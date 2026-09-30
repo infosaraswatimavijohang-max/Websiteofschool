@@ -1,0 +1,321 @@
+/* Screen styles: hide the print container by default */
+#print-id-card-container {
+  display: none;
+}
+
+/* ID Card Print Styles */
+@media print {
+  /* Hide the entire application interface EXCEPT the print container */
+  body > *:not(#print-id-card-container) {
+    display: none !important;
+  }
+  
+  /* Reset body and html margins */
+  body, html {
+    margin: 0;
+    padding: 0;
+    background: #ffffff;
+  }
+  
+  /* Show ONLY the print container */
+  #print-id-card-container {
+    display: flex !important;
+    position: relative; /* Normal document flow */
+    width: 100%;
+    margin: 0;
+    padding: 20px; /* Give it some breathing room from the edge */
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+  
+  /* Ensure backgrounds and colors print exactly as they appear on screen */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  
+  .id-card-wrapper {
+    box-shadow: none !important;
+    margin: 0 !important;
+    border: 1px solid #ccc !important; /* Add a faint border so they can cut it out if printing on A4 */
+    page-break-inside: avoid;
+  }
+  
+  /* Chrome print spooler bugs out with clip-path, so we use a simpler curved background for printing */
+  .id-card-wrapper::before {
+    clip-path: none !important;
+    border-bottom-left-radius: 60px !important;
+    border-bottom-right-radius: 20px !important;
+  }
+}
+
+/* -------------------------------------
+   NEXT LEVEL ID CARD STYLING
+-------------------------------------- */
+.id-card-wrapper {
+  width: 324px;   /* ~2.125 inches scaled up */
+  height: 540px;  /* Increased height for more fields */
+  background: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+  font-family: 'Inter', sans-serif;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.05);
+  margin: 0 auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Complex Modern Header Background */
+.id-card-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(135deg, #1e1b4b 0%, #3730a3 50%, #4f46e5 100%);
+  z-index: 1;
+  /* Cool angled slice effect */
+  clip-path: polygon(0 0, 100% 0, 100% 75%, 0 100%);
+}
+
+.id-card-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+  z-index: 1;
+  border-radius: 50%;
+  transform: translate(30%, -20%);
+  pointer-events: none;
+}
+
+/* Watermark */
+.id-card-logo-watermark {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 220px;
+  opacity: 0.04;
+  z-index: 1;
+  pointer-events: none;
+  filter: grayscale(100%);
+}
+
+/* Top Header Content */
+.id-card-header {
+  text-align: center;
+  padding: 18px 15px 5px;
+  position: relative;
+  z-index: 2;
+  color: #ffffff;
+}
+
+.id-card-school-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 21px;
+  font-weight: 800;
+  margin: 0 0 4px;
+  line-height: 1.1;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  letter-spacing: 0.5px;
+}
+
+.id-card-school-address {
+  font-size: 10px;
+  color: rgba(255,255,255,0.85);
+  margin: 0 0 6px;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.id-card-title-badge {
+  display: inline-block;
+  background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%);
+  color: #78350f;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 5px 16px;
+  border-radius: 20px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  margin-top: 2px;
+}
+
+/* Body Section */
+.id-card-body {
+  position: relative;
+  z-index: 3;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 20px;
+  margin-top: 5px;
+}
+
+/* Advanced Photo Styling */
+.id-card-photo-container {
+  width: 100px;
+  height: 100px;
+  background: #ffffff;
+  border-radius: 50%;
+  padding: 3px;
+  /* Gradient ring effect around photo */
+  background: linear-gradient(135deg, #f59e0b 0%, #4f46e5 100%);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.id-card-photo {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #f8fafc;
+  border: 2px solid #ffffff; /* Inner white border */
+}
+
+/* Details Section */
+.id-card-details {
+  width: 100%;
+  text-align: center;
+}
+
+.id-card-student-name {
+  font-size: 19px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+
+/* Sleek Grid */
+.id-card-info-grid {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 3px 6px;
+  text-align: left;
+  background: #f8fafc;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 10px;
+  border: 1px solid #e2e8f0;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.id-card-info-grid strong {
+  color: #4f46e5; /* Accent color for labels */
+  font-weight: 700;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+}
+
+.id-card-info-grid span {
+  color: #334155;
+  font-weight: 600;
+  border-bottom: 1px dashed #cbd5e1;
+  padding-bottom: 1px;
+  font-size: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Signature & Barcode Section */
+.id-card-signatures {
+  position: absolute;
+  bottom: 40px; /* Leave room for footer */
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0 25px;
+  z-index: 2;
+}
+
+/* Fake Barcode */
+.id-card-barcode {
+  width: 90px;
+  height: 28px;
+  background: repeating-linear-gradient(
+    90deg,
+    #0f172a,
+    #0f172a 2px,
+    transparent 2px,
+    transparent 4px,
+    #0f172a 4px,
+    #0f172a 5px,
+    transparent 5px,
+    transparent 8px,
+    #0f172a 8px,
+    #0f172a 11px,
+    transparent 11px,
+    transparent 12px
+  );
+  opacity: 0.8;
+  border-radius: 2px;
+}
+
+.id-card-signature-box {
+  text-align: center;
+  width: 100px;
+}
+
+.id-card-signature-img {
+  height: 28px;
+  max-width: 100%;
+  object-fit: contain;
+  margin-bottom: 2px;
+  mix-blend-mode: multiply;
+  opacity: 0.9;
+}
+
+.id-card-signature-line {
+  border-top: 1px solid #94a3b8;
+  padding-top: 3px;
+  font-size: 9px;
+  color: #475569;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Footer Section */
+.id-card-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #1e1b4b;
+  color: #ffffff;
+  text-align: center;
+  padding: 6px 10px;
+  font-size: 8px;
+  z-index: 2;
+}
+
+.id-card-footer-top {
+  color: #fbbf24;
+  font-weight: 700;
+  margin-bottom: 2px;
+  letter-spacing: 0.2px;
+}
+
+.id-card-footer-bottom {
+  opacity: 0.85;
+  letter-spacing: 0.5px;
+}

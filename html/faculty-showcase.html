@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Showcase - Shree Saraswati Secondary School</title>
+    <!-- Premium 2026 Faculty Showcase CSS -->
+    <link rel="stylesheet" href="../css/faculty-showcase.css">
+</head>
+<body class="fs-body-bg">
+
+    <section class="fs-section" id="faculty-showcase">
+        <div class="fs-container">
+            
+            <!-- Header -->
+            <div class="fs-header">
+                <span class="fs-header-subtitle">Academic Excellence</span>
+                <h2 class="fs-header-title">Our World-Class <span>Faculty</span></h2>
+            </div>
+
+            <!-- Interactive Filter Bar -->
+            <div class="fs-filter-wrap">
+                <div class="fs-filter-bar">
+                    <button class="fs-filter-btn active" data-filter="All">All Teachers</button>
+                    <button class="fs-filter-btn" data-filter="Science">Science</button>
+                    <button class="fs-filter-btn" data-filter="Management">Management</button>
+                    <button class="fs-filter-btn" data-filter="Primary">Primary</button>
+                </div>
+            </div>
+
+            <!-- Dynamic Faculty Grid -->
+            <!-- Populated by JS -->
+            <div class="fs-grid" id="fs-grid">
+                <!-- Skeletons load here initially -->
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Optionally inject Supabase Library here if needed to connect to actual DB -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script> -->
+    
+    <!-- Premium 2026 Faculty Showcase JS -->
+    <script src="../js/faculty-showcase.js"></script>
+</body>
+</html>

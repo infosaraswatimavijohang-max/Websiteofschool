@@ -1,0 +1,200 @@
+-- ====================================================================
+-- ADMIN QUERIES FOR EXAM RESULTS MANAGEMENT
+-- ====================================================================
+
+-- ====================================================================
+-- 1. VIEW ALL PENDING EXAM SUBMISSIONS (Admin Dashboard)
+-- ====================================================================
+-- This query helps admin see which exam results are waiting for approval
+-- SELECT 
+--   es.session_name,
+--   es.terminal_number,
+--   ec.subject,
+--   ec.class,
+--   ec.exam_type,
+--   ec.full_marks,
+--   ec.pass_marks,
+--   COUNT(er.id) as total_student_entries,
+--   SUM(CASE WHEN er.approval_status = 'Pending' THEN 1 ELSE 0 END) as pending_approvals,
+--   SUM(CASE WHEN er.approval_status = 'Approved' THEN 1 ELSE 0 END) as approved_count,
+--   MIN(er.submission_date) as first_submission,
+--   MAX(er.submission_date) as last_submission,
+--   ec.teacher_code as submitted_by
+-- FROM public.exam_sessions es
+-- JOIN public.exam_configurations ec ON es.id = ec.exam_session_id
+-- LEFT JOIN public.exam_results er ON ec.id = er.exam_config_id
+-- GROUP BY es.id, ec.id, es.session_name, es.terminal_number, ec.subject, ec.class, ec.exam_type, ec.full_marks, ec.pass_marks, ec.teacher_code
+-- ORDER BY es.terminal_number DESC, ec.subject, ec.class;
+
+-- ====================================================================
+-- 2. VIEW DETAILED EXAM RESULTS FOR APPROVAL (One Subject/Class)
+-- ====================================================================
+-- Admin clicks on an exam config to see all student results
+-- SELECT 
+--   er.id,
+--   er.student_roll,
+--   er.student_symbol,
+--   sr.name as student_name,
+--   er.theory_marks,
+--   er.practical_marks,
+--   er.total_marks,
+--   ec.full_marks,
+--   ROUND((er.total_marks::NUMERIC / ec.full_marks) * 100, 2) as percentage,
+--   er.grade,
+--   er.result_status,
+--   er.approval_status,
+--   er.submission_date,
+--   er.rejection_reason,
+--   ec.subject,
+--   ec.exam_type,
+--   ec.pass_marks
+-- FROM public.exam_results er
+-- JOIN public.exam_configurations ec ON er.exam_config_id = ec.id
+-- LEFT JOIN public.students_registry sr ON er.student_roll = sr.roll
+-- WHERE ec.id = $1
+-- ORDER BY er.student_roll;
+
+-- ====================================================================
+-- 3. BULK APPROVE ALL RESULTS FOR AN EXAM CONFIG
+-- ====================================================================
+-- UPDATE public.exam_results
+-- SET 
+--   approval_status = 'Approved',
+--   approval_by = $1,
+--   approval_date = NOW()
+-- WHERE exam_config_id = $2 AND approval_status = 'Pending';
+
+-- ====================================================================
+-- 4. REJECT SPECIFIC EXAM RESULT
+-- ====================================================================
+-- UPDATE public.exam_results
+-- SET 
+--   approval_status = 'Rejected',
+--   rejection_reason = $1,
+--   approval_by = $2,
+--   approval_date = NOW()
+-- WHERE id = $3;
+
+-- ====================================================================
+-- 5. VIEW EXAM RESULT SUMMARY BY CLASS
+-- ====================================================================
+-- Get overview of exam results for a specific class across all subjects
+-- SELECT 
+--   ec.subject,
+--   ec.exam_type,
+--   COUNT(er.id) as total_students,
+--   AVG(er.total_marks) as avg_marks,
+--   MAX(er.total_marks) as highest_marks,
+--   MIN(er.total_marks) as lowest_marks,
+--   SUM(CASE WHEN er.result_status = 'Pass' THEN 1 ELSE 0 END) as passed_count,
+--   SUM(CASE WHEN er.result_status = 'Fail' THEN 1 ELSE 0 END) as failed_count,
+--   ROUND(100.0 * SUM(CASE WHEN er.result_status = 'Pass' THEN 1 ELSE 0 END) / COUNT(er.id), 2) as pass_percentage
+-- FROM public.exam_configurations ec
+-- LEFT JOIN public.exam_results er ON ec.id = er.exam_config_id
+-- WHERE ec.class = $1 AND ec.exam_session_id = $2 AND er.approval_status = 'Approved'
+-- GROUP BY ec.id, ec.subject, ec.exam_type
+-- ORDER BY ec.subject;
+
+-- ====================================================================
+-- 6. VIEW STUDENT PERFORMANCE ACROSS EXAMS
+-- ====================================================================
+-- Get a student's performance in all exams
+-- SELECT 
+--   es.session_name,
+--   es.terminal_number,
+--   ec.subject,
+--   ec.exam_type,
+--   ec.full_marks,
+--   er.theory_marks,
+--   er.practical_marks,
+--   er.total_marks,
+--   ROUND((er.total_marks::NUMERIC / ec.full_marks) * 100, 2) as percentage,
+--   er.grade,
+--   er.result_status,
+--   er.approval_status
+-- FROM public.exam_results er
+-- JOIN public.exam_configurations ec ON er.exam_config_id = ec.id
+-- JOIN public.exam_sessions es ON ec.exam_session_id = es.id
+-- WHERE er.student_roll = $1
+-- ORDER BY es.terminal_number DESC, ec.subject;
+
+-- ====================================================================
+-- 7. GET EXAM CONFIGURATION DETAILS
+-- ====================================================================
+-- SELECT 
+--   ec.id,
+--   ec.exam_session_id,
+--   es.session_name,
+--   es.terminal_number,
+--   ec.subject,
+--   ec.class,
+--   ec.exam_type,
+--   ec.full_marks,
+--   ec.pass_marks,
+--   ec.teacher_code,
+--   COUNT(er.id) as submitted_results,
+--   SUM(CASE WHEN er.approval_status = 'Pending' THEN 1 ELSE 0 END) as pending_results,
+--   SUM(CASE WHEN er.approval_status = 'Approved' THEN 1 ELSE 0 END) as approved_results,
+--   SUM(CASE WHEN er.approval_status = 'Rejected' THEN 1 ELSE 0 END) as rejected_results
+-- FROM public.exam_configurations ec
+-- JOIN public.exam_sessions es ON ec.exam_session_id = es.id
+-- LEFT JOIN public.exam_results er ON ec.id = er.exam_config_id
+-- WHERE ec.id = $1
+-- GROUP BY ec.id, es.id, es.session_name, es.terminal_number, ec.subject, ec.class, ec.exam_type, ec.full_marks, ec.pass_marks, ec.teacher_code;
+
+-- ====================================================================
+-- 8. CLASS WISE EXAM PERFORMANCE REPORT
+-- ====================================================================
+-- Get comprehensive report for admin dashboard
+-- SELECT 
+--   sr.class,
+--   es.session_name,
+--   es.terminal_number,
+--   COUNT(DISTINCT er.student_roll) as total_appeared,
+--   COUNT(DISTINCT ec.subject) as subjects_examined,
+--   ROUND(AVG(er.total_marks), 2) as average_marks,
+--   SUM(CASE WHEN er.result_status = 'Pass' THEN 1 ELSE 0 END) as total_passed,
+--   SUM(CASE WHEN er.result_status = 'Fail' THEN 1 ELSE 0 END) as total_failed,
+--   ROUND(100.0 * SUM(CASE WHEN er.result_status = 'Pass' THEN 1 ELSE 0 END) / COUNT(*), 2) as pass_percentage
+-- FROM public.exam_results er
+-- JOIN public.exam_configurations ec ON er.exam_config_id = ec.id
+-- JOIN public.exam_sessions es ON ec.exam_session_id = es.id
+-- JOIN public.students_registry sr ON er.student_roll = sr.roll
+-- WHERE er.approval_status = 'Approved'
+-- GROUP BY sr.class, es.id, es.session_name, es.terminal_number
+-- ORDER BY es.terminal_number DESC, sr.class;
+
+-- ====================================================================
+-- 9. EXPORT EXAM RESULTS BY CLASS AND TERMINAL (For Reports)
+-- ====================================================================
+-- SELECT 
+--   er.student_roll,
+--   er.student_symbol,
+--   sr.name,
+--   ec.subject,
+--   ec.exam_type,
+--   er.theory_marks,
+--   er.practical_marks,
+--   er.total_marks,
+--   ec.full_marks,
+--   ROUND((er.total_marks::NUMERIC / ec.full_marks) * 100, 2) as percentage,
+--   er.grade,
+--   er.result_status
+-- FROM public.exam_results er
+-- JOIN public.exam_configurations ec ON er.exam_config_id = ec.id
+-- JOIN public.exam_sessions es ON ec.exam_session_id = es.id
+-- LEFT JOIN public.students_registry sr ON er.student_roll = sr.roll
+-- WHERE es.terminal_number = $1 AND ec.class = $2 AND er.approval_status = 'Approved'
+-- ORDER BY er.student_roll, ec.subject;
+
+-- ====================================================================
+-- 10. STATISTICS FOR DASHBOARD
+-- ====================================================================
+-- SELECT 
+--   COUNT(DISTINCT ec.id) as total_exam_configs,
+--   COUNT(DISTINCT CASE WHEN COUNT(er.id) > 0 THEN ec.id END) as configs_with_submissions,
+--   SUM(CASE WHEN er.approval_status = 'Pending' THEN 1 ELSE 0 END) as total_pending_approvals,
+--   SUM(CASE WHEN er.approval_status = 'Approved' THEN 1 ELSE 0 END) as total_approved,
+--   ROUND(100.0 * SUM(CASE WHEN er.approval_status = 'Approved' THEN 1 ELSE 0 END) / NULLIF(COUNT(er.id), 0), 2) as approval_percentage
+-- FROM public.exam_configurations ec
+-- LEFT JOIN public.exam_results er ON ec.id = er.exam_config_id;

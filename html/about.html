@@ -1,0 +1,2309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us | Shree Saraswati Secondary School</title>
+  <link rel="icon" type="image/png" href="../images/logo.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --primary:   #1a3a6b;
+      --secondary: #2e6da4;
+      --accent:    #f5a623;
+      --gold:      #d4af37;
+      --light:     #e8f4fd;
+      --white:     #ffffff;
+      --dark:      #0d2444;
+      --text:      #2c3e50;
+      --grad1: linear-gradient(135deg, #1a3a6b 0%, #2e6da4 50%, #1a8a5a 100%);
+      --grad2: linear-gradient(135deg, #0d2444 0%, #1a3a6b 60%, #2e6da4 100%);
+      --grad3: linear-gradient(135deg, #f5a623 0%, #d4af37 100%);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      color: var(--text);
+      background: #f0f6ff;
+      overflow-x: hidden;
+    }
+
+    /* ── TOP BAR (PREMIUM 2026 DESIGN) ── */
+    .topbar {
+      background: rgba(15, 45, 92, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      color: rgba(255, 255, 255, 0.95);
+      font-size: 0.85rem;
+      padding: 0.6rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      letter-spacing: 0.02em;
+      font-weight: 500;
+      font-family: 'Inter', sans-serif;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      position: relative;
+      z-index: 1000;
+    }
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .topbar-left span {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.3s ease;
+      cursor: default;
+    }
+    .topbar-left span:hover {
+      color: var(--secondary);
+    }
+    .topbar-left .divider {
+      color: rgba(255, 255, 255, 0.2);
+      margin: 0;
+    }
+    .topbar-left svg {
+      width: 16px;
+      height: 16px;
+      opacity: 0.8;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .topbar-left span:hover svg {
+      transform: translateY(-2px);
+      opacity: 1;
+      stroke: var(--secondary);
+    }
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+    .topbar-right .lang-switch {
+      display: flex;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 3px;
+      align-items: center;
+    }
+    .topbar-right .lang-switch a {
+      color: var(--white);
+      text-decoration: none;
+      padding: 0.3rem 0.8rem;
+      border-radius: 18px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    .topbar-right .lang-switch a.active {
+      background: var(--accent);
+      box-shadow: 0 2px 10px rgba(59, 130, 246, 0.4);
+    }
+    .topbar-right .lang-switch a:hover:not(.active) {
+      background: rgba(255, 255, 255, 0.15);
+    }
+    .topbar-right .topbar-login {
+      background: linear-gradient(135deg, var(--secondary) 0%, #f39c12 100%);
+      color: var(--white);
+      text-decoration: none;
+      padding: 0.4rem 1.4rem;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .topbar-right .topbar-login:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+      background: linear-gradient(135deg, #f39c12 0%, var(--secondary) 100%);
+    }
+
+    /* ── TICKER BAR (PREMIUM 2026 DESIGN) ── */
+    .ticker-wrap {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      display: flex;
+      align-items: center;
+      height: 48px;
+      overflow: hidden;
+      font-size: 0.9rem;
+      font-weight: 500;
+      font-family: 'Poppins', sans-serif;
+      color: var(--text);
+      position: relative;
+      z-index: 998;
+    }
+    .ticker-title {
+      background: linear-gradient(90deg, var(--secondary) 0%, #f39c12 100%);
+      color: var(--white);
+      padding: 0 1.5rem 0 3rem;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 700;
+      clip-path: polygon(0 0, 92% 0, 100% 100%, 0 100%);
+      padding-right: 2.5rem;
+      flex-shrink: 0;
+      z-index: 10;
+      box-shadow: 4px 0 15px rgba(245, 158, 11, 0.3);
+      gap: 0.5rem;
+    }
+    .ticker-title i {
+      animation: pulse-ring 2s infinite;
+    }
+    @keyframes pulse-ring {
+      0% { transform: scale(0.9); opacity: 0.7; }
+      50% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(0.9); opacity: 0.7; }
+    }
+    .ticker-content {
+      flex-grow: 1;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      position: relative;
+      height: 100%;
+    }
+    .ticker-text {
+      display: flex;
+      white-space: nowrap;
+      position: absolute;
+      left: 0;
+      will-change: transform;
+      animation: ticker-move 35s linear infinite;
+    }
+    .ticker-group {
+      display: flex;
+      gap: 4rem;
+      padding-right: 4rem;
+      flex-shrink: 0;
+      align-items: center;
+    }
+    .ticker-group span {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .ticker-text strong {
+      color: var(--primary);
+      font-weight: 700;
+      background: rgba(15, 45, 92, 0.05);
+      padding: 0.3rem 0.8rem;
+      border-radius: 6px;
+      border: 1px solid rgba(15, 45, 92, 0.1);
+    }
+    @keyframes ticker-move {
+      0% { transform: translate3d(0, 0, 0); }
+      100% { transform: translate3d(-50%, 0, 0); }
+    }
+    .ticker-wrap:hover .ticker-text {
+      animation-play-state: paused;
+    }
+    
+    @media (max-width: 900px) {
+      .topbar { padding: 0.8rem 1rem; flex-direction: column; gap: 0.8rem; }
+      .topbar-left { flex-wrap: wrap; justify-content: center; gap: 1rem; font-size: 0.85rem; }
+      .topbar-left .divider { display: none; }
+      .ticker-title { padding-left: 1rem; font-size: 0.75rem; }
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--white);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+    .header-inner {
+      max-width: 1400px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.8rem 2rem;
+    }
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      flex-shrink: 0;
+    }
+    /* Logo Image */
+    .logo-png {
+      width: 75px;
+      height: 75px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+    .logo-png-footer {
+      width: 52px;
+      height: 52px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+    .school-title {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .school-title h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--primary);
+      line-height: 1.1;
+      margin-bottom: 0.2rem;
+    }
+    .school-title h1 .gradient-text {
+      font-style: italic;
+      background: linear-gradient(to right, #ff007f, #7928ca);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      padding-right: 5px;
+    }
+    .school-title p {
+      font-size: 0.75rem;
+      color: var(--secondary);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    nav a {
+      text-decoration: none;
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.92rem;
+      padding: 0.5rem 0.9rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+    nav a:not(.btn-admit):hover {
+      color: var(--secondary);
+      background: rgba(26, 58, 107, 0.05);
+    }
+    nav a.active {
+      background: var(--primary);
+      color: var(--white);
+    }
+    nav a.active:hover {
+      background: var(--primary);
+      color: var(--white);
+    }
+    .btn-admit {
+      background: var(--grad3);
+      color: var(--dark) !important;
+      border-radius: 30px !important;
+      padding: 0.6rem 1.4rem !important;
+      box-shadow: 0 4px 15px rgba(245, 166, 35, 0.4);
+      margin-left: 0.2rem;
+    }
+    .btn-admit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(245, 166, 35, 0.6);
+    }
+
+    /* ── HEADER DROPDOWNS ── */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    .dropdown-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      cursor: pointer;
+    }
+    .dropdown-toggle .arrow {
+      font-size: 0.55rem;
+      transition: transform 0.3s ease;
+      opacity: 0.75;
+      margin-left: 0.1rem;
+    }
+    .dropdown:hover .dropdown-toggle .arrow {
+      transform: rotate(180deg);
+      color: var(--secondary);
+    }
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(15px);
+      background: var(--white);
+      min-width: 235px;
+      box-shadow: 0 12px 35px rgba(26, 58, 107, 0.12);
+      border-radius: 12px;
+      padding: 0.6rem;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      z-index: 1000;
+      border: 1px solid rgba(26, 58, 107, 0.05);
+    }
+    .dropdown-menu::before {
+      content: '';
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 8px;
+      border-style: solid;
+      border-color: transparent transparent var(--white) transparent;
+    }
+    .dropdown:hover .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(6px);
+    }
+    .dropdown-menu a {
+      display: block;
+      color: var(--primary) !important;
+      font-size: 0.88rem !important;
+      font-weight: 600 !important;
+      padding: 0.65rem 1rem !important;
+      border-radius: 8px !important;
+      transition: all 0.2s ease !important;
+      margin: 0.15rem 0 !important;
+      text-align: left;
+      background: transparent !important;
+    }
+    .dropdown-menu a:hover {
+      background: rgba(26, 58, 107, 0.06) !important;
+      color: var(--secondary) !important;
+      transform: translateX(4px) !important;
+    }
+
+    /* ── DEDICATED ABOUT HERO ── */
+    .about-hero {
+      position: relative;
+      background: var(--grad2);
+      padding: 7.5rem 0 9.5rem;
+      text-align: center;
+      color: var(--white);
+      overflow: hidden;
+    }
+    .about-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url('../images/img.jpg');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.22;
+      z-index: 1;
+    }
+    .about-hero-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    .about-hero h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.2rem;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      margin-bottom: 1.2rem;
+      animation: fadeInUp 0.8s ease-out;
+      line-height: 1.15;
+    }
+    .about-hero p {
+      font-size: 1.15rem;
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.6;
+      max-width: 600px;
+      margin: 0 auto;
+      font-weight: 600;
+      animation: fadeInUp 1s ease-out;
+    }
+    .hero-divider {
+      width: 80px;
+      height: 4px;
+      background: var(--grad3);
+      margin: 1.5rem auto;
+      border-radius: 20px;
+      animation: fadeInUp 0.9s ease-out;
+    }
+    .hero-angle-bottom {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: #f0f6ff;
+      clip-path: polygon(0 100%, 100% 100%, 100% 0, 0 100%);
+      z-index: 3;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── LEGACY METRIC STATS ROW ── */
+    .legacy-stats-container {
+      margin-top: -4.5rem;
+      position: relative;
+      z-index: 10;
+      padding: 0 2rem;
+    }
+    .legacy-stats-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+    .stat-badge-card {
+      background: var(--white);
+      border-radius: 18px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      box-shadow: 0 15px 35px rgba(13, 36, 68, 0.08);
+      border: 1px solid rgba(13, 36, 68, 0.03);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .stat-badge-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 22px 45px rgba(13, 36, 68, 0.15);
+    }
+    .stat-badge-card .icon-circle {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: rgba(26, 58, 107, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      color: var(--primary);
+      transition: all 0.3s ease;
+    }
+    .stat-badge-card:hover .icon-circle {
+      background: var(--accent);
+      color: var(--dark);
+    }
+    .stat-badge-card h4 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1;
+    }
+    .stat-badge-card span {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* ── STORY INTRODUCTION SECTION ── */
+    .section-padding {
+      padding: 6.5rem 0;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 4.5rem;
+      align-items: center;
+    }
+    .story-visual {
+      position: relative;
+    }
+    .story-visual-frame {
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 25px 55px rgba(13, 36, 68, 0.1);
+      border: 6px solid var(--white);
+    }
+    .story-visual-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .story-visual::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      left: -20px;
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(var(--accent) 20%, transparent 20%);
+      background-size: 12px 12px;
+      z-index: -1;
+      opacity: 0.5;
+    }
+    .story-visual::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      width: 160px;
+      height: 160px;
+      border: 3px solid var(--gold);
+      border-radius: 24px;
+      z-index: -2;
+      opacity: 0.3;
+    }
+    
+    .about-subtitle {
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+    .about-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      color: var(--primary);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+    .story-text p {
+      font-size: 1rem;
+      color: #4a5568;
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+    }
+    .story-values-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .story-values-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: var(--primary);
+    }
+    .story-values-list li svg {
+      width: 18px;
+      height: 18px;
+      stroke: #2ecc71;
+      fill: none;
+      stroke-width: 3;
+    }
+
+    /* ── VISION & MISSION GLASS PANELS ── */
+    .vision-mission-section {
+      background: var(--dark);
+      color: var(--white);
+      position: relative;
+    }
+    .vision-mission-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 24px;
+      padding: 3.5rem;
+      position: relative;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .glass-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(245, 166, 35, 0.25);
+      box-shadow: 0 15px 35px rgba(245, 166, 35, 0.05);
+    }
+    .glass-card .badge-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--gold) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      color: var(--dark);
+      box-shadow: 0 8px 20px rgba(245, 166, 35, 0.2);
+    }
+    .glass-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--white);
+    }
+    .glass-card p {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.8;
+    }
+    .glass-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+    .glass-card ul li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.85);
+      font-weight: 600;
+    }
+    .glass-card ul li::before {
+      content: '⚡';
+      color: var(--accent);
+      font-size: 0.9rem;
+    }
+
+    /* ── HISTORICAL TIMELINE ── */
+    .timeline-section {
+      background: #f8fafc;
+    }
+    .timeline-wrapper {
+      max-width: 900px;
+      margin: 4rem auto 0;
+      position: relative;
+    }
+    .timeline-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 4px;
+      background: var(--primary);
+      transform: translateX(-50%);
+      opacity: 0.15;
+    }
+    .timeline-item {
+      position: relative;
+      width: 50%;
+      padding: 0 3rem 4rem;
+      box-sizing: border-box;
+    }
+    .timeline-item.left {
+      left: 0;
+      text-align: right;
+    }
+    .timeline-item.right {
+      left: 50%;
+      text-align: left;
+    }
+    .timeline-badge {
+      position: absolute;
+      top: 5px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 4px solid var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      z-index: 10;
+      transition: all 0.3s ease;
+    }
+    .timeline-item.left .timeline-badge {
+      right: -22px;
+    }
+    .timeline-item.right .timeline-badge {
+      left: -22px;
+    }
+    .timeline-item:hover .timeline-badge {
+      background: var(--accent);
+      border-color: var(--accent);
+      transform: scale(1.15);
+    }
+    .timeline-card {
+      background: var(--white);
+      border-radius: 18px;
+      padding: 2.2rem;
+      box-shadow: 0 10px 25px rgba(13, 36, 68, 0.04);
+      border: 1px solid rgba(13, 36, 68, 0.02);
+      transition: all 0.3s ease;
+    }
+    .timeline-card:hover {
+      box-shadow: 0 18px 40px rgba(13, 36, 68, 0.09);
+      transform: translateY(-3px);
+    }
+    .timeline-date {
+      display: inline-block;
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--accent);
+      background: rgba(245, 166, 35, 0.1);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      margin-bottom: 0.8rem;
+    }
+    .timeline-card h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      color: var(--primary);
+      margin-bottom: 0.6rem;
+      font-weight: 800;
+    }
+    .timeline-card p {
+      font-size: 0.9rem;
+      color: #64748b;
+      line-height: 1.6;
+    }
+
+    /* ── HISTORY ERA ARCHIVES ── */
+    .history-era-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.2rem;
+      margin-top: 1rem;
+      margin-bottom: 5rem;
+    }
+    .era-card {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 2.5rem;
+      border: 1px solid #edf2f7;
+      box-shadow: 0 10px 30px rgba(13, 36, 68, 0.03);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .era-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--grad3);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .era-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 18px 45px rgba(13, 36, 68, 0.08);
+      border-color: rgba(245, 166, 35, 0.15);
+    }
+    .era-card:hover::before {
+      opacity: 1;
+    }
+    .era-icon {
+      width: 60px;
+      height: 60px;
+      background: rgba(26, 58, 107, 0.05);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      transition: all 0.3s ease;
+    }
+    .era-card:hover .era-icon {
+      background: var(--primary);
+      color: var(--white);
+      transform: scale(1.05);
+    }
+    .era-badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: 1px;
+      margin-bottom: 0.6rem;
+    }
+    .era-card h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+      font-weight: 800;
+    }
+    .era-card p {
+      font-size: 0.9rem;
+      color: #64748b;
+      line-height: 1.65;
+    }
+
+    /* ── LEADERSHIP ADMINISTRATIVE DESK ── */
+    .leadership-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3.5rem;
+      margin-top: 3.5rem;
+    }
+    .leader-desk-card {
+      background: var(--white);
+      border-radius: 24px;
+      border: 1px solid #edf2f7;
+      box-shadow: 0 15px 40px rgba(13, 36, 68, 0.04);
+      padding: 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+      position: relative;
+    }
+    .leader-profile {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .leader-photo-wrap {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: 4px solid var(--light);
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 8px 20px rgba(13, 36, 68, 0.06);
+    }
+    .leader-photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .leader-info h5 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--primary);
+      font-weight: 800;
+      margin-bottom: 0.2rem;
+    }
+    .leader-info span {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+    .leader-quote {
+      font-style: italic;
+      color: #4a5568;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      border-left: 3px solid var(--accent);
+      padding-left: 1.2rem;
+      position: relative;
+    }
+    .leader-quote::before {
+      content: '"';
+      position: absolute;
+      left: 4px;
+      top: -15px;
+      font-size: 3rem;
+      font-family: 'Playfair Display', serif;
+      color: rgba(245, 166, 35, 0.15);
+      line-height: 1;
+    }
+    .leader-desc {
+      font-size: 0.9rem;
+      color: #64748b;
+      line-height: 1.6;
+    }
+    .leader-sign {
+      align-self: flex-start;
+      margin-top: 0.5rem;
+      padding-top: 1rem;
+      border-top: 1px dashed #edf2f7;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .leader-sign span {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 1.05rem;
+    }
+
+    /* ── ADMINISTRATION TEAM ── */
+    .admin-team-section {
+      background: #f8fafc;
+      border-top: 1px solid #edf2f7;
+    }
+    .admin-team-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2.2rem;
+      margin-top: 3.5rem;
+    }
+    .admin-member-card {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 2.8rem 1.8rem;
+      text-align: center;
+      border: 1px solid #edf2f7;
+      box-shadow: 0 10px 25px rgba(13, 36, 68, 0.02);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .admin-member-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 18px 40px rgba(13, 36, 68, 0.06);
+      border-color: rgba(245, 166, 35, 0.15);
+    }
+    .admin-photo-container {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding: 5px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--gold) 100%);
+      transition: transform 0.3s ease;
+    }
+    .admin-member-card:hover .admin-photo-container {
+      transform: rotate(5deg) scale(1.05);
+    }
+    .admin-photo-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid var(--white);
+    }
+    .admin-photo-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .admin-member-card h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      color: var(--primary);
+      margin-bottom: 0.3rem;
+      font-weight: 800;
+    }
+    .admin-member-card .role {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+    .admin-member-card .dept {
+      font-size: 0.85rem;
+      color: #64748b;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+    .admin-socials {
+      display: flex;
+      justify-content: center;
+      gap: 0.8rem;
+      border-top: 1px dashed #edf2f7;
+      padding-top: 1.2rem;
+      width: 100%;
+      margin-top: auto;
+    }
+    .admin-social-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #f0f6ff;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .admin-social-btn:hover {
+      background: var(--primary);
+      color: var(--white);
+      transform: scale(1.1);
+    }
+
+    }
+
+    /* ── PRINCIPALS TREE ── */
+    .principal-tree-section {
+      background: #ffffff;
+      border-top: 1px solid #edf2f7;
+    }
+    .tree-wrapper {
+      position: relative;
+      max-width: 900px;
+      margin: 4rem auto 0;
+      padding-bottom: 2rem;
+    }
+    .tree-trunk {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 4px;
+      background: linear-gradient(to bottom, var(--primary) 0%, var(--gold) 100%);
+      transform: translateX(-50%);
+      border-radius: 4px;
+    }
+    .tree-node {
+      position: relative;
+      width: 50%;
+      padding: 0 3.5rem 3.5rem;
+      box-sizing: border-box;
+    }
+    .tree-node.left {
+      left: 0;
+      text-align: right;
+    }
+    .tree-node.right {
+      left: 50%;
+      text-align: left;
+    }
+    .tree-photo {
+      position: absolute;
+      top: 0;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 4px solid var(--gold);
+      box-shadow: 0 8px 25px rgba(13, 36, 68, 0.15);
+      z-index: 10;
+      overflow: hidden;
+      transform: translateX(-50%);
+      transition: all 0.3s ease;
+    }
+    .tree-node.left .tree-photo {
+      right: -45px;
+      transform: translateX(50%);
+    }
+    .tree-node.right .tree-photo {
+      left: 0;
+      transform: translateX(-50%);
+    }
+    .tree-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .tree-card {
+      background: #f8fafc;
+      border-radius: 20px;
+      padding: 2.2rem;
+      border: 1px solid #edf2f7;
+      box-shadow: 0 10px 30px rgba(13, 36, 68, 0.04);
+      position: relative;
+      transition: all 0.3s ease;
+      display: inline-block;
+      width: 100%;
+    }
+    .tree-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(13, 36, 68, 0.08);
+      border-color: rgba(212, 175, 55, 0.3);
+    }
+    .tree-node.left:hover .tree-photo {
+      transform: scale(1.1) translateX(45%);
+      box-shadow: 0 12px 35px rgba(212, 175, 55, 0.3);
+    }
+    .tree-node.right:hover .tree-photo {
+      transform: scale(1.1) translateX(-45%);
+      box-shadow: 0 12px 35px rgba(212, 175, 55, 0.3);
+    }
+    .tree-date {
+      display: inline-block;
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--white);
+      background: var(--primary);
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      margin-bottom: 1rem;
+      letter-spacing: 0.5px;
+    }
+    .tree-card h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--primary);
+      margin-bottom: 0.6rem;
+      font-weight: 800;
+    }
+    .tree-card p {
+      font-size: 0.95rem;
+      color: #64748b;
+      line-height: 1.6;
+      margin-bottom: 0;
+    }
+    @media (max-width: 767px) {
+      .tree-trunk { left: 40px; }
+      .tree-node { width: 100%; padding: 0 1.5rem 3rem 6.5rem; text-align: left !important; }
+      .tree-node.left, .tree-node.right { left: 0; }
+      .tree-node.left .tree-photo, .tree-node.right .tree-photo { left: 40px; right: auto; transform: translateX(-50%) !important; }
+      .tree-node.left:hover .tree-photo, .tree-node.right:hover .tree-photo { transform: scale(1.1) translateX(-45%) !important; }
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      color: rgba(255,255,255,.8);
+      padding: 3.5rem 2rem 1.5rem;
+    }
+    .footer-grid {
+      max-width: 1200px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 2.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .footer-brand .logo-wrap { margin-bottom: 1rem; }
+    .footer-brand p { font-size: .85rem; line-height: 1.75; opacity: .75; }
+    .footer-col h5 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: .55rem; }
+    .footer-col ul li a { color: rgba(255,255,255,.7); text-decoration: none; font-size: .85rem; transition: color .2s; }
+    .footer-col ul li a:hover { color: var(--accent); }
+    .footer-col address { font-style: normal; font-size: .85rem; line-height: 1.8; opacity: .75; }
+    .footer-col address strong { color: var(--accent); }
+    .footer-bottom {
+      max-width: 1200px;
+      margin: auto;
+      border-top: 1px solid rgba(255,255,255,.1);
+      padding-top: 1.2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: .78rem;
+      opacity: .65;
+      flex-wrap: wrap;
+      gap: .5rem;
+    }
+
+    /* ── SCROLL TO TOP ── */
+    #scrollTop {
+      position: fixed;
+      bottom: 2rem; right: 2rem;
+      background: var(--grad1);
+      color: #fff;
+      border: none;
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(26,58,107,.35);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      transition: transform .25s;
+    }
+    #scrollTop.show { display: flex; }
+    #scrollTop:hover { transform: scale(1.12); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .about-grid, .notices-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-strip { grid-template-columns: repeat(3, 1fr); grid-template-rows: auto; }
+      .gallery-strip .gimg:nth-child(1) { grid-column: span 1; grid-row: span 1; }
+      nav { display: none; }
+    }
+    @media (max-width: 600px) {
+      .slider { height: 320px; }
+      .slide-caption h2 { font-size: 1.4rem; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .stats-ribbon { gap: 1.5rem; }
+    }
+
+    /* ── SCROLL TO TOP ── */
+    #scrollTop {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      z-index: 998;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    #scrollTop.show {
+      opacity: 1;
+      visibility: visible;
+    }
+    #scrollTop:hover {
+      background: var(--accent);
+      color: var(--dark);
+      transform: translateY(-3px);
+    }
+
+    /* ── LOGIN MODAL CLASSES ── */
+    .login-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(13, 36, 68, 0.6);
+      backdrop-filter: blur(5px);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    .login-modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .login-modal-card {
+      background: var(--white);
+      width: 100%;
+      max-width: 480px;
+      border-radius: 24px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+      padding: 3rem;
+      position: relative;
+      transform: translateY(30px);
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    .login-modal-overlay.active .login-modal-card {
+      transform: translateY(0);
+    }
+    .login-modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      font-size: 2rem;
+      cursor: pointer;
+      color: #94a3b8;
+    }
+    .login-modal-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .login-modal-header h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--primary);
+      font-weight: 800;
+    }
+    .login-modal-header p {
+      font-size: 0.88rem;
+      color: #64748b;
+      margin-top: 0.3rem;
+    }
+    .login-tabs {
+      display: flex;
+      background: #edf2f7;
+      padding: 0.3rem;
+      border-radius: 12px;
+      margin-bottom: 1.8rem;
+    }
+    .login-tab-btn {
+      flex: 1;
+      padding: 0.7rem;
+      border: none;
+      background: none;
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: #64748b;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+    .login-tab-btn svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.2;
+    }
+    .login-tab-btn.active {
+      background: var(--white);
+      color: var(--primary);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+    .login-portal-form {
+      display: none;
+    }
+    .login-portal-form.active {
+      display: block;
+    }
+    .login-form-group {
+      margin-bottom: 1.3rem;
+    }
+    .login-form-group label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.4rem;
+      display: block;
+    }
+    .login-input-wrap {
+      position: relative;
+    }
+    .login-input-wrap .input-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      color: #94a3b8;
+    }
+    .login-input {
+      width: 100%;
+      padding: 0.85rem 1rem 0.85rem 2.8rem;
+      border-radius: 12px;
+      border: 1.5px solid #e2e8f0;
+      font-size: 0.95rem;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    .login-input:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(26,58,107,0.08);
+    }
+    .login-pwd-toggle {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #94a3b8;
+    }
+    .login-submit-btn {
+      width: 100%;
+      padding: 0.95rem;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary) 0%, #1e293b 100%);
+      color: var(--white);
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.95rem;
+      margin-top: 0.5rem;
+      box-shadow: 0 4px 15px rgba(26,58,107,0.15);
+    }
+    .login-submit-btn:hover {
+      box-shadow: 0 8px 25px rgba(26,58,107,0.3);
+      transform: translateY(-1px);
+    }
+    .login-help-links {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1.2rem;
+      font-size: 0.78rem;
+    }
+    .login-help-links a {
+      color: var(--secondary);
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .login-help-links a:hover {
+      text-decoration: underline;
+    }
+    .login-success-state {
+      position: absolute;
+      inset: 0;
+      background: var(--white);
+      border-radius: 24px;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      text-align: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    .login-success-state.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .success-icon-wrap {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: rgba(46, 204, 113, 0.15);
+      color: #2ecc71;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin-bottom: 1.2rem;
+    }
+    .success-icon-wrap svg {
+      width: 32px;
+      height: 32px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 3;
+    }
+
+    /* ── RESPONSIVENESS MEDIA BREAKPOINTS ── */
+    @media (max-width: 991px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+      .story-grid { grid-template-columns: 1fr; gap: 3.5rem; text-align: center; }
+      .story-values-list { justify-content: center; }
+      .vision-mission-grid { grid-template-columns: 1fr; }
+      .leadership-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .legacy-stats-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 767px) {
+      .about-hero h2 { font-size: 2.3rem; }
+      .about-title { font-size: 2rem; }
+      .timeline-line { left: 40px; }
+      .timeline-item { width: 100%; padding: 0 1.5rem 3rem 5.5rem; text-align: left !important; }
+      .timeline-badge { left: 18px !important; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+    @media (max-width: 480px) {
+      .legacy-stats-grid { grid-template-columns: 1fr; }
+      .story-values-list { grid-template-columns: 1fr; align-items: center; }
+      .glass-card { padding: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR (PREMIUM 2026 DESIGN) -->
+<div class="topbar">
+  <div class="topbar-left">
+    <span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+      Satyawati-6 Johang, Gulmi, Nepal
+    </span>
+    <span class="divider">|</span>
+    <span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+      infosaraswatimavijohang@gmail.com
+    </span>
+    <span class="divider">|</span>
+    <span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+      +977-9857062876
+    </span>
+  </div>
+  <div class="topbar-right">
+    <div class="lang-switch">
+      <a href="#" class="active">EN</a>
+      <a href="#">NP</a>
+    </div>
+    <span style="color: rgba(255, 255, 255, 0.25); margin: 0 0.2rem;">|</span>
+    <a href="#" class="topbar-login" onclick="openLoginModal(event)">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+      Portal Login
+    </a>
+  </div>
+</div>
+
+<!-- TICKER BAR (PREMIUM 2026 DESIGN) -->
+<div class="ticker-wrap">
+  <div class="ticker-title">
+    <i class="fas fa-bell"></i> Latest Updates
+  </div>
+  <div class="ticker-content">
+    <div class="ticker-text" id="dynamic-highlights-ticker">
+      <!-- Group 1 -->
+      <div class="ticker-group">
+        <span><i class="fas fa-graduation-cap" style="color: var(--secondary);"></i> <strong>Technical Education:</strong> Admissions open for Computer Engineering (Classes 9 to 12) for academic session 2083!</span>
+        <span><i class="fas fa-laptop-code" style="color: var(--secondary);"></i> <strong>Modern Infrastructure:</strong> Join Shree Saraswati Secondary School for hands-on practical learning, fully equipped labs, and expert faculty!</span>
+        <span><i class="fas fa-rocket" style="color: var(--secondary);"></i> <strong>Empowering Gulmi:</strong> Providing quality tech-driven vocational education to shape the future of our students. Apply today!</span>
+      </div>
+      <!-- Group 2 (Duplicate for seamless loop) -->
+      <div class="ticker-group">
+        <span><i class="fas fa-graduation-cap" style="color: var(--secondary);"></i> <strong>Technical Education:</strong> Admissions open for Computer Engineering (Classes 9 to 12) for academic session 2083!</span>
+        <span><i class="fas fa-laptop-code" style="color: var(--secondary);"></i> <strong>Modern Infrastructure:</strong> Join Shree Saraswati Secondary School for hands-on practical learning, fully equipped labs, and expert faculty!</span>
+        <span><i class="fas fa-rocket" style="color: var(--secondary);"></i> <strong>Empowering Gulmi:</strong> Providing quality tech-driven vocational education to shape the future of our students. Apply today!</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <!-- LOGO -->
+    <div class="logo-wrap">
+      <img class="logo-png" src="../images/logo.png" alt="Shree Saraswati Secondary School Logo" />
+      <div class="school-title">
+        <h1>Shree <span class="gradient-text">Saraswati</span><br/>Secondary School</h1>
+        <p>Satyawati-6 Johang, Gulmi &nbsp;|&nbsp; IEMIS: 460500011</p>
+      </div>
+    </div>
+    <!-- NAV -->
+    <nav>
+      <a href="../index.html">Home</a>
+      
+      <!-- Dropdown 1: About Us -->
+      <div class="dropdown">
+        <a href="about.html" class="dropdown-toggle">About Us <span class="arrow">▼</span></a>
+        <div class="dropdown-menu">
+          <a href="../index.html#message">Principal's Message</a>
+          <a href="about.html#history">History & Goals</a>
+          <a href="about.html#campuses">Our Campuses</a>
+          <a href="about.html#team">Administration Team</a>
+          <a href="../index.html#achievements">Achievements & Alumni</a>
+        </div>
+      </div>
+
+      <!-- Dropdown 2: Academics -->
+      <div class="dropdown">
+        <a href="#" class="dropdown-toggle" onclick="event.preventDefault();">Academics <span class="arrow">▼</span></a>
+        <div class="dropdown-menu">
+          <a href="../index.html#calendar">Academic Calendar</a>
+          <a href="../index.html#activities">Co-curricular Activities</a>
+          <a href="../index.html#teachers">Our Teachers</a>
+        </div>
+      </div>
+
+      <!-- Dropdown 3: Resources -->
+      <div class="dropdown">
+        <a href="#" class="dropdown-toggle" onclick="event.preventDefault();">Resources <span class="arrow">▼</span></a>
+        <div class="dropdown-menu">
+          <a href="../index.html#facilities">Campus Facilities</a>
+          <a href="../index.html#downloads">Downloads Hub</a>
+          <a href="student-directory.html">📚 Student Directory</a>
+          <a href="../index.html#faq">FAQ Board</a>
+        </div>
+      </div>
+
+      <a href="../index.html#notice">Notices</a>
+      <a href="../index.html#gallery">Gallery</a>
+      <a href="../index.html#contact">Contact</a>
+      
+      <a href="../index.html#admission" class="btn-admit">Admission</a>
+      <a href="#" class="btn-login" onclick="openLoginModal(event)">Login</a>
+    </nav>
+  </div>
+</header>
+
+
+<!-- ABOUT HERO BANNER -->
+<section class="about-hero">
+  <div class="about-hero-inner">
+    <h2 id="aboutHeroTitle">About Our School</h2>
+    <div class="hero-divider"></div>
+    <p id="aboutHeroSubtitle">Shaping Lives, Nurturing Potential, and Building Educational Legacies in Satyawati, Gulmi since 2016 B.S.</p>
+  </div>
+  <div class="hero-angle-bottom"></div>
+</section>
+
+<!-- Legacy Stats Cards -->
+<div class="legacy-stats-container">
+  <div class="legacy-stats-grid" id="statsContainer">
+    <!-- Stats will be loaded dynamically here -->
+  </div>
+</div>
+
+<!-- SECTION 1: INTRODUCTION & STORY -->
+<section class="section-padding" id="history" style="background:#f0f6ff;">
+  <div class="container" id="storyContainer">
+    <!-- Story will be loaded dynamically here -->
+  </div>
+</section>
+
+<!-- SECTION 2: VISION & MISSION GLASS CARDS -->
+<section class="section-padding vision-mission-section">
+  <div class="container">
+    <div class="vision-mission-grid" id="visionMissionContainer">
+      <!-- Vision and Mission cards will be loaded dynamically here -->
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: KEY HISTORICAL TIMELINE -->
+<section class="section-padding timeline-section" id="campuses">
+  <div class="container">
+    <!-- Chapter-based Eras Archive -->
+    <div class="section-head" style="text-align:center; max-width:700px; margin: 0 auto 3.5rem;">
+      <span class="about-subtitle">— CHRONOLOGY & JOURNEY</span>
+      <h3 class="about-title" style="margin-bottom:0.5rem;">Eras of Our Transformation</h3>
+      <p style="color:#64748b; font-size:0.95rem;">Explore the three monumental phases that shaped Shree Saraswati Secondary School from a rural basic classroom into Gulmi's leading model technical institution.</p>
+    </div>
+
+    <div class="history-era-grid">
+      <!-- Eras will be loaded dynamically here -->
+    </div>
+
+    <!-- Interactive Chronology Milestones -->
+    <div class="section-head" style="text-align:center; max-width:650px; margin: 2rem auto 4rem;">
+      <span class="about-subtitle">— THE CHRONOLOGICAL RECORD</span>
+      <h3 class="about-title" style="margin-bottom:0.5rem;">Historical Milestones</h3>
+      <p style="color:#64748b; font-size:0.95rem;">A detailed historical record of academic advancements, structural tier upgrades, and model upgrades in Satyawati, Gulmi.</p>
+    </div>
+
+    <!-- Timeline Wrapper -->
+    <div class="timeline-wrapper">
+      <!-- Timeline milestones will be loaded dynamically here -->
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4: ADMINISTRATION TEAM -->
+<section class="section-padding admin-team-section" id="team">
+  <div class="container">
+    <div class="section-head" style="text-align:center; max-width:650px; margin: 0 auto 2rem;">
+      <span class="about-subtitle">— THE CORE PILLARS</span>
+      <h3 class="about-title" style="margin-bottom:0.5rem;">Administration & Faculty Leads</h3>
+      <p style="color:#64748b; font-size:0.95rem;">The dedicated team of educators and administrative professionals managing daily operations and academic execution.</p>
+    </div>
+
+    <div class="admin-team-grid">
+      <!-- Admin team members will be loaded dynamically here -->
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 5: PRINCIPALS LEGACY TREE -->
+<section class="section-padding principal-tree-section" id="principals-legacy">
+  <div class="container">
+    <div class="section-head" style="text-align:center; max-width:650px; margin: 0 auto 4rem;">
+      <span class="about-subtitle">— OUR GUIDING LIGHTS</span>
+      <h3 class="about-title" style="margin-bottom:0.5rem;">The Principals' Legacy</h3>
+      <p style="color:#64748b; font-size:0.95rem;">Honoring the visionary headmasters who have steered Shree Saraswati Secondary School since its inception in 2016 B.S.</p>
+    </div>
+
+    <div class="tree-wrapper" id="principals-legacy-tree-wrapper">
+      <!-- Principals legacy tree will be loaded dynamically here -->
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3.6: TECHNICAL INCHARGE LEGACY TREE -->
+<section class="section-padding principal-tree-section" id="tech-legacy" style="background: #f8fafc; border-top: none;">
+  <div class="container">
+    <div class="section-head" style="text-align:center; max-width:650px; margin: 0 auto 4rem;">
+      <span class="about-subtitle">— OUR TECH PIONEERS</span>
+      <h3 class="about-title" style="margin-bottom:0.5rem;">Technical Incharge Legacy</h3>
+      <p style="color:#64748b; font-size:0.95rem;">Recognizing the brilliant engineering minds who have spearheaded our CTEVT Computer Engineering stream since its launch in 2076 B.S.</p>
+    </div>
+
+    <div class="tree-wrapper" id="technical-legacy-tree-wrapper">
+      <!-- Technical incharge legacy tree will be loaded dynamically here -->
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3.7: PRIMARY INCHARGE LEGACY TREE -->
+<section class="section-padding principal-tree-section" id="primary-legacy" style="background: #ffffff; border-top: none;">
+  <div class="container">
+    <div class="section-head" style="text-align:center; max-width:650px; margin: 0 auto 4rem;">
+      <span class="about-subtitle">— OUR FOUNDATIONAL EDUCATORS</span>
+      <h3 class="about-title" style="margin-bottom:0.5rem;">Primary Incharge Legacy</h3>
+      <p style="color:#64748b; font-size:0.95rem;">Honoring the dedicated educators who have shaped the foundational early childhood and primary education at Shree Saraswati.</p>
+    </div>
+
+    <div class="tree-wrapper" id="primary-legacy-tree-wrapper">
+      <!-- Primary incharge legacy tree will be loaded dynamically here -->
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 8: LEADERSHIP DESKS -->
+<section class="section-padding" id="leadership" style="background:#ffffff;">
+  <div class="container">
+    <div class="section-head" style="text-align:center; max-width:650px; margin: 0 auto 2rem;">
+      <span class="about-subtitle">— OUR ADMINISTRATORS</span>
+      <h3 class="about-title" style="margin-bottom:0.5rem;">Leadership Messages</h3>
+      <p style="color:#64748b; font-size:0.95rem;">Inspiring words from the visionaries steering the Shree Saraswati academic voyage.</p>
+    </div>
+
+    <div class="leadership-grid">
+      <!-- Leadership desk cards will be loaded dynamically here -->
+    </div>
+  </div>
+</section><!-- SECTION 6: ALUMNI EXCELLENCE -->
+<section class="section-padding alumni-section" id="alumni" style="background:#f8fafc;">
+  <div class="container">
+    <div class="section-head" style="text-align:center; max-width:650px; margin:0 auto 4rem;">
+      <span class="about-subtitle">— ALUMNI EXCELLENCE</span>
+      <h3 class="about-title" style="margin-bottom:0.5rem;">Our Shining Stars</h3>
+      <p style="color:#64748b; font-size:0.95rem;">Celebrating our recent graduates who have secured outstanding results and are paving the way for future generations.</p>
+    </div>
+    <style>
+      .alumni-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 2.5rem;
+        padding-top: 3rem; /* Space for absolute avatars */
+      }
+      .alumni-card {
+        background: var(--white);
+        border-radius: 20px;
+        text-align: center;
+        padding: 3.5rem 1.5rem 2rem;
+        position: relative;
+        box-shadow: 0 10px 25px rgba(13, 36, 68, 0.04);
+        border: 1px solid #edf2f7;
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      }
+      .alumni-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(13, 36, 68, 0.08);
+        border-color: rgba(212, 175, 55, 0.3);
+      }
+      .alumni-photo {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 5px solid var(--white);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        position: absolute;
+        top: -50px;
+        left: 50%;
+        transform: translateX(-50%);
+        transition: transform 0.4s ease;
+      }
+      .alumni-card:hover .alumni-photo {
+        transform: translateX(-50%) scale(1.05);
+      }
+      .alumni-name {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.3rem;
+        color: var(--primary);
+        margin-bottom: 0.3rem;
+        font-weight: 800;
+      }
+      .alumni-batch {
+        color: #64748b;
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 1.5rem;
+      }
+      .alumni-gpa-wrap {
+        display: inline-block;
+        background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.2) 100%);
+        padding: 0.5rem 1.5rem;
+        border-radius: 30px;
+        border: 1px solid rgba(212, 175, 55, 0.3);
+      }
+      .alumni-gpa {
+        color: var(--accent);
+        font-weight: 900;
+        font-size: 1.2rem;
+      }
+      .alumni-gpa-label {
+        font-size: 0.75rem;
+        color: #64748b;
+        font-weight: 700;
+        display: block;
+        text-transform: uppercase;
+      }
+    </style>
+    <div class="alumni-grid">
+      <!-- Alumni cards will be loaded dynamically here -->
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 7: BLOGS -->
+<section class="section-padding blog-section" id="blogs" style="background:var(--white);">
+  <div class="container">
+    <div class="section-head" style="text-align:center; max-width:650px; margin:0 auto 4rem;">
+      <span class="about-subtitle">— OUR STORIES</span>
+      <h3 class="about-title" style="margin-bottom:0.5rem;">Latest News & Articles</h3>
+      <p style="color:#64748b; font-size:0.95rem;">Explore the latest insights, events, and achievements from Shree Saraswati Secondary School.</p>
+    </div>
+    <style>
+      .premium-blog-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2.5rem;
+      }
+      .premium-blog-card {
+        background: #ffffff;
+        border-radius: 20px;
+        overflow: hidden;
+        border: 1px solid #edf2f7;
+        box-shadow: 0 10px 30px rgba(13, 36, 68, 0.05);
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        display: flex;
+        flex-direction: column;
+      }
+      .premium-blog-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(13, 36, 68, 0.1);
+        border-color: rgba(212, 175, 55, 0.4);
+      }
+      .premium-blog-img-wrap {
+        width: 100%;
+        height: 240px;
+        overflow: hidden;
+        position: relative;
+      }
+      .premium-blog-img-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+      }
+      .premium-blog-card:hover .premium-blog-img-wrap img {
+        transform: scale(1.08);
+      }
+      .blog-badge {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        background: var(--gold);
+        color: var(--white);
+        padding: 0.4rem 1rem;
+        border-radius: 30px;
+        font-size: 0.75rem;
+        font-weight: 800;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        z-index: 2;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      }
+      .premium-blog-content {
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+      }
+      .premium-blog-meta {
+        font-size: 0.85rem;
+        color: #94a3b8;
+        font-weight: 600;
+        margin-bottom: 0.8rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .premium-blog-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.4rem;
+        color: var(--primary);
+        line-height: 1.4;
+        margin-bottom: 1rem;
+        font-weight: 800;
+      }
+      .premium-blog-excerpt {
+        color: #64748b;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        flex-grow: 1;
+      }
+      .premium-read-more {
+        align-self: flex-start;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--primary);
+        font-weight: 800;
+        font-size: 0.9rem;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+      .premium-read-more::after {
+        content: '→';
+        transition: transform 0.3s ease;
+      }
+      .premium-read-more:hover {
+        color: var(--accent);
+      }
+      .premium-read-more:hover::after {
+        transform: translateX(5px);
+      }
+    </style>
+    <div class="blogs-grid premium-blog-grid">
+      <!-- Blog posts will be loaded dynamically here -->
+    </div>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo-wrap">
+        <img class="logo-png-footer" src="../images/logo.png" alt="Shree Saraswati Secondary School Logo" />
+        <div class="school-title">
+          <h1 style="color:#fff;font-size:1.1rem;">Shree <span class="gradient-text">Saraswati</span> Secondary School</h1>
+          <p style="color:#d4af37;">Satyawati-6 Johang, Gulmi</p>
+        </div>
+      </div>
+      <p>Committed to nurturing the next generation of leaders from Gulmi with quality education, strong values, and a vision for a brighter Nepal.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Quick Links</h5>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="../index.html#about">About Us</a></li>
+        <li><a href="../index.html#facilities">Facilities</a></li>
+        <li><a href="../index.html#calendar">Academic Calendar</a></li>
+        <li><a href="../index.html#achievements">Achievements & Alumni</a></li>
+        <li><a href="../index.html#downloads">Downloads Hub</a></li>
+        <li><a href="../index.html#faq">FAQ Board</a></li>
+        <li><a href="../index.html#admission">Admissions</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Academics</h5>
+      <ul>
+        <li><a href="#">Primary Level (1-5)</a></li>
+        <li><a href="#">Lower Secondary (6-8)</a></li>
+        <li><a href="#">Secondary (9-10)</a></li>
+        <li><a href="#">Science Lab</a></li>
+        <li><a href="#">Library</a></li>
+        <li><a href="#">Exam Results</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Contact Us</h5>
+      <ul class="contact-list" style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 1.25rem;">
+        
+        <!-- Address -->
+        <li style="display: flex; align-items: flex-start; gap: 1rem;">
+          <div style="background: rgba(255,255,255,0.08); padding: 0.6rem; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--secondary); transition: background 0.3s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+          </div>
+          <div>
+            <strong style="display: block; font-size: 0.9rem; font-weight: 700; color: #f8fafc; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.5px;">Address</strong>
+            <span style="color: rgba(255,255,255,0.7); font-size: 0.9rem; line-height: 1.5; font-weight: 500;">Satyawati-6 Johang, Gulmi<br/>Lumbini Province, Nepal</span>
+          </div>
+        </li>
+        
+        <!-- Phone -->
+        <li style="display: flex; align-items: flex-start; gap: 1rem;">
+          <div style="background: rgba(255,255,255,0.08); padding: 0.6rem; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--secondary); transition: background 0.3s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+            </svg>
+          </div>
+          <div>
+            <strong style="display: block; font-size: 0.9rem; font-weight: 700; color: #f8fafc; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.5px;">Phone</strong>
+            <span style="color: rgba(255,255,255,0.7); font-size: 0.9rem; font-weight: 500;">+977-9857062876</span>
+          </div>
+        </li>
+        
+        <!-- Email -->
+        <li style="display: flex; align-items: flex-start; gap: 1rem;">
+          <div style="background: rgba(255,255,255,0.08); padding: 0.6rem; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--secondary); transition: background 0.3s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+          </div>
+          <div>
+            <strong style="display: block; font-size: 0.9rem; font-weight: 700; color: #f8fafc; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.5px;">Email</strong>
+            <a href="mailto:infosaraswatimavijohang@gmail.com" style="color: rgba(255,255,255,0.7); font-size: 0.9rem; text-decoration: none; font-weight: 500; transition: color 0.3s;" onmouseover="this.style.color='var(--secondary)'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">infosaraswatimavijohang@gmail.com</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2083 B.S. Shree Saraswati Secondary School, Gulmi. All rights reserved.</span>
+
+  </div>
+</footer>
+
+
+<!-- SCROLL TO TOP -->
+<button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- PORTAL LOGIN MODAL -->
+<div class="login-modal-overlay" id="loginModal" onclick="handleOutsideClick(event)">
+  <div class="login-modal-card">
+    <button class="login-modal-close" onclick="closeLoginModal()">&times;</button>
+    
+    <div class="login-success-state" id="loginSuccessState">
+      <div class="success-icon-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+      <h4 id="successTitle">Welcome Back!</h4>
+      <p id="successMessage">Redirecting to your portal dashboard...</p>
+    </div>
+
+    <div class="login-modal-header">
+      <h3>School Portal</h3>
+      <p>Secure Sign-in to Shree Saraswati Portals</p>
+    </div>
+
+    <div class="login-tabs">
+      <button class="login-tab-btn active" id="tab-teacher" onclick="switchLoginTab('teacher')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+        </svg>
+        Teacher
+      </button>
+      <button class="login-tab-btn" id="tab-student" onclick="switchLoginTab('student')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+          <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"></path>
+        </svg>
+        Student
+      </button>
+    </div>
+
+    <div class="login-forms-container">
+      <form class="login-portal-form active" id="teacher-portal" onsubmit="handleLoginSubmit(event, 'teacher')">
+        <div class="login-form-group">
+          <label for="teacher-id">Teacher ID or Email</label>
+          <div class="login-input-wrap">
+            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            <input type="text" class="login-input" id="teacher-id" placeholder="Enter email or faculty code" required />
+          </div>
+        </div>
+        <div class="login-form-group">
+          <label for="teacher-password">Password</label>
+          <div class="login-input-wrap">
+            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            <input type="password" class="login-input" id="teacher-password" placeholder="Enter password" required />
+          </div>
+        </div>
+        <button type="submit" class="login-submit-btn">Secure Teacher Sign In</button>
+      </form>
+
+      <form class="login-portal-form" id="student-portal" onsubmit="handleLoginSubmit(event, 'student')">
+        <div class="login-form-group">
+          <label for="student-roll">Student Roll Number or ID</label>
+          <div class="login-input-wrap">
+            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+            <input type="text" class="login-input" id="student-roll" placeholder="Enter your roll number or ID" required />
+          </div>
+        </div>
+        <div class="login-form-group">
+          <label for="student-password">Password</label>
+          <div class="login-input-wrap">
+            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            <input type="password" class="login-input" id="student-password" placeholder="Enter password" required />
+          </div>
+        </div>
+        <button type="submit" class="login-submit-btn">Secure Student Sign In</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── SCROLL TOP BUTTON ──
+  const st = document.getElementById('scrollTop');
+  window.addEventListener('scroll', () => {
+    st.classList.toggle('show', window.scrollY > 400);
+  });
+
+  // ── PORTAL LOGIN MODAL CONTROLS ──
+  function openLoginModal(event) {
+    if (event) event.preventDefault();
+    const modal = document.getElementById('loginModal');
+    const successState = document.getElementById('loginSuccessState');
+    successState.classList.remove('active');
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLoginModal() {
+    const modal = document.getElementById('loginModal');
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function handleOutsideClick(event) {
+    if (event.target === document.getElementById('loginModal')) {
+      closeLoginModal();
+    }
+  }
+
+  function switchLoginTab(type) {
+    const tabTeacher = document.getElementById('tab-teacher');
+    const tabStudent = document.getElementById('tab-student');
+    const formTeacher = document.getElementById('teacher-portal');
+    const formStudent = document.getElementById('student-portal');
+    
+    if (type === 'teacher') {
+      tabTeacher.classList.add('active');
+      tabStudent.classList.remove('active');
+      formTeacher.classList.add('active');
+      formStudent.classList.remove('active');
+    } else {
+      tabStudent.classList.add('active');
+      tabTeacher.classList.remove('active');
+      formStudent.classList.add('active');
+      formTeacher.classList.remove('active');
+    }
+  }
+
+  function handleLoginSubmit(event, type) {
+    event.preventDefault();
+    const form = document.getElementById(type + '-portal');
+    
+    // Simple mock credential check
+    const idInput = form.querySelector('input[type="text"]');
+    const passInput = form.querySelector('input[type="password"]');
+    let isRedirectAdmin = false;
+    
+    if (idInput && passInput) {
+      const idVal = idInput.value;
+      const passVal = passInput.value;
+      
+      if (idVal === 'adm2080' && passVal === 'saraswati123') {
+        isRedirectAdmin = true;
+      } else if (type === 'student') {
+        if (idVal !== 'std2080' || passVal !== 'saraswati123') {
+          alert('Invalid credentials! Use std2080 (Student), tch2080 (Teacher), or adm2080 (Admin) with password saraswati123.');
+          return;
+        }
+      } else if (type === 'teacher') {
+        if (idVal !== 'tch2080' || passVal !== 'saraswati123') {
+          alert('Invalid credentials! Use std2080 (Student), tch2080 (Teacher), or adm2080 (Admin) with password saraswati123.');
+          return;
+        }
+      }
+    }
+
+    const successState = document.getElementById('loginSuccessState');
+    const successTitle = document.getElementById('successTitle');
+    const successMessage = document.getElementById('successMessage');
+    
+    if (isRedirectAdmin) {
+      successTitle.textContent = 'System Access Granted!';
+      successMessage.textContent = 'Global Admin workspace authenticated successfully. Entering HQ...';
+    } else if (type === 'teacher') {
+      successTitle.textContent = 'Welcome back, Educator!';
+      successMessage.textContent = 'Faculty portal authenticated successfully. Accessing dashboard...';
+    } else {
+      successTitle.textContent = 'Welcome back, Student!';
+      successMessage.textContent = 'Student portal authenticated successfully. Redirecting to dashboard...';
+    }
+    
+    successState.classList.add('active');
+    setTimeout(() => {
+      if (isRedirectAdmin) {
+        window.location.href = 'admin-portal.html';
+      } else if (type === 'student') {
+        window.location.href = 'student-portal.html';
+      } else if (type === 'teacher') {
+        window.location.href = 'teacher-portal.html';
+      } else {
+        closeLoginModal();
+      }
+    }, 2200);
+  }
+
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-client.js"></script>
+<script src="../js/about-data.js"></script>
+<script>
+  // ═══════════════════════════════════════════════════════════════════
+  // DYNAMIC ABOUT PAGE DATA LOADING (runs after all scripts are loaded)
+  // ═══════════════════════════════════════════════════════════════════
+  (async function initAboutPage() {
+    if (typeof loadAllAboutData === 'function') {
+      try {
+        await loadAllAboutData();
+        if (typeof renderAboutHero       === 'function') await renderAboutHero();
+        if (typeof renderStory           === 'function') await renderStory();
+        if (typeof renderAboutStats      === 'function') await renderAboutStats();
+        if (typeof renderVisionMission   === 'function') await renderVisionMission();
+        if (typeof renderEraCards        === 'function') await renderEraCards();
+        if (typeof renderTimeline        === 'function') await renderTimeline();
+        if (typeof renderAdminTeam       === 'function') await renderAdminTeam();
+        if (typeof renderLeadershipDesks === 'function') await renderLeadershipDesks();
+        if (typeof renderAlumniHighlights=== 'function') await renderAlumniHighlights();
+        if (typeof renderAboutBlogs      === 'function') await renderAboutBlogs();
+        if (typeof renderPrincipalsTree  === 'function') await renderPrincipalsTree();
+        if (typeof renderTechnicalTree   === 'function') await renderTechnicalTree();
+        if (typeof renderPrimaryTree     === 'function') await renderPrimaryTree();
+        console.log('✅ All About page sections rendered successfully');
+      } catch (err) {
+        console.error('Error loading dynamic about page data:', err);
+      }
+    } else {
+      console.warn('⚠ loadAllAboutData not available — about-data.js may not have loaded');
+    }
+  })();
+</script>
+</body>
+</html>

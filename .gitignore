@@ -1,0 +1,22 @@
+# Dependencies.
+# NOTE: adms-api/node_modules and scratch/node_modules are already tracked in git
+# history (1,876 files). This rule does NOT untrack them - it only stops new
+# installs (e.g. at the repo root) from being added. Untracking them is a
+# separate, deliberate `git rm -r --cached` operation.
+node_modules/
+
+# Supabase CLI local-dev artifacts (this project applies SQL by hand, so these
+# should stay absent - if they appear, a local `supabase init` was run)
+supabase/.temp/
+supabase/.branches/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-error.log*
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+.idea/

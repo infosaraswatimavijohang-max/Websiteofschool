@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizational Structure - Shree Saraswati Secondary School</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1e1b4b;
+            --primary-light: #312e81;
+            --accent: #7c3aed;
+            --accent-hover: #6d28d9;
+            --secondary: #f59e0b;
+            --bg-color: #f5f3ff;
+            --white: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --success: #16a34a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* ── HEADER ── */
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+        }
+
+        /* ── TREE CONTAINER ── */
+        .tree-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .organizational-tree {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        /* ── TREE LEVELS ── */
+        .tree-level {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            width: 100%;
+            position: relative;
+        }
+
+        .tree-level::before {
+            content: '';
+            position: absolute;
+            top: -2rem;
+            left: 50%;
+            width: 2px;
+            height: 2rem;
+            background: linear-gradient(to bottom, var(--primary), transparent);
+            transform: translateX(-50%);
+        }
+
+        .tree-level:first-child::before {
+            display: none;
+        }
+
+        /* ── TREE NODE (STAFF CARD) ── */
+        .tree-node {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .tree-node-card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+            border: 2px solid transparent;
+            width: 260px;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tree-node-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 15px 40px rgba(124, 58, 237, 0.2);
+            transform: translateY(-8px);
+        }
+
+        .tree-node-image-container {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tree-node-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .tree-node-card:hover .tree-node-image-container img {
+            transform: scale(1.05);
+        }
+
+        .tree-node-image-container.no-image {
+            font-size: 4rem;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .tree-node-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--secondary);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .tree-node-content {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .tree-node-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .tree-node-position {
+            font-size: 0.95rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .tree-node-department {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+        }
+
+        .tree-node-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            padding: 1rem 0;
+            border-top: 1px solid #f3f4f6;
+            border-bottom: 1px solid #f3f4f6;
+            margin-bottom: 0.75rem;
+        }
+
+        .tree-node-detail {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .tree-node-detail i {
+            color: var(--accent);
+            width: 16px;
+        }
+
+        .tree-node-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .tree-node-btn {
+            flex: 1;
+            padding: 0.6rem;
+            border: 1px solid #e5e7eb;
+            background: var(--white);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+        }
+
+        .tree-node-btn:hover {
+            background: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+        }
+
+        .tree-node-btn.email:hover {
+            background: var(--success);
+            border-color: var(--success);
+        }
+
+        /* ── CONNECTIONS ── */
+        .tree-connections {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            height: 40px;
+            margin: -20px 0;
+            z-index: 0;
+        }
+
+        .tree-connection-line {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+
+        .tree-connection-horizontal {
+            position: absolute;
+            top: 0;
+            height: 2px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+        }
+
+        /* ── FEATURED SECTION ── */
+        .featured-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            color: var(--white);
+            margin-bottom: 3rem;
+            box-shadow: 0 15px 40px rgba(30, 27, 75, 0.2);
+        }
+
+        .featured-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+        }
+
+        .featured-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .featured-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-5px);
+        }
+
+        .featured-image {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .featured-image.no-image {
+            font-size: 3rem;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .featured-content {
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .featured-name {
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .featured-position {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+
+        .featured-department {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        /* ── VIEW OPTIONS ── */
+        .view-options {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .view-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid #e5e7eb;
+            background: var(--white);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .view-btn.active {
+            background: var(--accent);
+            color: var(--white);
+            border-color: var(--accent);
+        }
+
+        .view-btn:hover:not(.active) {
+            border-color: var(--accent);
+        }
+
+        /* ── MODAL ── */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(30, 27, 75, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--white);
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            padding: 2rem;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            animation: modalSlide 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes modalSlide {
+            from {
+                transform: scale(0.9) translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-close {
+            float: right;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+
+        .modal-close:hover {
+            color: var(--primary);
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .modal-image.no-image {
+            font-size: 3rem;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-subtitle {
+            font-size: 1rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .modal-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .modal-info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .modal-info-icon {
+            width: 24px;
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+
+        .modal-info-content {
+            flex: 1;
+        }
+
+        .modal-info-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .modal-info-value {
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .modal-bio {
+            font-size: 0.95rem;
+            color: var(--text-main);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 0.75rem;
+            border: 2px solid var(--accent);
+            background: var(--white);
+            color: var(--accent);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .modal-btn:hover {
+            background: var(--accent);
+            color: var(--white);
+        }
+
+        /* ── LOADING ── */
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem;
+            gap: 1rem;
+            color: var(--text-muted);
+        }
+
+        .spinner {
+            border: 4px solid #f3f4f6;
+            border-top: 4px solid var(--accent);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-muted);
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .empty-state-text {
+            font-size: 1.1rem;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 1024px) {
+            .tree-level {
+                gap: 1.5rem;
+            }
+
+            .tree-node-card {
+                width: 220px;
+            }
+
+            .featured-grid {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .tree-level {
+                gap: 1rem;
+            }
+
+            .tree-node-card {
+                width: 180px;
+            }
+
+            .tree-node-image-container {
+                height: 140px;
+            }
+
+            .tree-node-content {
+                padding: 1rem;
+            }
+
+            .tree-node-name {
+                font-size: 0.95rem;
+            }
+
+            .tree-node-position {
+                font-size: 0.85rem;
+            }
+
+            .featured-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .featured-card {
+                border-radius: 10px;
+            }
+
+            .featured-image {
+                height: 140px;
+            }
+
+            .featured-content {
+                padding: 1rem;
+            }
+
+            .featured-name {
+                font-size: 0.95rem;
+            }
+
+            .modal-content {
+                width: 95%;
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tree-node-card {
+                width: 150px;
+            }
+
+            .tree-node-image-container {
+                height: 120px;
+            }
+
+            .tree-node-content {
+                padding: 0.75rem;
+            }
+
+            .tree-node-name {
+                font-size: 0.85rem;
+            }
+
+            .tree-node-position {
+                font-size: 0.75rem;
+            }
+
+            .tree-node-details {
+                display: none;
+            }
+
+            .tree-node-actions {
+                flex-direction: column;
+            }
+
+            .featured-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .view-options {
+                flex-direction: column;
+            }
+
+            .view-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1><i class="fas fa-sitemap"></i> Our Organizational Structure</h1>
+            <p>Meet the dedicated team leading Shree Saraswati Secondary School</p>
+        </div>
+
+        <!-- View Options -->
+        <div class="view-options">
+            <button class="view-btn active" data-view="tree">
+                <i class="fas fa-sitemap"></i> Tree View
+            </button>
+            <button class="view-btn" data-view="featured">
+                <i class="fas fa-star"></i> Featured Staff
+            </button>
+            <button class="view-btn" data-view="departments">
+                <i class="fas fa-building"></i> By Department
+            </button>
+        </div>
+
+        <!-- Featured Staff Section -->
+        <div id="featuredSection" class="featured-section" style="display: none;">
+            <h2>Key Leadership</h2>
+            <div class="featured-grid" id="featuredGrid"></div>
+        </div>
+
+        <!-- Tree View -->
+        <div id="treeView" class="tree-wrapper">
+            <div id="organizationalTree" class="organizational-tree"></div>
+        </div>
+
+        <!-- Departments View -->
+        <div id="departmentsView" style="display: none;">
+            <div id="departmentsList"></div>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loadingState" class="loading" style="display: none;">
+            <div class="spinner"></div>
+            <span>Loading organizational structure...</span>
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="empty-state" style="display: none;">
+            <div class="empty-state-icon">👥</div>
+            <div class="empty-state-text">No staff members available at this time</div>
+        </div>
+    </div>
+
+    <!-- Staff Detail Modal -->
+    <div class="modal-overlay" id="staffModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModal">&times;</button>
+            <div class="modal-image" id="modalImage">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="modal-title" id="modalName">Staff Name</div>
+            <div class="modal-subtitle" id="modalPosition">Position</div>
+            
+            <div class="modal-info">
+                <div class="modal-info-item" id="departmentInfo" style="display: none;">
+                    <div class="modal-info-icon"><i class="fas fa-building"></i></div>
+                    <div class="modal-info-content">
+                        <div class="modal-info-label">Department</div>
+                        <div class="modal-info-value" id="modalDepartment"></div>
+                    </div>
+                </div>
+                <div class="modal-info-item" id="qualificationInfo" style="display: none;">
+                    <div class="modal-info-icon"><i class="fas fa-certificate"></i></div>
+                    <div class="modal-info-content">
+                        <div class="modal-info-label">Qualification</div>
+                        <div class="modal-info-value" id="modalQualification"></div>
+                    </div>
+                </div>
+                <div class="modal-info-item" id="experienceInfo" style="display: none;">
+                    <div class="modal-info-icon"><i class="fas fa-briefcase"></i></div>
+                    <div class="modal-info-content">
+                        <div class="modal-info-label">Experience</div>
+                        <div class="modal-info-value" id="modalExperience"></div>
+                    </div>
+                </div>
+                <div class="modal-info-item" id="specializationInfo" style="display: none;">
+                    <div class="modal-info-icon"><i class="fas fa-lightbulb"></i></div>
+                    <div class="modal-info-content">
+                        <div class="modal-info-label">Specialization</div>
+                        <div class="modal-info-value" id="modalSpecialization"></div>
+                    </div>
+                </div>
+                <div class="modal-info-item" id="officeInfo" style="display: none;">
+                    <div class="modal-info-icon"><i class="fas fa-door-open"></i></div>
+                    <div class="modal-info-content">
+                        <div class="modal-info-label">Office Location</div>
+                        <div class="modal-info-value" id="modalOffice"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-bio" id="modalBio" style="display: none;"></div>
+
+            <div class="modal-actions">
+                <button class="modal-btn" id="emailBtn">
+                    <i class="fas fa-envelope"></i> Email
+                </button>
+                <button class="modal-btn" id="callBtn">
+                    <i class="fas fa-phone"></i> Call
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase-client.js"></script>
+    <script src="../js/staff-handler.js"></script>
+
+    <script>
+        class OrganizationalTreeView {
+            constructor() {
+                this.handler = staffHandler;
+                this.staffData = [];
+                this.currentView = 'tree';
+                this.init();
+            }
+
+            async init() {
+                this.setupEventListeners();
+                await this.loadStaffData();
+                await this.renderTreeView();
+            }
+
+            setupEventListeners() {
+                // View buttons
+                document.querySelectorAll('.view-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => this.switchView(e.target.closest('.view-btn').dataset.view));
+                });
+
+                // Modal
+                document.getElementById('closeModal').addEventListener('click', () => this.closeModal());
+                document.getElementById('staffModal').addEventListener('click', (e) => {
+                    if (e.target.id === 'staffModal') this.closeModal();
+                });
+            }
+
+            async loadStaffData() {
+                try {
+                    document.getElementById('loadingState').style.display = 'flex';
+                    
+                    const result = await this.handler.getStaffTree();
+                    if (result.success) {
+                        this.staffData = result.data;
+                    } else {
+                        throw new Error('Failed to load staff data');
+                    }
+
+                    document.getElementById('loadingState').style.display = 'none';
+
+                } catch (error) {
+                    console.error('Error loading staff:', error);
+                    document.getElementById('loadingState').style.display = 'none';
+                    document.getElementById('emptyState').style.display = 'block';
+                }
+            }
+
+            switchView(view) {
+                this.currentView = view;
+
+                // Update button states
+                document.querySelectorAll('.view-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                event.target.classList.add('active');
+
+                // Hide all views
+                document.getElementById('treeView').style.display = 'none';
+                document.getElementById('featuredSection').style.display = 'none';
+                document.getElementById('departmentsView').style.display = 'none';
+
+                // Show selected view
+                if (view === 'tree') {
+                    document.getElementById('treeView').style.display = 'block';
+                } else if (view === 'featured') {
+                    document.getElementById('featuredSection').style.display = 'block';
+                    this.renderFeaturedView();
+                } else if (view === 'departments') {
+                    document.getElementById('departmentsView').style.display = 'block';
+                    this.renderDepartmentsView();
+                }
+            }
+
+            async renderTreeView() {
+                try {
+                    const treeHtml = this.buildTreeHtml(this.staffData);
+                    document.getElementById('organizationalTree').innerHTML = treeHtml;
+                } catch (error) {
+                    console.error('Error rendering tree:', error);
+                }
+            }
+
+            buildTreeHtml(staff, level = 0) {
+                if (!staff || staff.length === 0) return '';
+
+                const levelClass = `level-${level}`;
+                let html = `<div class="tree-level ${levelClass}">`;
+
+                staff.forEach(person => {
+                    html += this.buildStaffCardHtml(person);
+                });
+
+                html += '</div>';
+
+                // Add children
+                staff.forEach(person => {
+                    if (person.children && person.children.length > 0) {
+                        html += this.buildTreeHtml(person.children, level + 1);
+                    }
+                });
+
+                return html;
+            }
+
+            buildStaffCardHtml(staff) {
+                const hasImage = staff.image_url;
+                const hasDetails = staff.qualification || staff.experience_years > 0 || staff.specialization;
+
+                return `
+                    <div class="tree-node">
+                        <div class="tree-node-card" onclick="treeView.showStaffDetail('${staff.id}')">
+                            <div class="tree-node-image-container ${!hasImage ? 'no-image' : ''}">
+                                ${hasImage ? `<img src="${staff.image_url}" alt="${staff.name}">` : '<i class="fas fa-user"></i>'}
+                                <div class="tree-node-badge">${['Principal', 'VP', 'Head', 'Teacher', 'Staff'][staff.hierarchy_level] || 'Staff'}</div>
+                            </div>
+                            <div class="tree-node-content">
+                                <div class="tree-node-name">${staff.name}</div>
+                                <div class="tree-node-position">${staff.position}</div>
+                                <div class="tree-node-department">${staff.department}</div>
+                                ${hasDetails ? `
+                                    <div class="tree-node-details">
+                                        ${staff.qualification ? `<div class="tree-node-detail"><i class="fas fa-certificate"></i> ${staff.qualification}</div>` : ''}
+                                        ${staff.experience_years > 0 ? `<div class="tree-node-detail"><i class="fas fa-briefcase"></i> ${staff.experience_years} years</div>` : ''}
+                                    </div>
+                                ` : ''}
+                                <div class="tree-node-actions">
+                                    ${staff.email ? `<a href="mailto:${staff.email}" class="tree-node-btn email"><i class="fas fa-envelope"></i> Email</a>` : ''}
+                                    ${staff.phone ? `<a href="tel:${staff.phone}" class="tree-node-btn"><i class="fas fa-phone"></i> Call</a>` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            async renderFeaturedView() {
+                try {
+                    const result = await this.handler.getFeaturedStaff();
+                    if (result.success && result.data.length > 0) {
+                        const html = result.data.map(staff => `
+                            <div class="featured-card" onclick="treeView.showStaffDetail('${staff.id}')">
+                                <div class="featured-image ${!staff.image_url ? 'no-image' : ''}">
+                                    ${staff.image_url ? `<img src="${staff.image_url}" alt="">` : '<i class="fas fa-user"></i>'}
+                                </div>
+                                <div class="featured-content">
+                                    <div class="featured-name">${staff.name}</div>
+                                    <div class="featured-position">${staff.position}</div>
+                                    <div class="featured-department">${staff.department}</div>
+                                </div>
+                            </div>
+                        `).join('');
+                        document.getElementById('featuredGrid').innerHTML = html;
+                    }
+                } catch (error) {
+                    console.error('Error rendering featured view:', error);
+                }
+            }
+
+            async renderDepartmentsView() {
+                try {
+                    const result = await this.handler.getDepartments();
+                    if (result.success && result.data.length > 0) {
+                        let html = '';
+                        for (const dept of result.data) {
+                            const deptStaff = await this.handler.getStaffByDepartment(dept);
+                            if (deptStaff.success && deptStaff.data.length > 0) {
+                                html += `
+                                    <div style="margin-bottom: 3rem;">
+                                        <h3 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--primary); margin-bottom: 1.5rem; padding-bottom: 0.5rem; border-bottom: 3px solid var(--accent);">
+                                            ${dept}
+                                        </h3>
+                                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem;">
+                                            ${deptStaff.data.map(staff => `
+                                                <div class="tree-node-card" onclick="treeView.showStaffDetail('${staff.id}')" style="cursor: pointer; width: 100%;">
+                                                    <div class="tree-node-image-container ${!staff.image_url ? 'no-image' : ''}">
+                                                        ${staff.image_url ? `<img src="${staff.image_url}" alt="">` : '<i class="fas fa-user"></i>'}
+                                                    </div>
+                                                    <div class="tree-node-content">
+                                                        <div class="tree-node-name">${staff.name}</div>
+                                                        <div class="tree-node-position">${staff.position}</div>
+                                                    </div>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                `;
+                            }
+                        }
+                        document.getElementById('departmentsList').innerHTML = html;
+                    }
+                } catch (error) {
+                    console.error('Error rendering departments:', error);
+                }
+            }
+
+            async showStaffDetail(staffId) {
+                try {
+                    const result = await this.handler.getStaffById(staffId);
+                    if (!result.success) return;
+
+                    const staff = result.data;
+
+                    // Update modal
+                    document.getElementById('modalImage').innerHTML = staff.image_url 
+                        ? `<img src="${staff.image_url}" alt="">`
+                        : '<i class="fas fa-user"></i>';
+                    
+                    document.getElementById('modalName').textContent = staff.name;
+                    document.getElementById('modalPosition').textContent = staff.position;
+
+                    // Toggle info sections
+                    this.toggleInfo('departmentInfo', staff.department, 'modalDepartment', staff.department);
+                    this.toggleInfo('qualificationInfo', staff.qualification, 'modalQualification', staff.qualification);
+                    this.toggleInfo('experienceInfo', staff.experience_years > 0, 'modalExperience', `${staff.experience_years} years of experience`);
+                    this.toggleInfo('specializationInfo', staff.specialization, 'modalSpecialization', staff.specialization);
+                    this.toggleInfo('officeInfo', staff.office_location, 'modalOffice', staff.office_location);
+
+                    // Bio
+                    const bioElement = document.getElementById('modalBio');
+                    if (staff.bio) {
+                        bioElement.textContent = staff.bio;
+                        bioElement.style.display = 'block';
+                    } else {
+                        bioElement.style.display = 'none';
+                    }
+
+                    // Action buttons
+                    const emailBtn = document.getElementById('emailBtn');
+                    const callBtn = document.getElementById('callBtn');
+
+                    if (staff.email) {
+                        emailBtn.onclick = () => window.location.href = `mailto:${staff.email}`;
+                        emailBtn.style.display = 'flex';
+                    } else {
+                        emailBtn.style.display = 'none';
+                    }
+
+                    if (staff.phone) {
+                        callBtn.onclick = () => window.location.href = `tel:${staff.phone}`;
+                        callBtn.style.display = 'flex';
+                    } else {
+                        callBtn.style.display = 'none';
+                    }
+
+                    document.getElementById('staffModal').classList.add('active');
+
+                } catch (error) {
+                    console.error('Error showing staff detail:', error);
+                }
+            }
+
+            toggleInfo(infoId, condition, valueId, value) {
+                const infoElement = document.getElementById(infoId);
+                const valueElement = document.getElementById(valueId);
+                if (condition) {
+                    valueElement.textContent = value;
+                    infoElement.style.display = 'flex';
+                } else {
+                    infoElement.style.display = 'none';
+                }
+            }
+
+            closeModal() {
+                document.getElementById('staffModal').classList.remove('active');
+            }
+        }
+
+        // Initialize
+        const treeView = new OrganizationalTreeView();
+    </script>
+</body>
+</html>
