@@ -52,11 +52,11 @@ Global CLIs (not repo dependencies, so they never appear in git): `supabase` (2.
 
 - RLS policies gate on `auth.role() = 'authenticated'` (see `sql/fixes/FIX_RLS_POLICIES.sql`) — **any signed-in Supabase user is effectively an admin**; there is no real role separation.
 - `student_credentials.student_password` / `teacher_credentials` store **plaintext** passwords (the SQL carries a "store as bcrypt in production" comment).
-- Supabase anon keys are committed in `js/supabase-client.js` and `adms-api/index.js`. The README says to replace them, but real values are already in the tree — treat RLS as the only backend guard and never add a service-role key or other secret to the repo.
+- Supabase anon keys are committed in `js/supabase-client.js` and `adms-api/index.js`. The README says to replace them, but real values are already in the tree — treat RLS as the only backend guard and never add a service-role key or other secret to the repo. `adms-api/index.js` loads `SUPABASE_KEY` from the environment, so a local `.env` is expected; it is gitignored, and the hardcoded anon key is only the fallback.
 
 ## Repo hygiene traps
 
-- **`node_modules` is already committed** (1,876 of 2,097 tracked files, under `adms-api/` and `scratch/`). A `.gitignore` now exists and matches `node_modules/`, but it does **not** untrack those files — they stay in history until someone deliberately runs `git rm -r --cached`. So `git status`/diffs remain noisy; keep dependency noise out of intentional commits.
+- **`node_modules` is gitignored and untracked** (0 tracked files). A fresh clone has no dependencies installed — run `npm install` in `adms-api/` (Express server) and `scratch/` (Playwright) if you need them. Both directories keep a real `package.json` and `package-lock.json`, which *are* tracked, so installs are reproducible.
 - **Two divergent copies of the homepage exist and are not in sync**: root `index.html` (8,672 lines) and `html/index.html` (7,656 lines) differ by ~2,000 lines. They exist because pages use different relative depths (`js/...` vs `../js/...`). Confirm which one you're editing and mirror the change deliberately; `scripts/dev-tools/copy_index_to_html.js` was the old one-off sync.
 - **Broken leftovers at the repo root — do not try to run or fix them**: `test_syntax.js`, `test_syntax2.js`, `test_syntax_final.js`, `temp_script.js` are invalid JS fragments (bare `await`, literal `</script>` tags), and `schema.json` is 0 bytes despite the README calling it the schema reference.
 - **`scratch/` (~55 files) and `scripts/dev-tools/` (~28 files) are archaeology**, not runtime. One-off migration/debug scripts, Playwright experiments, `.py`/`.ps1` variants of the same fix. Never wire them into the app; don't "clean them up" casually either (`scripts/dev-tools/README.md` calls them an audit trail).
@@ -68,6 +68,8 @@ Global CLIs (not repo dependencies, so they never appear in git): `supabase` (2.
 
 ## Conventions
 
-- Single branch `main`, clean tree; work is committed directly, so don't commit unless asked.
-- Message style is mixed: plain imperatives (`Fix admin-portal UI syntax errors...`) alongside occasional conventional prefixes (`chore:`, `feat:`). Match the imperative form.
+- Single branch `main`, clean tree, work committed directly — don't commit unless asked.
+- **History was reset to a single `Initial commit`; there is no `origin` remote yet**, so `git push` fails until one is added. Ask before adding a remote or pushing.
+- **Git has no `user.name`/`user.email` configured**, so `git commit` errors with "unable to auto-detect email address". Pass `-c user.name=... -c user.email=...` per-commit rather than writing config unless asked.
+- Commit messages use plain imperatives (`Fix admin-portal UI syntax errors...`), with occasional conventional prefixes (`chore:`, `feat:`). Match the imperative form.
 - Files are UTF-8 **without BOM**; em-dashes render as `??` in PowerShell console output — that's a console artifact, not file corruption.

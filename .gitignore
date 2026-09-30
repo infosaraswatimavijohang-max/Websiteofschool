@@ -1,9 +1,14 @@
-# Dependencies.
-# NOTE: adms-api/node_modules and scratch/node_modules are already tracked in git
-# history (1,876 files). This rule does NOT untrack them - it only stops new
-# installs (e.g. at the repo root) from being added. Untracking them is a
-# separate, deliberate `git rm -r --cached` operation.
+# Dependencies. adms-api/node_modules and scratch/node_modules are untracked
+# here (a fresh clone has none - run npm install in those two directories).
 node_modules/
+
+# Secrets. adms-api/index.js calls require('dotenv').config() and reads
+# PORT / SUPABASE_URL / SUPABASE_KEY from the environment, so a local .env is
+# expected. It must never be committed - SUPABASE_KEY may be a service-role
+# key. Keep a .env.example instead.
+.env
+.env.*
+!.env.example
 
 # Supabase CLI local-dev artifacts (this project applies SQL by hand, so these
 # should stay absent - if they appear, a local `supabase init` was run)
