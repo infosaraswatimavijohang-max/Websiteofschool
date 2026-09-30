@@ -42,14 +42,14 @@
 
       // Load defaults from the existing HTML content
       populateForm({
-        name: 'Chhabilal Bhandari',
+        name: 'Man Bahadur Thapa',
         title: 'Head Teacher',
         school: 'Shree Saraswati Secondary School, Gulmi',
         greeting: 'Dear Students, Parents, and Well-wishers,',
         message: 'It is my absolute privilege and joy to welcome you to Shree Saraswati Secondary School, a center of educational excellence nestled in the gorgeous, peaceful hills of Satyawati-6, Johang, Gulmi. Since our historical establishment in 2016 B.S., we have committed ourselves to bringing standard, career-empowering education to the youth of our community.',
         quote: '"We do not merely teach curriculum; we spark curiosity, cultivate strong moral character, and inspire each student to realize their ultimate potential."',
         message2: 'In this digital age, we have integrated modern pedagogical techniques alongside our values-based general studies. Our specialized Computer Engineering program (Grades 9 to 12) prepares students directly for tech-focused careers. We invite you to join us on this beautiful journey of knowledge, leadership, and success.',
-        photoUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=50'
+        photoUrl: '/images/Man%20Bahadur%20Thapa.JPG'
       });
 
     } catch (e) {
