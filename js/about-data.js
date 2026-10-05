@@ -79,7 +79,6 @@ const ABOUT_FALLBACKS = {
     { id: 'f-tl-6', icon_emoji: '🚀', timeline_date: '2082 B.S. (2025 A.D.)', timeline_title: 'Smart Classrooms Upgrade', timeline_description: 'Crowned as a Model Technical School. Installed high-tech interactive touch displays in all secondary classrooms, integrated digital libraries, and updated hardware testing arrays.', timeline_position: 'right', display_order: 6 }
   ],
   admin_team: [
-    { id: 'f-admin-1', member_name: 'Deepak Bhandari', member_role: 'Vice Principal', member_department: 'Senior Academic Operations & Coordination', member_photo_url: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=50', member_email: 'deepak.bhandari@gmail.com', display_order: 1 },
     { id: 'f-admin-2', member_name: 'Yam Bahadur Khatri', member_role: 'Chief Accountant', member_department: 'Finance, Admissions & Operations Lead', member_photo_url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=50', member_email: 'yam.khatri@gmail.com', display_order: 2 },
     { id: 'f-admin-3', member_name: 'Er. Sandesh Bhandari', member_role: 'CTEVT Coordinator', member_department: 'Computer Engineering Technical Stream Incharge', member_photo_url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=50', member_email: 'sandesh.ctevt@gmail.com', display_order: 3 },
     { id: 'f-admin-4', member_name: 'Saraswati Sen', member_role: 'Primary Lead', member_department: 'Early Childhood Education & Primary Coordinator', member_photo_url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=50', member_email: 'saraswati.sen@gmail.com', display_order: 4 }
@@ -462,8 +461,18 @@ async function renderAboutHero() {
     let url = hero.background_image_url || '../images/img.jpg';
     try {
       if (typeof supabaseDb !== 'undefined' && supabaseDb) {
-         const {data} = await supabaseDb.from('website_settings').select('value').eq('key', 'about_main_image').single();
-         if (data && data.value) url = data.value;
+         try {
+           const {data} = await supabaseDb.from('school_settings').select('setting_value').eq('setting_key', 'about_main_image').single();
+           if (data && data.setting_value) {
+             url = (typeof data.setting_value === 'string') ? data.setting_value : (data.setting_value.url || data.setting_value.value || url);
+           }
+         } catch (e) {
+           // Fallback to legacy table name if it exists
+           try {
+             const {data} = await supabaseDb.from('website_settings').select('value').eq('key', 'about_main_image').single();
+             if (data && data.value) url = data.value;
+           } catch (e2) { /* ignore */ }
+         }
       } else {
          const localUrl = localStorage.getItem('generic_module_Settings_about_main_image');
          if (localUrl) url = localUrl;

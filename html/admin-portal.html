@@ -7,6 +7,9 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <title>Central Administrative Panel - Shree Saraswati Secondary School</title>
+  <!-- SEO: private admin surface - keep it out of search indexes. -->
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="googlebot" content="noindex, nofollow" />
   
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1577,12 +1580,19 @@
                         onfocus="this.style.borderColor='var(--accent)'; this.style.boxShadow='0 0 0 3px rgba(126,34,206,0.1)'" 
                         onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow=''" required>
                     </div>
-                    <div class="form-group" style="margin-bottom:0; grid-column: span 2;">
+                    <div class="form-group">
                       <label for="tch-joined-date" style="font-weight:600; color:var(--text-main); display:block; margin-bottom:0.5rem;">Joined Date <span style="color:var(--danger);">*</span></label>
                       <input type="date" id="tch-joined-date" class="form-control" 
                         style="border:2px solid #e5e7eb; border-radius:8px; padding:0.9rem 1rem; transition:all 0.3s; font-size:0.95rem;"
                         onfocus="this.style.borderColor='var(--accent)'; this.style.boxShadow='0 0 0 3px rgba(126,34,206,0.1)'" 
                         onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow=''" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="tch-display-order" style="font-weight:600; color:var(--text-main); display:block; margin-bottom:0.5rem;">Display Priority (lower = first)</label>
+                      <input type="number" id="tch-display-order" class="form-control" value="0"
+                        style="border:2px solid #e5e7eb; border-radius:8px; padding:0.9rem 1rem; transition:all 0.3s; font-size:0.95rem;"
+                        onfocus="this.style.borderColor='var(--accent)'; this.style.boxShadow='0 0 0 3px rgba(126,34,206,0.1)'" 
+                        onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow=''">
                     </div>
                   </div>
                 </div>
@@ -4711,7 +4721,10 @@
             </div>
             <div style="margin-bottom: 1.5rem;">
               <label style="display: block; margin-bottom: 0.5rem; color: var(--text-dark); font-weight: 600;">Current Image Preview</label>
-              <img id="aboutMainImagePreview" src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=600&q=50" alt="About Main Image" style="max-width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 1px solid #e2e8f0; display: block;">
+              <img id="aboutMainImagePreview" 
+src="../images/General Block.webp" alt="About Main 
+Image" style="max-width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 1px solid #e2e8f0; 
+display: block;">
             </div>
             <button class="submit-btn" id="uploadAboutImageBtn" onclick="saveAboutMainImage(event)">Upload and Save Image</button>
           </div>
@@ -8490,6 +8503,7 @@
       const phone = document.getElementById('tch-phone').value.trim();
       const position = document.getElementById('tch-position').value.trim();
       const joinedDate = document.getElementById('tch-joined-date').value;
+      const displayOrder = parseInt(document.getElementById('tch-display-order')?.value) || 0;
 
       // Get all subject values
       const subjectInputs = document.querySelectorAll('.subject-input');
@@ -8556,6 +8570,7 @@
             teacher_email: email,
             teacher_phone: phone,
             joined_date: joinedDate,
+            display_order: displayOrder,
             is_active: true
           }]);
           if (profErr) {
@@ -8583,6 +8598,7 @@
           teacher_email: email,
           teacher_phone: phone,
           joined_date: joinedDate,
+          display_order: displayOrder,
           is_active: true
         });
         localStorage.setItem('teacher_profiles', JSON.stringify(profiles));
@@ -12833,11 +12849,20 @@
 
     async function loadAboutMainImage() {
       const preview = document.getElementById('aboutMainImagePreview');
-      let url = 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=600&q=50';
+      let url = '../images/General Block.webp';
       try {
         if (supabaseDb) {
-           const {data} = await supabaseDb.from('website_settings').select('value').eq('key', 'about_main_image').single();
-           if (data && data.value) url = data.value;
+           try {
+             const {data} = await supabaseDb.from('school_settings').select('setting_value').eq('setting_key', 'about_main_image').single();
+             if (data && data.setting_value) {
+               url = (typeof data.setting_value === 'string') ? data.setting_value : (data.setting_value.url || data.setting_value.value || url);
+             }
+           } catch(e) {
+             try {
+               const {data} = await supabaseDb.from('website_settings').select('value').eq('key', 'about_main_image').single();
+               if (data && data.value) url = data.value;
+             } catch(e2) {}
+           }
         } else {
            const localUrl = localStorage.getItem('generic_module_Settings_about_main_image');
            if (localUrl) url = localUrl;
@@ -12869,13 +12894,28 @@
          }
 
          if (supabaseDb) {
-            // Check if exists
-            const {data: existing} = await supabaseDb.from('website_settings').select('id').eq('key', 'about_main_image').single();
-            if (existing) {
-               await supabaseDb.from('website_settings').update({ value: imageUrl, updated_at: new Date().toISOString() }).eq('id', existing.id);
-            } else {
-               await supabaseDb.from('website_settings').insert([{ key: 'about_main_image', value: imageUrl, updated_at: new Date().toISOString() }]);
-            }
+             // Check if exists (prefer school_settings)
+             let saved = false;
+             try {
+               const {data: existing} = await supabaseDb.from('school_settings').select('id').eq('setting_key', 'about_main_image').single();
+               if (existing) {
+                 await supabaseDb.from('school_settings').update({ setting_value: imageUrl, updated_at: new Date().toISOString() }).eq('id', existing.id);
+                 saved = true;
+               } else {
+                 await supabaseDb.from('school_settings').insert([{ setting_key: 'about_main_image', setting_value: imageUrl }]);
+                 saved = true;
+               }
+             } catch (e) { /* try legacy */ }
+             if (!saved) {
+               try {
+                 const {data: existing} = await supabaseDb.from('website_settings').select('id').eq('key', 'about_main_image').single();
+                 if (existing) {
+                   await supabaseDb.from('website_settings').update({ value: imageUrl, updated_at: new Date().toISOString() }).eq('id', existing.id);
+                 } else {
+                   await supabaseDb.from('website_settings').insert([{ key: 'about_main_image', value: imageUrl, updated_at: new Date().toISOString() }]);
+                 }
+               } catch (e2) {}
+             }
          } else {
             localStorage.setItem('generic_module_Settings_about_main_image', imageUrl);
          }
@@ -16778,6 +16818,9 @@
         document.getElementById('tch-phone').value = profile.teacher_phone || '';
         document.getElementById('tch-position').value = profile.teacher_role || '';
         document.getElementById('tch-joined-date').value = profile.joined_date || '';
+        if (document.getElementById('tch-display-order')) {
+          document.getElementById('tch-display-order').value = profile.display_order ?? 0;
+        }
         if (profile.teacher_image_url) {
           document.getElementById('tch-image-preview').src = profile.teacher_image_url;
           document.getElementById('tch-image-preview').style.display = 'block';
@@ -16790,6 +16833,9 @@
         document.getElementById('tch-phone').value = '';
         document.getElementById('tch-position').value = '';
         document.getElementById('tch-joined-date').value = '';
+        if (document.getElementById('tch-display-order')) {
+          document.getElementById('tch-display-order').value = 0;
+        }
         document.getElementById('tch-image-preview').style.display = 'none';
         document.getElementById('tch-preview-card-img').src = 'https://via.placeholder.com/150?text=No+Photo';
       }
@@ -16879,6 +16925,7 @@
         const phone = document.getElementById('tch-phone').value.trim();
         const position = document.getElementById('tch-position').value.trim();
         const joinedDate = document.getElementById('tch-joined-date').value;
+        const displayOrder = parseInt(document.getElementById('tch-display-order')?.value) || 0;
         const password = document.getElementById('tch-password').value;
 
         // Get subjects
@@ -16919,7 +16966,8 @@
               teacher_role: position,
               teacher_email: email,
               teacher_phone: phone,
-              joined_date: joinedDate
+              joined_date: joinedDate,
+              display_order: displayOrder !== undefined ? displayOrder : (existingProf?.display_order ?? 0)
             };
             if (imageUrl) {
               profilePayload.teacher_image_url = imageUrl;
@@ -16932,7 +16980,7 @@
             } else {
               profilePayload.teacher_code = code;
               if (!imageUrl) profilePayload.teacher_image_url = "";
-              await supabaseDb.from('teacher_profiles').insert([profilePayload]);
+              profilePayload.is_active = profilePayload.is_active ?? true; await supabaseDb.from('teacher_profiles').insert([profilePayload]);
             }
 
             // Update credentials if credId is active
@@ -16973,6 +17021,7 @@
           profiles[pIndex].teacher_email = email;
           profiles[pIndex].teacher_phone = phone;
           profiles[pIndex].joined_date = joinedDate;
+          profiles[pIndex].display_order = displayOrder;
           if (imageUrl) profiles[pIndex].teacher_image_url = imageUrl;
           localStorage.setItem('teacher_profiles', JSON.stringify(profiles));
         } else {
@@ -16983,6 +17032,7 @@
             teacher_email: email,
             teacher_phone: phone,
             joined_date: joinedDate,
+            display_order: displayOrder,
             teacher_image_url: imageUrl || "",
             is_active: true
           });
