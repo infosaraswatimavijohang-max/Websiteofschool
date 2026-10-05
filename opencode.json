@@ -12,7 +12,11 @@
     },
     "context7": {
       "type": "remote",
-      "url": "https://mcp.context7.com/mcp/oauth",
+      "url": "https://mcp.context7.com/mcp",
+      "headers": {
+        "Authorization": "Bearer {env:CONTEXT7_API_KEY}"
+      },
+      "oauth": false,
       "enabled": true,
       "timeout": 30000
     },
@@ -20,6 +24,17 @@
       "type": "local",
       "command": ["npx.cmd", "-y", "@playwright/mcp@0.0.83"],
       "enabled": true
+    },
+    "graphify": {
+      "type": "local",
+      "command": [
+        "python",
+        "-m",
+        "graphify.serve",
+        "C:\\Users\\saras\\.graphify\\school-website\\graph.json"
+      ],
+      "enabled": true,
+      "timeout": 30000
     }
   }
 }
