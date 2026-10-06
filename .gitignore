@@ -1,6 +1,11 @@
-# Dependencies. adms-api/node_modules and scratch/node_modules are untracked
-# here (a fresh clone has none - run npm install in those two directories).
+# Dependencies. adms-api/node_modules is untracked here (a fresh clone has
+# none - run npm install in that directory).
 node_modules/
+
+# Agent-tooling artifacts. The playwright MCP server writes .playwright-mcp/
+# and graphify writes graphify-out/ at the repo root; neither is project source.
+.playwright-mcp/
+graphify-out/
 
 # Secrets. adms-api/index.js calls require('dotenv').config() and reads
 # PORT / SUPABASE_URL / SUPABASE_KEY from the environment, so a local .env is

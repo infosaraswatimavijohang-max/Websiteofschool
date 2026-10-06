@@ -37,7 +37,6 @@ school-management-saraswati/
 ├── 📄 index.html                   ← Public landing page (main website)
 ├── 📄 admin-portal.html            ← Root redirect → html/admin-portal.html
 ├── 📄 README.md                    ← This file
-├── 📄 schema.json                  ← Supabase DB schema reference
 │
 ├── 📁 html/                        ← All application HTML pages
 │   ├── about.html                  ← Public About Us page (fully dynamic)
@@ -54,18 +53,12 @@ school-management-saraswati/
 ├── 📁 js/                          ← Application JavaScript modules
 │   ├── supabase-client.js          ⭐ Core DB client + shared CRUD (required everywhere)
 │   ├── about-data.js               ← About page data layer & render functions
-│   ├── admin-about-handler.js      ← About page admin CRUD operations
 │   ├── admission-handler.js        ← Student admission processing
-│   ├── biometric-attendance.js     ← Attendance marking & sessions
 │   ├── class-handler.js            ← Class/section CRUD
 │   ├── document-handler.js         ← Document upload & management
-│   ├── exam-portal-admin.js        ← Exam admin management
 │   ├── exam-result-admin-handler.js← Exam result entry (admin)
 │   ├── exam-result-handler.js      ← Exam result viewer (student)
-│   ├── fee-handler.js              ← Full fee management lifecycle
 │   ├── staff-handler.js            ← Staff profile CRUD
-│   ├── student-directory-handler.js← Student directory renderer
-│   ├── student-fee-portal.js       ← Student fee status viewer
 │   ├── student-profiles-handler.js ← Student profile CRUD
 │   ├── subject-handler.js          ← Academic subjects CRUD
 │   └── timetable-handler.js        ← Timetable builder
@@ -112,13 +105,6 @@ school-management-saraswati/
 │       ├── TECHNICAL_REFERENCE.md
 │       ├── FILE_MANIFEST.md
 │       └── FILE_LISTING_AND_NAVIGATION.md
-│
-├── 📁 scripts/                     ← Developer utilities (not used at runtime)
-│   └── 📁 dev-tools/               ← One-off migration & fix scripts (archived)
-│       ├── fix_errors.js
-│       ├── inject_marksheet.js
-│       ├── organize.ps1
-│       └── ... (22 more archived scripts)
 │
 └── 📁 adms-api/                    ← Backend Node.js API server (optional)
 ```
