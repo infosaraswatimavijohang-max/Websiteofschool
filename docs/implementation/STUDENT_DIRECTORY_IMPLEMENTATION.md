@@ -1,3 +1,12 @@
+> **STALE GUIDE: it tells you to add files that no longer exist.**
+>
+> Steps below reference `js/student-directory-handler.js`. Those files were never loaded by any page and
+> were deleted in a repo cleanup, so following this guide now produces a 404 and a
+> non-functional feature. The live directory is implemented inline in `html/student-directory.html`. The originals are still in git
+> history (`git show <sha>:<path>`) - recover them before recreating anything.
+
+---
+
 # 📚 Student Directory - Implementation Summary
 
 ## What Was Created

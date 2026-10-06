@@ -40,8 +40,7 @@ school-management-saraswati/
 │
 ├── 📁 html/                        ← All application HTML pages
 │   ├── about.html                  ← Public About Us page (fully dynamic)
-│   ├── admin-portal.html           ← 🔒 Central Admin HQ (650KB+ full-featured)
-│   ├── admin-about-panel.html      ← About page admin sub-panel
+│   ├── admin-portal.html           ← 🔒 Central Admin HQ (856KB full-featured)
 │   ├── index.html                  ← Homepage (school website)
 │   ├── organizational-tree.html    ← Staff org chart viewer
 │   ├── staff-management-admin.html ← Staff management panel
@@ -106,7 +105,7 @@ school-management-saraswati/
 │       ├── FILE_MANIFEST.md
 │       └── FILE_LISTING_AND_NAVIGATION.md
 │
-└── 📁 adms-api/                    ← Backend Node.js API server (optional)
+└── 📁 adms-api/                    ← ZKTeco biometric receiver (/iclock - the web app never calls it)
 ```
 
 ---

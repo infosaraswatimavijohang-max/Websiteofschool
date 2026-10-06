@@ -1,3 +1,12 @@
+> **STALE GUIDE: it tells you to add files that no longer exist.**
+>
+> Steps below reference `js/admin-about-handler.js` and `html/admin-about-panel.html`. Those files were never loaded by any page and
+> were deleted in a repo cleanup, so following this guide now produces a 404 and a
+> non-functional feature. The live about-team CRUD is inline in `html/admin-portal.html`, on top of the `readAllAdminTeam` / `createAdminMember` exports in `js/about-data.js`. The originals are still in git
+> history (`git show <sha>:<path>`) - recover them before recreating anything.
+
+---
+
 # 🎯 Dynamic About Page Implementation - Complete Summary
 
 ## ✅ What Was Done

@@ -1,3 +1,12 @@
+> **STALE GUIDE: it tells you to add files that no longer exist.**
+>
+> Steps below reference `js/admin-about-handler.js`. Those files were never loaded by any page and
+> were deleted in a repo cleanup, so following this guide now produces a 404 and a
+> non-functional feature. The live about-page logic is inline in `html/admin-portal.html` and `js/about-data.js`. The originals are still in git
+> history (`git show <sha>:<path>`) - recover them before recreating anything.
+
+---
+
 # Dynamic "Our Legacy" Section Setup Guide
 
 ## Overview

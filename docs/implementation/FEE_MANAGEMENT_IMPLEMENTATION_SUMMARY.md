@@ -1,3 +1,12 @@
+> **STALE GUIDE: it tells you to add files that no longer exist.**
+>
+> Steps below reference `js/fee-handler.js` and `js/student-fee-portal.js`. Those files were never loaded by any page and
+> were deleted in a repo cleanup, so following this guide now produces a 404 and a
+> non-functional feature. The live fee UI is implemented inline in `html/admin-portal.html` and `html/student-portal.html`. The originals are still in git
+> history (`git show <sha>:<path>`) - recover them before recreating anything.
+
+---
+
 # 🏫 Advanced Finance & Fee Management System
 ## Complete Implementation Summary
 
