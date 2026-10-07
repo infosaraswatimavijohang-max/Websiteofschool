@@ -294,6 +294,16 @@
     .minimized-form > form { display: none !important; }
     .minimized-form > .form-toggle { margin-bottom: 0; }
 
+    .duty-chip {
+      display: flex; align-items: center; gap: 0.5rem;
+      background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 8px;
+      padding: 0.6rem 0.8rem; cursor: pointer; font-size: 0.9rem;
+      font-weight: 600; color: var(--text-main); transition: all 0.2s ease;
+    }
+    .duty-chip:hover { border-color: var(--accent); background: #f3e8ff; }
+    .duty-chip:has(input:checked) { background: #f3e8ff; border-color: var(--accent); color: #6b21a8; }
+    .duty-chip input { accent-color: var(--accent); width: 16px; height: 16px; cursor: pointer; flex-shrink: 0; }
+
     .submit-btn {
       padding: 0.9rem; background: var(--primary); color: var(--white);
       border: none; border-radius: 8px; font-weight: 700; cursor: pointer;
@@ -1753,10 +1763,41 @@
 
                 <hr style="border:none; border-top:2px solid #e5e7eb; margin:2rem 0;">
                 
-                <!-- Step 3: Security -->
+                <!-- Step 3: Duties & Responsibilities -->
                 <div style="margin-bottom:2rem;">
                   <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:1.2rem;">
                     <span style="background:var(--accent); color:white; width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:1rem;">3</span>
+                    <h4 style="margin:0; color:var(--primary); font-weight:700; font-size:1.05rem;">Duties & Responsibilities</h4>
+                  </div>
+
+                  <label style="font-weight:600; color:var(--text-main); display:block; margin-bottom:0.8rem;">
+                    Assigned Duties / Roles
+                    <small style="color:#7f8c8d; font-weight:normal; display:block; margin-top:0.3rem;">Select this if the teacher also serves as a House Teacher, Club Teacher, Exam Coordinator, Cultural/Art Teacher, or leads a specific club or committee.</small>
+                  </label>
+                  <div id="tch-duties-container" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(190px, 1fr)); gap:0.6rem; margin-bottom:1.2rem;">
+                    <label class="duty-chip"><input type="checkbox" class="tch-duty-cb" value="House Teacher" onchange="updateTeacherPreview()"> House Teacher</label>
+                    <label class="duty-chip"><input type="checkbox" class="tch-duty-cb" value="Club Teacher" onchange="updateTeacherPreview()"> Club Teacher</label>
+                    <label class="duty-chip"><input type="checkbox" class="tch-duty-cb" value="Exam Coordinator" onchange="updateTeacherPreview()"> Exam Coordinator</label>
+                    <label class="duty-chip"><input type="checkbox" class="tch-duty-cb" value="Cultural/Art Teacher" onchange="updateTeacherPreview()"> Cultural/Art Teacher</label>
+                    <label class="duty-chip"><input type="checkbox" class="tch-duty-cb" value="Club/Committee Lead" onchange="updateTeacherPreview()"> Club/Committee Lead</label>
+                  </div>
+
+                  <div class="form-group" style="margin-bottom:0;">
+                    <label for="tch-duty-assign" style="font-weight:600; color:var(--text-main); display:block; margin-bottom:0.5rem;">Assigned Club / Committee (optional)</label>
+                    <input type="text" id="tch-duty-assign" class="form-control" placeholder="e.g. Eco Club, Sports Committee, Science Club"
+                      style="border:2px solid #e5e7eb; border-radius:8px; padding:0.9rem 1rem; transition:all 0.3s; font-size:0.95rem;"
+                      onfocus="this.style.borderColor='var(--accent)'; this.style.boxShadow='0 0 0 3px rgba(126,34,206,0.1)'" 
+                      onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow=''">
+                    <small style="color:#7f8c8d; display:block; margin-top:0.4rem;">Name the house, club, or committee this teacher is assigned to lead (e.g. Science Club, Sports Committee).</small>
+                  </div>
+                </div>
+
+                <hr style="border:none; border-top:2px solid #e5e7eb; margin:2rem 0;">
+                
+                <!-- Step 4: Security -->
+                <div style="margin-bottom:2rem;">
+                  <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:1.2rem;">
+                    <span style="background:var(--accent); color:white; width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:1rem;">4</span>
                     <h4 style="margin:0; color:var(--primary); font-weight:700; font-size:1.05rem;">Portal Security</h4>
                   </div>
 
@@ -1804,6 +1845,7 @@
                   </div>
                   <h4 id="tch-preview-card-name" style="margin-top: 12px; font-weight: 700; color: var(--primary); font-size: 1rem; min-height: 1.2rem; word-break: break-word;">Teacher Name</h4>
                   <span id="tch-preview-card-role" style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: var(--accent); background: #f3e8ff; padding: 0.2rem 0.6rem; border-radius: 20px; margin-top: 4px; display: inline-block;">Position / Role</span>
+                  <p id="tch-preview-card-duties" style="font-size: 0.7rem; color: var(--accent); font-weight: 600; margin-top: 6px; min-height: 0.9rem; word-break: break-word;">No additional duties</p>
                   <p id="tch-preview-card-subjects" style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px; font-style: italic;">No subjects assigned</p>
                 </div>
               </div>
@@ -1855,6 +1897,7 @@
                     <th style="padding:1rem 1.2rem; font-weight:700; color:var(--primary); font-size:0.95rem;">Code</th>
                     <th style="padding:1rem 1.2rem; font-weight:700; color:var(--primary); font-size:0.95rem;">Name</th>
                     <th style="padding:1rem 1.2rem; font-weight:700; color:var(--primary); font-size:0.95rem;">Subject</th>
+                    <th style="padding:1rem 1.2rem; font-weight:700; color:var(--primary); font-size:0.95rem;">Duties</th>
                     <th style="padding:1rem 1.2rem; font-weight:700; color:var(--primary); font-size:0.95rem;">Email</th>
                     <th style="padding:1rem 1.2rem; font-weight:700; color:var(--primary); font-size:0.95rem;">Status</th>
                     <th style="padding:1rem 1.2rem; font-weight:700; color:var(--primary); font-size:0.95rem;">Actions</th>
@@ -8876,6 +8919,13 @@ display: block;">
       loadTeacherAccounts();
     }
 
+    function formatTeacherDutyBadges(duty, club) {
+      const parts = (duty || '').split(',').map(s => s.trim()).filter(Boolean);
+      if (club) parts.push('Lead: ' + club);
+      if (!parts.length) return '<span style="color:#9ca3af; font-size:0.85rem;">—</span>';
+      return parts.map(p => `<span style="display:inline-block; background:#f3e8ff; color:#6b21a8; border:1px solid #d8b4fe; font-size:0.75rem; font-weight:600; padding:0.2rem 0.6rem; border-radius:6px; margin:0.15rem 0.3rem 0.15rem 0;">${p}</span>`).join('');
+    }
+
     async function loadTeacherAccounts() {
       const tbody = document.getElementById('admin-teachers-tbody');
       if (!tbody) return;
@@ -8898,13 +8948,19 @@ display: block;">
           teachers = JSON.parse(localStorage.getItem('teachers_registry') || '[]');
         } catch(e) {}
 
+        let profiles = [];
+        try {
+          profiles = JSON.parse(localStorage.getItem('teacher_profiles') || '[]');
+        } catch(e) {}
+
         if (teachers.length === 0 && credentials.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 2rem; color: #7f8c8d;">No faculty registered yet. Register one using the form.</td></tr>';
+          tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding: 2rem; color: #7f8c8d;">No faculty registered yet. Register one using the form.</td></tr>';
           return;
         }
 
         tbody.innerHTML = teachers.map(teacher => {
           const cred = credentials.find(c => c.teacher_code === teacher.code);
+          const profile = profiles.find(p => p.teacher_code === teacher.code);
           const email = cred ? cred.teacher_email : '-';
           const isActive = cred ? cred.is_active : false;
           const statusText = cred ? (cred.is_active ? 'Active' : 'Inactive') : 'No Login';
@@ -8947,6 +9003,7 @@ display: block;">
               <td style="padding: 0.75rem;"><strong>${teacher.code}</strong></td>
               <td style="padding: 0.75rem;">${teacher.name}</td>
               <td style="padding: 0.75rem;">${teacher.subject}</td>
+              <td style="padding: 0.75rem;">${formatTeacherDutyBadges(profile && profile.teacher_duty, profile && profile.teacher_duty_club)}</td>
               <td style="padding: 0.75rem;">${email}</td>
               <td style="padding: 0.75rem;">
                 <span style="background:${badgeBg}; color:${badgeColor}; padding:0.25rem 0.75rem; border-radius:20px; font-size:0.8rem; font-weight:600;">
@@ -8970,7 +9027,7 @@ display: block;">
         }
       } catch(e) {
         console.error('Error loading teacher accounts:', e);
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 2rem; color: #ef4444;">Error loading teacher accounts.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding: 2rem; color: #ef4444;">Error loading teacher accounts.</td></tr>';
       }
     }
 
@@ -8986,6 +9043,8 @@ display: block;">
       const position = document.getElementById('tch-position').value.trim();
       const joinedDate = document.getElementById('tch-joined-date').value;
       const displayOrder = parseInt(document.getElementById('tch-display-order')?.value) || 0;
+      const duty = Array.from(document.querySelectorAll('.tch-duty-cb:checked')).map(cb => cb.value).join(', ');
+      const dutyAssign = document.getElementById('tch-duty-assign') ? document.getElementById('tch-duty-assign').value.trim() : '';
 
       // Get all subject values
       const subjectInputs = document.querySelectorAll('.subject-input');
@@ -9044,7 +9103,7 @@ display: block;">
           }
 
           // 2. Save profile
-          const { error: profErr } = await supabaseDb.from('teacher_profiles').insert([{
+          const profilePayload = {
             teacher_code: code,
             teacher_name: name,
             teacher_role: position,
@@ -9054,9 +9113,19 @@ display: block;">
             joined_date: joinedDate,
             display_order: displayOrder,
             is_active: true
-          }]);
+          };
+          if (duty) profilePayload.teacher_duty = duty;
+          if (dutyAssign) profilePayload.teacher_duty_club = dutyAssign;
+          const { error: profErr } = await supabaseDb.from('teacher_profiles').insert([profilePayload]);
           if (profErr) {
-            console.error('Error creating profile:', profErr);
+            if ((duty || dutyAssign) && (profErr.message.includes('schema cache') || profErr.message.includes('Could not find'))) {
+              delete profilePayload.teacher_duty;
+              delete profilePayload.teacher_duty_club;
+              const { error: retryErr } = await supabaseDb.from('teacher_profiles').insert([profilePayload]);
+              if (retryErr) console.error('Error creating profile:', retryErr);
+            } else {
+              console.error('Error creating profile:', profErr);
+            }
           }
         } catch(err) {
           console.error("DB Sync failed:", err);
@@ -9076,6 +9145,8 @@ display: block;">
           teacher_code: code,
           teacher_name: name,
           teacher_role: position,
+          teacher_duty: duty,
+          teacher_duty_club: dutyAssign,
           teacher_image_url: imageUrl,
           teacher_email: email,
           teacher_phone: phone,
@@ -9097,7 +9168,8 @@ display: block;">
 
         const result = await createTeacherCredential(credentialData);
         if (result.success) {
-          alert(`✅ Faculty Lecturer Registered & Account Created Successfully!\n\nEmail/Login: ${email}\nPassword: ${password}\n\nSubjects: ${subjectString}\n\nShare these credentials with the teacher.`);
+          const dutyLine = [duty, dutyAssign ? 'Assigned: ' + dutyAssign : ''].filter(Boolean).join(', ');
+          alert(`✅ Faculty Lecturer Registered & Account Created Successfully!\n\nEmail/Login: ${email}\nPassword: ${password}\n\nSubjects: ${subjectString}${dutyLine ? '\nDuties: ' + dutyLine : ''}\n\nShare these credentials with the teacher.`);
           clearTeacherForm();
           loadTeacherAccounts();
           renderDashboardMetrics();
@@ -9219,6 +9291,14 @@ display: block;">
       });
       const subCard = document.getElementById('tch-preview-card-subjects');
       if (subCard) subCard.textContent = subjects.length > 0 ? subjects.join(', ') : 'No subjects assigned';
+
+      const dutyCard = document.getElementById('tch-preview-card-duties');
+      if (dutyCard) {
+        const duties = Array.from(document.querySelectorAll('.tch-duty-cb:checked')).map(cb => cb.value);
+        const assign = document.getElementById('tch-duty-assign') ? document.getElementById('tch-duty-assign').value.trim() : '';
+        const dutyText = duties.concat(assign ? 'Lead: ' + assign : []).join('  |  ');
+        dutyCard.textContent = dutyText || 'No additional duties';
+      }
     }
 
     async function openTeacherDetailAdmin(code) {
@@ -9240,6 +9320,8 @@ display: block;">
       const subjects = teacher ? teacher.subject : (profile ? profile.teacher_expertise || '-' : '-');
       const name = profile ? profile.teacher_name : (teacher ? teacher.name : 'Unknown Faculty');
       const imageUrl = profile ? profile.teacher_image_url : '';
+      const duty = (profile && profile.teacher_duty) ? profile.teacher_duty.split(',').map(s => s.trim()).filter(Boolean) : [];
+      if (profile && profile.teacher_duty_club) duty.push('Lead: ' + profile.teacher_duty_club);
       
       const initials = name.split(' ').map(n => n.charAt(0)).join('').toUpperCase().substring(0, 2);
       
@@ -9274,6 +9356,12 @@ display: block;">
             <label style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 0.4rem;">Subjects Taught</label>
             <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
               ${subjects.split(',').map(s => s.trim()).filter(Boolean).map(s => `<span style="background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; font-size: 0.8rem; font-weight: 600; padding: 0.25rem 0.75rem; border-radius: 6px;">${s}</span>`).join('') || '<span style="color: var(--text-muted);">None</span>'}
+            </div>
+          </div>
+          <div style="grid-column: span 2;">
+            <label style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 0.4rem;">Duties / Assigned Roles</label>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              ${duty.map(d => `<span style="background: #f3e8ff; color: #6b21a8; border: 1px solid #d8b4fe; font-size: 0.8rem; font-weight: 600; padding: 0.25rem 0.75rem; border-radius: 6px;">${d}</span>`).join('') || '<span style="color: var(--text-muted);">None</span>'}
             </div>
           </div>
         </div>
@@ -9401,7 +9489,7 @@ display: block;">
           if (!tbody.querySelector('.no-results')) {
             const noResults = document.createElement('tr');
             noResults.className = 'no-results';
-            noResults.innerHTML = `<td colspan="6" style="text-align:center; padding:2rem; color:#ef4444; font-weight:600;">No faculty found matching "${searchTerm}"</td>`;
+            noResults.innerHTML = `<td colspan="7" style="text-align:center; padding:2rem; color:#ef4444; font-weight:600;">No faculty found matching "${searchTerm}"</td>`;
             tbody.appendChild(noResults);
           }
         } else {
@@ -17935,10 +18023,21 @@ display: block;">
       let profiles = [];
       try { profiles = JSON.parse(localStorage.getItem('teacher_profiles') || '[]'); } catch(e){}
       const profile = profiles.find(p => p.teacher_code === code);
+      // Reset duty selections before prefilling
+      document.querySelectorAll('.tch-duty-cb').forEach(cb => cb.checked = false);
+      const dutyAssignInput = document.getElementById('tch-duty-assign');
+      if (dutyAssignInput) dutyAssignInput.value = '';
       if (profile) {
         document.getElementById('tch-phone').value = profile.teacher_phone || '';
         document.getElementById('tch-position').value = profile.teacher_role || '';
         document.getElementById('tch-joined-date').value = profile.joined_date || '';
+        const duties = (profile.teacher_duty || '').split(',').map(s => s.trim()).filter(Boolean);
+        if (duties.length) {
+          document.querySelectorAll('.tch-duty-cb').forEach(cb => {
+            if (duties.includes(cb.value)) cb.checked = true;
+          });
+        }
+        if (dutyAssignInput && profile.teacher_duty_club) dutyAssignInput.value = profile.teacher_duty_club;
         if (document.getElementById('tch-display-order')) {
           document.getElementById('tch-display-order').value = profile.display_order ?? 0;
         }
@@ -18048,6 +18147,8 @@ display: block;">
         const joinedDate = document.getElementById('tch-joined-date').value;
         const displayOrder = parseInt(document.getElementById('tch-display-order')?.value) || 0;
         const password = document.getElementById('tch-password').value;
+        const duty = Array.from(document.querySelectorAll('.tch-duty-cb:checked')).map(cb => cb.value).join(', ');
+        const dutyAssign = document.getElementById('tch-duty-assign') ? document.getElementById('tch-duty-assign').value.trim() : '';
 
         // Get subjects
         const subjectInputs = document.querySelectorAll('.subject-input');
@@ -18090,14 +18191,23 @@ display: block;">
               joined_date: joinedDate,
               display_order: displayOrder !== undefined ? displayOrder : (existingProf?.display_order ?? 0)
             };
+            if (duty) profilePayload.teacher_duty = duty;
+            if (dutyAssign) profilePayload.teacher_duty_club = dutyAssign;
             if (imageUrl) {
               profilePayload.teacher_image_url = imageUrl;
             }
 
             if (existingProf) {
-              await supabaseDb.from('teacher_profiles')
+              const { error: updErr } = await supabaseDb.from('teacher_profiles')
                 .update(profilePayload)
                 .eq('teacher_code', editingTeacherCode);
+              if (updErr && (duty || dutyAssign) && (updErr.message.includes('schema cache') || updErr.message.includes('Could not find'))) {
+                delete profilePayload.teacher_duty;
+                delete profilePayload.teacher_duty_club;
+                await supabaseDb.from('teacher_profiles')
+                  .update(profilePayload)
+                  .eq('teacher_code', editingTeacherCode);
+              }
             } else {
               profilePayload.teacher_code = code;
               if (!imageUrl) profilePayload.teacher_image_url = "";
@@ -18139,6 +18249,8 @@ display: block;">
         if (pIndex >= 0) {
           profiles[pIndex].teacher_name = name;
           profiles[pIndex].teacher_role = position;
+          profiles[pIndex].teacher_duty = duty;
+          profiles[pIndex].teacher_duty_club = dutyAssign;
           profiles[pIndex].teacher_email = email;
           profiles[pIndex].teacher_phone = phone;
           profiles[pIndex].joined_date = joinedDate;
@@ -18150,6 +18262,8 @@ display: block;">
             teacher_code: code,
             teacher_name: name,
             teacher_role: position,
+            teacher_duty: duty,
+            teacher_duty_club: dutyAssign,
             teacher_email: email,
             teacher_phone: phone,
             joined_date: joinedDate,
