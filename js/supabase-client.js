@@ -153,6 +153,14 @@ async function pullAllFromSupabase() {
       }
     });
 
+    // 6.5. House & Club Memberships
+    await _safeFetch('student_group_memberships', async () => {
+      const { data: memberships, error: membershipErr } = await supabaseDb.from('student_group_memberships').select('*');
+      if (!membershipErr && memberships) {
+        localStorage.setItem('student_group_memberships', JSON.stringify(memberships));
+      }
+    });
+
     // 7. Events
     const { data: events, error: eventErr } = await supabaseDb.from('school_events').select('*');
     if (!eventErr && events) {
@@ -1500,6 +1508,96 @@ function getStudentCredentialsFromCache() {
 }
 
 // ====================================================================
+// HOUSE & CLUB MEMBERSHIP CRUD OPERATIONS (student_group_memberships)
+// ====================================================================
+
+const GROUP_POSITION_RANK = { leader: 1, 'co-leader': 2, member: 3 };
+
+async function syncStudentGroupMemberships() {
+  try {
+    if (!supabaseDb) throw new Error("Database not initialized");
+    const { data, error } = await supabaseDb
+      .from('student_group_memberships')
+      .select('*')
+      .order('position_rank', { ascending: true })
+      .order('student_roll', { ascending: true });
+
+    if (!error && data) {
+      localStorage.setItem('student_group_memberships', JSON.stringify(data));
+    } else if (error) {
+      console.warn("student_group_memberships table may not exist yet. Run sql/setup/HOUSE_CLUB_MEMBERSHIP_SETUP.sql to create it.");
+    }
+  } catch (e) {
+    console.warn("Sync student_group_memberships skipped:", e.message);
+  }
+}
+
+function getStudentGroupMembershipsFromCache() {
+  try {
+    const cached = localStorage.getItem('student_group_memberships');
+    return cached ? JSON.parse(cached) : [];
+  } catch (e) {
+    console.warn("Error parsing student_group_memberships from cache:", e);
+    return [];
+  }
+}
+
+async function createStudentGroupMembership({ student_roll, group_type, group_name, position } = {}) {
+  if (!student_roll || !group_type || !group_name) {
+    return { success: false, error: 'Missing required membership fields' };
+  }
+  const normalizedPosition = position || 'member';
+  const payload = {
+    student_roll,
+    group_type,
+    group_name,
+    position: normalizedPosition,
+    position_rank: GROUP_POSITION_RANK[normalizedPosition] || 3,
+    updated_at: new Date().toISOString()
+  };
+
+  try {
+    if (!supabaseDb) throw new Error("Database not initialized");
+    const { data, error } = await supabaseDb
+      .from('student_group_memberships')
+      .upsert([payload], { onConflict: 'student_roll,group_type,group_name' })
+      .select();
+    if (error) throw error;
+    await syncStudentGroupMemberships();
+    return { success: true, data: data && data[0] };
+  } catch (e) {
+    console.warn("Supabase membership save failed, storing locally:", e);
+    const cached = getStudentGroupMembershipsFromCache();
+    const idx = cached.findIndex(m =>
+      m.student_roll === student_roll && m.group_type === group_type && m.group_name === group_name
+    );
+    const row = { id: Date.now(), ...payload, created_at: new Date().toISOString() };
+    if (idx >= 0) cached[idx] = row; else cached.push(row);
+    localStorage.setItem('student_group_memberships', JSON.stringify(cached));
+    return { success: true, data: row };
+  }
+}
+
+async function deleteStudentGroupMembership(id) {
+  const cached = getStudentGroupMembershipsFromCache();
+  try {
+    if (supabaseDb) {
+      const { error } = await supabaseDb
+        .from('student_group_memberships')
+        .delete()
+        .eq('id', id);
+      if (error) throw error;
+    }
+    localStorage.setItem('student_group_memberships', JSON.stringify(cached.filter(m => m.id !== id)));
+    return { success: true };
+  } catch (e) {
+    console.warn("Membership delete failed, cleaning cache only:", e);
+    localStorage.setItem('student_group_memberships', JSON.stringify(cached.filter(m => m.id !== id)));
+    return { success: true };
+  }
+}
+
+// ====================================================================
 // TEACHER LOGIN CREDENTIALS CRUD OPERATIONS
 // ====================================================================
 
@@ -1911,6 +2009,12 @@ window.updateStudentCredential = updateStudentCredential;
 window.deleteStudentCredential = deleteStudentCredential;
 window.syncStudentCredentials = syncStudentCredentials;
 window.getStudentCredentialsFromCache = getStudentCredentialsFromCache;
+
+// Expose house & club membership functions
+window.syncStudentGroupMemberships = syncStudentGroupMemberships;
+window.getStudentGroupMembershipsFromCache = getStudentGroupMembershipsFromCache;
+window.createStudentGroupMembership = createStudentGroupMembership;
+window.deleteStudentGroupMembership = deleteStudentGroupMembership;
 
 // Expose teacher credential functions
 window.createTeacherCredential = createTeacherCredential;

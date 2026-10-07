@@ -212,6 +212,88 @@
     }
     .form-control:focus { border-color: var(--accent); }
 
+    /* ── LANDSCAPE FORM LAYOUT ── */
+    form:has(> .form-group),
+    #generic-form-fields {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      column-gap: 1.5rem;
+      row-gap: 0.5rem;
+      align-items: start;
+      min-width: 0;
+    }
+    form:has(> .form-group) > .form-group,
+    #generic-form-fields > .form-group {
+      margin-bottom: 0;
+      min-width: 0;
+    }
+    form:has(> .form-group) > .form-group:has(textarea, input[type="file"], .image-upload-input, .sp-photo-upload),
+    form:has(> .form-group) > div[style*="grid-template-columns"] .form-group:has(textarea, input[type="file"]),
+    #generic-form-fields > .form-group:has(textarea, input[type="file"]) {
+      grid-column: 1 / -1;
+    }
+    form:has(> .form-group) > .submit-btn,
+    form:has(> .form-group) > button[type="submit"] {
+      grid-column: 1 / -1;
+    }
+    .page-view div[style*="grid-template-columns"] > div {
+      min-width: 0;
+    }
+
+    /* ── STACK FORM PANELS ABOVE THEIR LISTS (desktop) ──
+       Pages that pair a form (first child) with a list/table (second child) get
+       the form panel full-width on top in landscape and the list panel below. */
+    @media (min-width: 1025px) {
+      .page-view:not(#page-dashboard):not(#page-website-config):not(#page-manage-about):not(#page-principal-management):not(#page-student-profiles):not(#page-student-manual-attendance):not(#page-employee-manual-attendance):not(#page-practical-marks-evaluation):not(#page-coming-soon) div[style*="grid-template-columns"]:has(> div:first-child form) {
+        grid-template-columns: 1fr !important;
+      }
+      form[style*="flex-direction: column"],
+      form[style*="flex-direction:column"],
+      #gallery-form,
+      #add-school-event-form {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)) !important;
+        column-gap: 1.5rem;
+        row-gap: 0.5rem;
+        align-items: start;
+        min-width: 0;
+      }
+      form[style*="flex-direction: column"] > *:has(textarea, input[type="file"]),
+      form[style*="flex-direction:column"] > *:has(textarea, input[type="file"]),
+      #gallery-form > *:has(textarea, input[type="file"]),
+      #add-school-event-form > *:has(textarea, input[type="file"]) {
+        grid-column: 1 / -1;
+      }
+      form[style*="flex-direction: column"] > button,
+      form[style*="flex-direction:column"] > button,
+      #gallery-form > button,
+      #add-school-event-form > button {
+        grid-column: 1 / -1;
+      }
+    }
+
+    /* ── COLLAPSIBLE FORM PANELS ── */
+    .form-toggle {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 0.5rem;
+    }
+    .form-collapse-btn {
+      border: 1px solid #cbd5e1;
+      background: #fff;
+      color: #64748b;
+      border-radius: 20px;
+      padding: 0.35rem 0.9rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      line-height: 1.2;
+    }
+    .form-collapse-btn:hover { border-color: var(--primary); color: var(--primary); background: #eff6ff; }
+    .minimized-form > form { display: none !important; }
+    .minimized-form > .form-toggle { margin-bottom: 0; }
+
     .submit-btn {
       padding: 0.9rem; background: var(--primary); color: var(--white);
       border: none; border-radius: 8px; font-weight: 700; cursor: pointer;
@@ -246,7 +328,7 @@
 
     /* ── MOBILE RESPONSIVENESS ── */
     @media (max-width: 1024px) {
-      .main-grid, .stat-grid, .cal-wrapper, div[style*="grid-template-columns: minmax(0, 1fr) minmax(0, 1.8fr)"], div[style*="grid-template-columns: 1fr 2fr"], div[style*="grid-template-columns: 1fr 1fr"] {
+      .main-grid, .stat-grid, .cal-wrapper, div[style*="grid-template-columns: minmax(0, 1fr) minmax(0, 1.8fr)"], div[style*="grid-template-columns: 1fr 2fr"], div[style*="grid-template-columns: 1fr 1fr"], div[style*="grid-template-columns: 1fr 1.3fr"], div[style*="grid-template-columns: 1fr 1.5fr"], div[style*="grid-template-columns: 1fr 1.8fr"], div[style*="grid-template-columns: 1fr 2.5fr"] {
         grid-template-columns: 1fr !important;
       }
       .stat-grid {
@@ -295,6 +377,10 @@
       }
       .search-bar {
         width: 150px;
+      }
+      .page-view form div[style*="display: flex"],
+      .page-view form div[style*="display:flex"] {
+        flex-wrap: wrap;
       }
     }
 
@@ -1418,6 +1504,44 @@
                 </select>
                 <small style="color:#7f8c8d; margin-top:0.25rem; display:block;">Select from available classes</small>
               </div>
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                  <label for="std-house">House</label>
+                  <select id="std-house" class="form-control">
+                    <option value="">-- No House --</option>
+                  </select>
+                  <small style="color:#7f8c8d; margin-top:0.25rem; display:block;">Assign the student to a house</small>
+                </div>
+                <div class="form-group">
+                  <label for="std-house-pos">House Position</label>
+                  <select id="std-house-pos" class="form-control">
+                    <option value="">-- Member --</option>
+                    <option value="leader">🏅 Leader</option>
+                    <option value="co-leader">✦ Co-Leader</option>
+                    <option value="member">Member</option>
+                  </select>
+                  <small style="color:#7f8c8d; margin-top:0.25rem; display:block;">Role inside the house</small>
+                </div>
+              </div>
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                  <label for="std-club">Club / Society</label>
+                  <select id="std-club" class="form-control">
+                    <option value="">-- No Club --</option>
+                  </select>
+                  <small style="color:#7f8c8d; margin-top:0.25rem; display:block;">e.g. Junior Red Cross, Eco Club...</small>
+                </div>
+                <div class="form-group">
+                  <label for="std-club-pos">Club Position</label>
+                  <select id="std-club-pos" class="form-control">
+                    <option value="">-- Member --</option>
+                    <option value="leader">🏅 Leader</option>
+                    <option value="co-leader">✦ Co-Leader</option>
+                    <option value="member">Member</option>
+                  </select>
+                  <small style="color:#7f8c8d; margin-top:0.25rem; display:block;">Role inside the club</small>
+                </div>
+              </div>
               <div class="form-group" style="display: flex; align-items: center; gap: 0.6rem; padding: 0.6rem 0.8rem; background: rgba(59, 130, 246, 0.05); border: 1px dashed rgba(59, 130, 246, 0.3); border-radius: 8px; margin-bottom: 1rem;">
                 <input type="checkbox" id="auto-gen-creds" checked style="width: auto; cursor: pointer; transform: scale(1.15); margin: 0;">
                 <label for="auto-gen-creds" style="margin: 0; font-weight: 600; cursor: pointer; color: var(--primary); font-size: 0.9rem; user-select: none;">Auto-generate Student Credentials</label>
@@ -2144,11 +2268,28 @@
                   <tbody id="academic-reports-tbody">
                     <!-- Loaded dynamically -->
                   </tbody>
-                </table>
-              </div>
+</table>
             </div>
           </div>
         </div>
+
+        <!-- Houses & Clubs Roster -->
+        <div class="panel">
+          <div class="panel-header">
+            <h3>🏠 Houses & Clubs Roster</h3>
+            <button class="submit-btn" onclick="loadStudentGroupRoster('refresh')" style="padding:0.4rem 0.9rem; font-size:0.85rem;">⟳ Refresh</button>
+          </div>
+          <div style="padding: 1.5rem;">
+            <p style="color:#64748b; margin:0 0 1rem; font-size:0.9rem;">
+              Click a house or club below to see its members and their positions (Leader / Co-Leader / Member).
+            </p>
+            <div id="group-roster-chips" style="display:flex; flex-wrap:wrap; gap:0.75rem;">
+              <span style="color:#94a3b8;">Loading roster...</span>
+            </div>
+            <div id="group-roster-detail" style="margin-top:1.5rem;"></div>
+          </div>
+        </div>
+      </div>
 
         <!-- Section 2: Performance Analytics Dashboard -->
         <div id="section-report-analytics" style="display: none;">
@@ -2836,6 +2977,347 @@
                 </form>
               </div>
 
+            </div>
+          </div>
+
+          <!-- 5. Testimonials -->
+          <div class="panel">
+            <div class="panel-header">
+              <h3>5. Testimonials (Voices From Our Community)</h3>
+            </div>
+            <div style="padding:1.5rem; display:flex; flex-direction:column; gap:1.5rem;">
+              <p style="color:var(--text-muted); font-size:0.9rem; margin:0;">Quote cards shown in the homepage testimonial section. The homepage keeps its built-in cards until you add or remove items here.</p>
+              <div class="custom-table-wrapper">
+                <table class="custom-table">
+                  <thead>
+                    <tr>
+                      <th style="width: 50%;">Quote</th>
+                      <th style="width: 20%;">Name</th>
+                      <th style="width: 20%;">Role</th>
+                      <th style="width: 10%; text-align:center;">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="cmsw-testimonials-tbody">
+                    <!-- Dynamic rendering -->
+                  </tbody>
+                </table>
+              </div>
+              <form onsubmit="addCmsTestimonial(event)" style="display:grid; grid-template-columns:1.5fr 1fr; gap:1.2rem;">
+                <div class="form-group" style="margin:0;">
+                  <label for="cmsw-testimonial-quote">Testimonial Quote</label>
+                  <textarea id="cmsw-testimonial-quote" class="form-control" rows="3" placeholder="What the person said about the school..." required></textarea>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:1.2rem;">
+                  <div class="form-group" style="margin:0;">
+                    <label for="cmsw-testimonial-name">Person Name (optional)</label>
+                    <input type="text" id="cmsw-testimonial-name" class="form-control" placeholder="e.g. Ram Bahadur Khatri">
+                  </div>
+                  <div class="form-group" style="margin:0;">
+                    <label for="cmsw-testimonial-role">Role / Title</label>
+                    <input type="text" id="cmsw-testimonial-role" class="form-control" placeholder="e.g. Parent, Class 8" required>
+                  </div>
+                </div>
+                <div style="grid-column: span 2; text-align:right;">
+                  <button type="submit" class="submit-btn" style="background:var(--accent); padding:0.8rem 2.5rem;">Add Testimonial</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- 6. FAQ -->
+          <div class="panel">
+            <div class="panel-header">
+              <h3>6. Frequently Asked Questions Board</h3>
+            </div>
+            <div style="padding:1.5rem; display:flex; flex-direction:column; gap:1.5rem;">
+              <p style="color:var(--text-muted); font-size:0.9rem; margin:0;">Q&amp;A cards on the homepage FAQ section. Answers may contain simple HTML such as <code>&lt;strong&gt;bold&lt;/strong&gt;</code>.</p>
+              <div class="custom-table-wrapper">
+                <table class="custom-table">
+                  <thead>
+                    <tr>
+                      <th style="width: 40%;">Question</th>
+                      <th style="width: 50%;">Answer</th>
+                      <th style="width: 10%; text-align:center;">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="cmsw-faq-tbody">
+                    <!-- Dynamic rendering -->
+                  </tbody>
+                </table>
+              </div>
+              <form onsubmit="addCmsFaq(event)" style="display:flex; flex-direction:column; gap:1.2rem;">
+                <div class="form-group" style="margin:0;">
+                  <label for="cmsw-faq-question">Question</label>
+                  <input type="text" id="cmsw-faq-question" class="form-control" placeholder="e.g. What are the school timings?" required>
+                </div>
+                <div class="form-group" style="margin:0;">
+                  <label for="cmsw-faq-answer">Answer</label>
+                  <textarea id="cmsw-faq-answer" class="form-control" rows="3" placeholder="Answer shown when the FAQ card is expanded..." required></textarea>
+                </div>
+                <div style="text-align:right;">
+                  <button type="submit" class="submit-btn" style="background:var(--accent); padding:0.8rem 2.5rem;">Add FAQ</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- 7. Why Choose Us / Features -->
+          <div class="panel">
+            <div class="panel-header">
+              <h3>7. Why Choose Us Feature Cards</h3>
+            </div>
+            <div style="padding:1.5rem; display:flex; flex-direction:column; gap:1.5rem;">
+              <p style="color:var(--text-muted); font-size:0.9rem; margin:0;">The six feature cards in the "What Makes Us Special" section of the homepage.</p>
+              <div class="custom-table-wrapper">
+                <table class="custom-table">
+                  <thead>
+                    <tr>
+                      <th style="width: 22%;">Title</th>
+                      <th style="width: 48%;">Description</th>
+                      <th style="width: 20%;">Icon</th>
+                      <th style="width: 10%; text-align:center;">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="cmsw-features-tbody">
+                    <!-- Dynamic rendering -->
+                  </tbody>
+                </table>
+              </div>
+              <form onsubmit="addCmsFeature(event)" style="display:grid; grid-template-columns:1fr 2fr 1fr; gap:1.2rem; align-items:end;">
+                <div class="form-group" style="margin:0;">
+                  <label for="cmsw-feature-title">Feature Title</label>
+                  <input type="text" id="cmsw-feature-title" class="form-control" placeholder="e.g. Strong Curriculum" required>
+                </div>
+                <div class="form-group" style="margin:0;">
+                  <label for="cmsw-feature-desc">Feature Description</label>
+                  <textarea id="cmsw-feature-desc" class="form-control" rows="2" placeholder="Short description shown under the title..." required></textarea>
+                </div>
+                <div class="form-group" style="margin:0;">
+                  <label for="cmsw-feature-icon">Icon</label>
+                  <select id="cmsw-feature-icon" class="form-control">
+                    <option value="book">Book</option>
+                    <option value="graduation">Graduation Cap</option>
+                    <option value="building">School Building</option>
+                    <option value="message">Speech Bubble</option>
+                    <option value="globe">Globe</option>
+                    <option value="shield">Shield</option>
+                  </select>
+                </div>
+                <div style="grid-column: span 3; text-align:right;">
+                  <button type="submit" class="submit-btn" style="background:var(--accent); padding:0.8rem 2.5rem;">Add Feature Card</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- 8. Campuses -->
+          <div class="panel">
+            <div class="panel-header">
+              <h3>8. Twin Campus Cards</h3>
+            </div>
+            <div style="padding:1.5rem; display:flex; flex-direction:column; gap:1.5rem;">
+              <p style="color:var(--text-muted); font-size:0.9rem; margin:0;">The General Block and Technical Block cards in the "Our Campuses" section. "General" cards use the green button style; "Technical" cards use the blue style — pick the matching variant.</p>
+              <div class="custom-table-wrapper">
+                <table class="custom-table">
+                  <thead>
+                    <tr>
+                      <th style="width: 25%;">Title</th>
+                      <th style="width: 22%;">Location</th>
+                      <th style="width: 13%;">Variant</th>
+                      <th style="width: 18%;">Image</th>
+                      <th style="width: 12%; text-align:center;">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="cmsw-campuses-tbody">
+                    <!-- Dynamic rendering -->
+                  </tbody>
+                </table>
+              </div>
+              <form onsubmit="addCmsCampus(event)" style="display:grid; grid-template-columns:1fr 1fr; gap:1.2rem;">
+                <div class="form-group" style="margin:0;">
+                  <label for="cmsw-campus-variant">Campus Variant</label>
+                  <select id="cmsw-campus-variant" class="form-control">
+                    <option value="general">General Block (Education)</option>
+                    <option value="technical">Technical Block (Engineering)</option>
+                  </select>
+                </div>
+                <div class="form-group" style="margin:0;">
+                  <label for="cmsw-campus-badge">Badge Label</label>
+                  <input type="text" id="cmsw-campus-badge" class="form-control" placeholder="e.g. General Block" required>
+                </div>
+                <div class="form-group" style="grid-column: span 2; margin:0;">
+                  <label for="cmsw-campus-title">Card Title (use a new line for the second line)</label>
+                  <textarea id="cmsw-campus-title" class="form-control" rows="2" placeholder="General Education&#10;Johang Campus" required></textarea>
+                </div>
+                <div class="form-group" style="margin:0;">
+                  <label for="cmsw-campus-location">Location Line</label>
+                  <input type="text" id="cmsw-campus-location" class="form-control" placeholder="e.g. Ward No. 06, Johang" required>
+                </div>
+                <div class="form-group" style="margin:0;">
+                  <label for="cmsw-campus-map-url">Google Maps Link</label>
+                  <input type="text" id="cmsw-campus-map-url" class="form-control" placeholder="https://maps.google.com/?q=..." required>
+                </div>
+                <div class="form-group" style="grid-column: span 2; margin:0;">
+                  <label for="cmsw-campus-points">Highlight Points (one per line)</label>
+                  <textarea id="cmsw-campus-points" class="form-control" rows="4" placeholder="ECD / Pre-Primary to Grade 10&#10;Library, Science Lab, Playground" required></textarea>
+                </div>
+                <div class="form-group" style="margin:0;">
+                  <label for="cmsw-campus-image-url">Image URL (optional)</label>
+                  <input type="text" id="cmsw-campus-image-url" class="form-control" placeholder="Leave empty to use the default image">
+                </div>
+                <div class="form-group" style="margin:0;">
+                  <label for="cmsw-campus-file">Or Upload Image</label>
+                  <input type="file" id="cmsw-campus-file" class="form-control" accept="image/*">
+                </div>
+                <div style="grid-column: span 2; text-align:right;">
+                  <button type="submit" class="submit-btn" id="cmsw-campus-submit-btn" style="background:var(--accent); padding:0.8rem 2.5rem;">Add Campus Card</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- 9. Students by Class -->
+          <div class="panel">
+            <div class="panel-header">
+              <h3>9. Students By Class (Statistics Badges)</h3>
+            </div>
+            <div style="padding:1.5rem; display:flex; flex-direction:column; gap:1.5rem;">
+              <p style="color:var(--text-muted); font-size:0.9rem; margin:0;">The colour-coded class badges in the school statistics section. Level controls the badge colour: Pre-School (orange), Basic (blue), Secondary (green), Higher (purple).</p>
+              <div class="custom-table-wrapper">
+                <table class="custom-table">
+                  <thead>
+                    <tr>
+                      <th style="width: 35%;">Class Title</th>
+                      <th style="width: 25%;">Student Count</th>
+                      <th style="width: 30%;">Level</th>
+                      <th style="width: 10%; text-align:center;">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="cmsw-class-stats-tbody">
+                    <!-- Dynamic rendering -->
+                  </tbody>
+                </table>
+              </div>
+              <form onsubmit="addClassStat(event)" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.2rem; align-items:end;">
+                <div class="form-group" style="margin:0;">
+                  <label for="cmsw-class-title">Class Title</label>
+                  <input type="text" id="cmsw-class-title" class="form-control" placeholder="e.g. Grade 5" required>
+                </div>
+                <div class="form-group" style="margin:0;">
+                  <label for="cmsw-class-count">Student Count</label>
+                  <input type="text" id="cmsw-class-count" class="form-control" placeholder="e.g. 17" required>
+                </div>
+                <div class="form-group" style="margin:0;">
+                  <label for="cmsw-class-level">Level</label>
+                  <select id="cmsw-class-level" class="form-control">
+                    <option value="Pre-School">Pre-School</option>
+                    <option value="Basic" selected>Basic</option>
+                    <option value="Secondary">Secondary</option>
+                    <option value="Higher">Higher</option>
+                  </select>
+                </div>
+                <div style="grid-column: span 3; text-align:right;">
+                  <button type="submit" class="submit-btn" style="background:var(--accent); padding:0.8rem 2.5rem;">Add Class Badge</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- 10. About Section Teaser -->
+          <div class="panel">
+            <div class="panel-header">
+              <h3>10. About Section Text &amp; Value Chips</h3>
+            </div>
+            <div style="padding:1.5rem;">
+              <p style="color:var(--text-muted); font-size:0.9rem; margin:0 0 1.5rem 0;">The heading, paragraphs and value chips of the homepage About section. Paragraphs may contain simple HTML such as <code>&lt;strong&gt;</code>.</p>
+              <form onsubmit="saveCmsAboutTeaser(event)" style="display:flex; flex-direction:column; gap:1.2rem;">
+                <div class="form-group" style="margin:0;">
+                  <label for="cmsw-about-heading">Section Heading</label>
+                  <input type="text" id="cmsw-about-heading" class="form-control" required>
+                </div>
+                <div class="form-group" style="margin:0;">
+                  <label for="cmsw-about-p1">First Paragraph</label>
+                  <textarea id="cmsw-about-p1" class="form-control" rows="4" required></textarea>
+                </div>
+                <div class="form-group" style="margin:0;">
+                  <label for="cmsw-about-p2">Second Paragraph</label>
+                  <textarea id="cmsw-about-p2" class="form-control" rows="4" required></textarea>
+                </div>
+                <div class="form-group" style="margin:0;">
+                  <label for="cmsw-about-chips">Value Chips (comma separated)</label>
+                  <input type="text" id="cmsw-about-chips" class="form-control" placeholder="🎯 Excellence, 🤝 Integrity, 🌱 Growth" required>
+                </div>
+                <div style="text-align:right;">
+                  <button type="submit" class="submit-btn" style="background:var(--secondary); color:var(--primary); padding:0.8rem 2.5rem;">Save About Section</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- 11. Contact / Top Bar / Footer Info -->
+          <div class="panel">
+            <div class="panel-header">
+              <h3>11. Contact, Top Bar &amp; Footer Details</h3>
+            </div>
+            <div style="padding:1.5rem;">
+              <p style="color:var(--text-muted); font-size:0.9rem; margin:0 0 1.5rem 0;">Shared contact details used by the top bar, header line, About info blocks, Contact section, both maps and the footer. Map embed URLs accept a Google Maps "Embed a map" link.</p>
+              <form onsubmit="saveCmsContactInfo(event)" style="display:grid; grid-template-columns:1fr 1fr; gap:1.2rem;">
+                <div class="form-group" style="margin:0;">
+                  <label for="cmsw-contact-address">Address (top bar &amp; header)</label>
+                  <input type="text" id="cmsw-contact-address" class="form-control" placeholder="Satyawati-6 Johang, Gulmi, Nepal">
+                </div>
+                <div class="form-group" style="margin:0;">
+                  <label for="cmsw-contact-phone">Phone</label>
+                  <input type="text" id="cmsw-contact-phone" class="form-control" placeholder="+977-9857064140">
+                </div>
+                <div class="form-group" style="margin:0;">
+                  <label for="cmsw-contact-email">Email</label>
+                  <input type="email" id="cmsw-contact-email" class="form-control" placeholder="saraswatischool60@gmail.com">
+                </div>
+                <div class="form-group" style="margin:0;">
+                  <label for="cmsw-contact-iemis">IEMIS Code</label>
+                  <input type="text" id="cmsw-contact-iemis" class="form-control" placeholder="460500011">
+                </div>
+                <div class="form-group" style="margin:0;">
+                  <label for="cmsw-contact-school-type">School Type</label>
+                  <input type="text" id="cmsw-contact-school-type" class="form-control" placeholder="Public">
+                </div>
+                <div class="form-group" style="margin:0;">
+                  <label for="cmsw-contact-province">Province Line (About block)</label>
+                  <input type="text" id="cmsw-contact-province" class="form-control" placeholder="Lumbini Province, Satyawati Rural Municipality">
+                </div>
+                <div class="form-group" style="grid-column: span 2; margin:0;">
+                  <label for="cmsw-contact-location">Campus Locations Line (About block)</label>
+                  <input type="text" id="cmsw-contact-location" class="form-control" placeholder="General Block: Johang, Ward 6 · Technical Block: Bedauri">
+                </div>
+                <div class="form-group" style="grid-column: span 2; margin:0;">
+                  <label for="cmsw-contact-map-address">Map Header Address (Contact section)</label>
+                  <input type="text" id="cmsw-contact-map-address" class="form-control" placeholder="Satyawati-6 Johang, Gulmi — Province 5, Nepal">
+                </div>
+                <div class="form-group" style="grid-column: span 2; margin:0;">
+                  <label for="cmsw-contact-map-general">General Block Map Embed URL</label>
+                  <input type="text" id="cmsw-contact-map-general" class="form-control" placeholder="https://www.google.com/maps/embed?pb=...">
+                </div>
+                <div class="form-group" style="grid-column: span 2; margin:0;">
+                  <label for="cmsw-contact-map-technical">Technical Block Map Embed URL</label>
+                  <input type="text" id="cmsw-contact-map-technical" class="form-control" placeholder="https://www.google.com/maps/embed?pb=...">
+                </div>
+                <div class="form-group" style="margin:0;">
+                  <label for="cmsw-contact-footer-address">Footer Address (one line per row)</label>
+                  <textarea id="cmsw-contact-footer-address" class="form-control" rows="2" placeholder="Satyawati-6 Johang, Gulmi&#10;Lumbini Province, Nepal"></textarea>
+                </div>
+                <div class="form-group" style="margin:0;">
+                  <label for="cmsw-contact-footer-tagline">Footer Tagline</label>
+                  <textarea id="cmsw-contact-footer-tagline" class="form-control" rows="2"></textarea>
+                </div>
+                <div class="form-group" style="grid-column: span 2; margin:0;">
+                  <label for="cmsw-contact-copyright">Footer Copyright Line</label>
+                  <input type="text" id="cmsw-contact-copyright" class="form-control">
+                </div>
+                <div style="grid-column: span 2; text-align:right;">
+                  <button type="submit" class="submit-btn" style="background:var(--primary); padding:0.8rem 2.5rem;">Save Contact &amp; Footer Details</button>
+                </div>
+              </form>
             </div>
           </div>
 
@@ -5891,6 +6373,8 @@ display: block;">
       if (pageId === 'students') {
         if (typeof loadStudentAccounts === 'function') loadStudentAccounts();
         if (typeof loadClassesForDropdown === 'function') loadClassesForDropdown();
+        if (typeof loadStudentGroupSelects === 'function') loadStudentGroupSelects();
+        if (typeof loadStudentGroupRoster === 'function') loadStudentGroupRoster('render');
       }
 
       // Load teacher accounts when page is visited
@@ -11540,6 +12024,144 @@ display: block;">
           });
         }
       }
+
+      // 5. Testimonials
+      const cmswTestimonials = getCmsWebsiteVal('website_testimonials') || [];
+      const cmswTestimonialsTbody = document.getElementById('cmsw-testimonials-tbody');
+      if (cmswTestimonialsTbody) {
+        if (cmswTestimonials.length === 0) {
+          cmswTestimonialsTbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--text-muted);">No testimonials — the homepage shows its built-in cards.</td></tr>';
+        } else {
+          cmswTestimonialsTbody.innerHTML = cmswTestimonials.map((t, idx) => `
+            <tr>
+              <td><div style="font-size:0.85rem; color:var(--primary); max-width:320px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${escAdm(t.quote)}">${escAdm(t.quote)}</div></td>
+              <td>${escAdm(t.name || '')}</td>
+              <td>${escAdm(t.role || '')}</td>
+              <td style="text-align:center;">
+                <button type="button" style="background:#fee2e2; color:#ef4444; border:none; padding:0.4rem 0.8rem; border-radius:6px; font-weight:bold; cursor:pointer;" onclick="deleteCmsWebsiteItem('website_testimonials', ${idx}, 'testimonial')">Remove</button>
+              </td>
+            </tr>
+          `).join('');
+        }
+      }
+
+      // 6. FAQ
+      const cmswFaqs = getCmsWebsiteVal('website_faq') || [];
+      const cmswFaqTbody = document.getElementById('cmsw-faq-tbody');
+      if (cmswFaqTbody) {
+        if (cmswFaqs.length === 0) {
+          cmswFaqTbody.innerHTML = '<tr><td colspan="3" style="text-align:center; color:var(--text-muted);">No FAQ entries — the homepage shows its built-in questions.</td></tr>';
+        } else {
+          cmswFaqTbody.innerHTML = cmswFaqs.map((f, idx) => `
+            <tr>
+              <td><div style="font-weight:700; color:var(--primary); font-size:0.9rem;">${escAdm(f.question)}</div></td>
+              <td><div style="font-size:0.85rem; color:var(--text-muted); max-width:340px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${escAdm(f.answer)}">${escAdm(f.answer)}</div></td>
+              <td style="text-align:center;">
+                <button type="button" style="background:#fee2e2; color:#ef4444; border:none; padding:0.4rem 0.8rem; border-radius:6px; font-weight:bold; cursor:pointer;" onclick="deleteCmsWebsiteItem('website_faq', ${idx}, 'FAQ entry')">Remove</button>
+              </td>
+            </tr>
+          `).join('');
+        }
+      }
+
+      // 7. Feature cards
+      const cmswFeatures = getCmsWebsiteVal('website_features') || [];
+      const cmswFeaturesTbody = document.getElementById('cmsw-features-tbody');
+      if (cmswFeaturesTbody) {
+        if (cmswFeatures.length === 0) {
+          cmswFeaturesTbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--text-muted);">No feature cards — the homepage shows its built-in cards.</td></tr>';
+        } else {
+          cmswFeaturesTbody.innerHTML = cmswFeatures.map((f, idx) => `
+            <tr>
+              <td><div style="font-weight:700; color:var(--primary); font-size:0.9rem;">${escAdm(f.title)}</div></td>
+              <td><div style="font-size:0.85rem; color:var(--text-muted); max-width:300px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${escAdm(f.description)}">${escAdm(f.description)}</div></td>
+              <td><span class="status-badge active" style="font-size:0.8rem; padding:0.25rem 0.6rem; border-radius:12px;">${escAdm(f.icon || 'book')}</span></td>
+              <td style="text-align:center;">
+                <button type="button" style="background:#fee2e2; color:#ef4444; border:none; padding:0.4rem 0.8rem; border-radius:6px; font-weight:bold; cursor:pointer;" onclick="deleteCmsWebsiteItem('website_features', ${idx}, 'feature card')">Remove</button>
+              </td>
+            </tr>
+          `).join('');
+        }
+      }
+
+      // 8. Campus cards
+      const cmswCampuses = getCmsWebsiteVal('website_campuses') || [];
+      const cmswCampusesTbody = document.getElementById('cmsw-campuses-tbody');
+      if (cmswCampusesTbody) {
+        if (cmswCampuses.length === 0) {
+          cmswCampusesTbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--text-muted);">No campus cards — the homepage shows its built-in cards.</td></tr>';
+        } else {
+          cmswCampusesTbody.innerHTML = cmswCampuses.map((c, idx) => {
+            const imgHtml = c.image_url
+              ? `<img src="${escAdm(c.image_url)}" style="width:60px; height:40px; object-fit:cover; border-radius:4px; display:block; margin:auto;" />`
+              : '<span style="color:var(--text-muted); font-size:0.8rem;">Default image</span>';
+            return `
+              <tr>
+                <td>
+                  <div style="font-weight:700; color:var(--primary); font-size:0.9rem;">${escAdm(c.title || '').replace(/\n/g, '<br/>')}</div>
+                  <span class="status-badge active" style="font-size:0.75rem; padding:0.2rem 0.5rem; border-radius:12px; margin-top:4px; display:inline-block;">${escAdm(c.badge || '')}</span>
+                </td>
+                <td>${escAdm(c.location || '')}</td>
+                <td>${escAdm(c.variant || 'general')}</td>
+                <td style="text-align:center;">${imgHtml}</td>
+                <td style="text-align:center;">
+                  <button type="button" style="background:#fee2e2; color:#ef4444; border:none; padding:0.4rem 0.8rem; border-radius:6px; font-weight:bold; cursor:pointer;" onclick="deleteCmsWebsiteItem('website_campuses', ${idx}, 'campus card')">Remove</button>
+                </td>
+              </tr>
+            `;
+          }).join('');
+        }
+      }
+
+      // 9. Class statistics badges
+      const cmswClassStats = getCmsWebsiteVal('website_class_stats') || [];
+      const cmswClassStatsTbody = document.getElementById('cmsw-class-stats-tbody');
+      if (cmswClassStatsTbody) {
+        if (cmswClassStats.length === 0) {
+          cmswClassStatsTbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--text-muted);">No class badges — the homepage shows its built-in badges.</td></tr>';
+        } else {
+          cmswClassStatsTbody.innerHTML = cmswClassStats.map((c, idx) => `
+            <tr>
+              <td><div style="font-weight:700; color:var(--primary);">${escAdm(c.title)}</div></td>
+              <td>${escAdm(c.count)}</td>
+              <td>${escAdm(c.level)}</td>
+              <td style="text-align:center;">
+                <button type="button" style="background:#fee2e2; color:#ef4444; border:none; padding:0.4rem 0.8rem; border-radius:6px; font-weight:bold; cursor:pointer;" onclick="deleteCmsWebsiteItem('website_class_stats', ${idx}, 'class badge')">Remove</button>
+              </td>
+            </tr>
+          `).join('');
+        }
+      }
+
+      // 10. About section teaser form prefill
+      const cmswAbout = Object.assign({}, getCmsWebsiteDefaults('website_about_teaser'), getCmsWebsiteVal('website_about_teaser') || {});
+      const cmswAboutHeading = document.getElementById('cmsw-about-heading');
+      if (cmswAboutHeading) {
+        cmswAboutHeading.value = cmswAbout.heading || '';
+        document.getElementById('cmsw-about-p1').value = cmswAbout.p1 || '';
+        document.getElementById('cmsw-about-p2').value = cmswAbout.p2 || '';
+        document.getElementById('cmsw-about-chips').value = (cmswAbout.chips || []).join(', ');
+      }
+
+      // 11. Contact / top bar / footer form prefill
+      const cmswContact = Object.assign({}, getCmsWebsiteDefaults('website_contact_info'), getCmsWebsiteVal('website_contact_info') || {});
+      const cmswSetField = (id, key) => {
+        const el = document.getElementById(id);
+        if (el) el.value = cmswContact[key] !== undefined && cmswContact[key] !== null ? cmswContact[key] : '';
+      };
+      cmswSetField('cmsw-contact-address', 'address');
+      cmswSetField('cmsw-contact-phone', 'phone');
+      cmswSetField('cmsw-contact-email', 'email');
+      cmswSetField('cmsw-contact-iemis', 'iemis');
+      cmswSetField('cmsw-contact-school-type', 'school_type');
+      cmswSetField('cmsw-contact-province', 'province_line');
+      cmswSetField('cmsw-contact-location', 'location_line');
+      cmswSetField('cmsw-contact-map-address', 'map_address');
+      cmswSetField('cmsw-contact-map-general', 'map_general_url');
+      cmswSetField('cmsw-contact-map-technical', 'map_technical_url');
+      cmswSetField('cmsw-contact-footer-address', 'footer_address');
+      cmswSetField('cmsw-contact-footer-tagline', 'footer_tagline');
+      cmswSetField('cmsw-contact-copyright', 'footer_copyright');
     }
 
     async function addCmsHighlight(event) {
@@ -11740,6 +12362,274 @@ display: block;">
       await pullAllFromSupabase();
       renderWebsiteConfig();
       alert("Co-curricular club card removed successfully!");
+    }
+
+    // ══════════════════════════════════════════════════════
+    // WEBSITE FRONTEND SETTINGS — PANELS 5 to 11
+    // ══════════════════════════════════════════════════════
+
+    function escAdm(v) {
+      return String(v == null ? '' : v)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    // Built-in homepage content — used to prefill the admin panels when a key
+    // has never been saved, so admins see (and can edit) what visitors see now.
+    function getCmsWebsiteDefaults(key) {
+      const defaults = {
+        website_testimonials: [
+          { quote: `My children have flourished here. The teachers give personal attention and the school's values-based teaching has made them confident and responsible individuals.`, name: `Ram Bahadur Khatri`, role: `Parent, Class 8` },
+          { quote: `Shree Saraswati School gave me the foundation I needed. The supportive environment helped me score Distinction in SEE and I am now pursuing my dreams.`, name: `Sunita Pun`, role: `SEE Graduate, 2080` },
+          { quote: `Teaching here is a joy. The management is supportive and the students are eager to learn. I am proud to be part of this growing institution in Gulmi.`, name: ``, role: `Mathematics Teacher` }
+        ],
+        website_faq: [
+          { question: `How can my child secure admission into the Computer Engineering stream?`, answer: `Admissions into the specialized <strong>Computer Engineering program (Grades 9 to 12)</strong> are open to students who have successfully cleared the Class 8 evaluations. The selection is based on basic scientific and mathematical aptitude, evaluated through an interactive admission counseling session at our Bedauri Campus.` },
+          { question: `What are the school timings for the Johang and Bedauri campuses?`, answer: `Our standard classes run from <strong>10:00 AM to 04:00 PM</strong>, Sunday through Friday. The specialized laboratory sessions and practice hours for Computer Engineering students can occasionally start early at 09:30 AM on designated weekdays.` },
+          { question: `Are there any scholarship provisions or fee exemptions available?`, answer: `Yes, as a public institution dedicated to social development, we provide complete tuition fee waivers and material scholarships to meritorious, economically disadvantaged, and marginalized students, guided by municipal education directives.` },
+          { question: `Does the school offer transportation facilities for far-away students?`, answer: `Currently, our students reside locally within the Satyawati-6 Johang and adjoining Gulmi communities, and commute on foot. We are actively discussing bus transit pathways with the local municipality for far-away student sectors.` }
+        ],
+        website_features: [
+          { title: `Strong Curriculum`, description: `SEE-aligned curriculum with modern pedagogy that builds critical thinking and problem-solving skills.`, icon: `book` },
+          { title: `Expert Faculty`, description: `Experienced, passionate educators committed to personalized attention and student success.`, icon: `graduation` },
+          { title: `Modern Facilities`, description: `Well-equipped classrooms, library, science lab, and sports ground for complete development.`, icon: `building` },
+          { title: `Arts & Culture`, description: `Regular cultural programs, art classes and events that celebrate Nepal's rich heritage.`, icon: `message` },
+          { title: `Digital Learning`, description: `Technology-integrated classrooms preparing students for the demands of the modern world.`, icon: `globe` },
+          { title: `Safe Campus`, description: `A secure, inclusive, and nurturing environment where every student feels valued and protected.`, icon: `shield` }
+        ],
+        website_campuses: [
+          {
+            variant: `general`,
+            badge: `General Block`,
+            title: `General Education\nJohang Campus`,
+            location: `Ward No. 06, Johang`,
+            image_url: ``,
+            map_url: `https://maps.google.com/?q=Johang+Satyawati+Gulmi`,
+            points: [
+              `ECD / Pre-Primary to Grade 10`,
+              `Classes 11 & 12 — Education Faculty`,
+              `Science, Social Studies, Nepali, English`,
+              `Library, Science Lab, Playground`,
+              `SEE Preparation & Guidance`
+            ]
+          },
+          {
+            variant: `technical`,
+            badge: `Technical Block`,
+            title: `Computer Engineering\n(Classes 9 to 12) — Bedauri`,
+            location: `Bedauri Campus`,
+            image_url: ``,
+            map_url: `https://maps.google.com/?q=Bedauri+Satyawati+Gulmi`,
+            points: [
+              `Computer Engineering Classes 9 to 12`,
+              `Modern Computer Lab & ICT Facilities`,
+              `Industry-Oriented Curriculum`,
+              `Internet & Digital Learning Resources`,
+              `Technical Career Pathways`
+            ]
+          }
+        ],
+        website_class_stats: [
+          { title: `ECD`, count: `24`, level: `Pre-School` },
+          { title: `Grade 1`, count: `9`, level: `Basic` },
+          { title: `Grade 2`, count: `11`, level: `Basic` },
+          { title: `Grade 3`, count: `10`, level: `Basic` },
+          { title: `Grade 4`, count: `30`, level: `Basic` },
+          { title: `Grade 5`, count: `17`, level: `Basic` },
+          { title: `Grade 6`, count: `28`, level: `Basic` },
+          { title: `Grade 7`, count: `17`, level: `Basic` },
+          { title: `Grade 8`, count: `9`, level: `Basic` },
+          { title: `Grade 9`, count: `30`, level: `Secondary` },
+          { title: `Grade 10`, count: `28`, level: `Secondary` },
+          { title: `Grade 11`, count: `21`, level: `Higher` },
+          { title: `Grade 12`, count: `11`, level: `Higher` }
+        ],
+        website_about_teaser: {
+          heading: `Empowering the Youth of Gulmi Since 2016`,
+          p1: `We started our journey way back in <strong>2016 B.S.</strong> with a simple but powerful dream: to bring quality education to the children of Gulmi. Tucked away in the peaceful hills of Satyawati-6, Johang, our school has grown from a tiny local school into a vibrant home of learning that hundreds of local families trust every single day.`,
+          p2: `Here, we don't just focus on textbooks and exams. We believe in helping children grow into good, kind, and creative human beings who care about their community. Plus, to help our students match today's fast world, we also offer a special <strong>Computer Engineering course for Classes 9 to 12</strong>. We are proud of our roots, and we welcome every child with open arms to learn, laugh, and grow with us!`,
+          chips: [`🎯 Excellence`, `🤝 Integrity`, `🌱 Growth`, `🏆 Leadership`, `🌍 Community`]
+        },
+        website_contact_info: {
+          address: `Satyawati-6 Johang, Gulmi, Nepal`,
+          phone: `+977-9857064140`,
+          email: `saraswatischool60@gmail.com`,
+          iemis: `460500011`,
+          school_type: `Public`,
+          location_line: `General Block: Johang, Ward 6 · Technical Block: Bedauri`,
+          province_line: `Lumbini Province, Satyawati Rural Municipality`,
+          map_address: `Satyawati-6 Johang, Gulmi — Province 5, Nepal`,
+          map_general_url: `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4945.44979506572!2d83.43735004639127!3d28.04216465064118!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399671f3de286135%3A0xc1901eba6a9d0eba!2z4KS44KSw4KS44KWN4KS14KSk4KWAIOCkieCkmuCljeCkmiDgpK7gpL7gpKfgpY3gpK_gpK7gpL_gpJUg4KSs4KS_4KSm4KWN4KSv4KS-4KSy4KSvIOCknOCli-CkueCkvuCkmSDgpJfgpYHgpLLgpY3gpK7gpYA!5e1!3m2!1sen!2snp!4v1784956524664!5m2!1sen!2snp`,
+          map_technical_url: `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d992.9299859320676!2d83.44490989429353!3d28.029043540794692!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39967100621386e5%3A0x6a172d4fc2bfee7d!2sShree%20Saraswati%20Secondary%20School%20Technical%20Block!5e1!3m2!1sen!2snp!4v1784956481693!5m2!1sen!2snp`,
+          footer_address: `Satyawati-6 Johang, Gulmi\nLumbini Province, Nepal`,
+          footer_tagline: `Committed to nurturing the next generation of leaders from Gulmi with quality education, strong values, and a vision for a brighter Nepal.`,
+          footer_copyright: `© 2083 B.S. Shree Saraswati Secondary School, Gulmi. All rights reserved.`
+        }
+      };
+      return defaults[key];
+    }
+
+    // Saved value from localStorage, falling back to the built-in homepage content
+    function getCmsWebsiteVal(key) {
+      let v = null;
+      try { v = JSON.parse(localStorage.getItem(key)); } catch (e) {}
+      if (v !== null && v !== undefined) return v;
+      return getCmsWebsiteDefaults(key);
+    }
+
+    // Shared save path: upsert school_config -> mirror to localStorage -> re-render
+    async function saveCmsWebsiteKey(key, value, okMsg, errCtx) {
+      if (supabaseDb) {
+        try {
+          const { error } = await supabaseDb.from('school_config').upsert([{ key, val: value }]);
+          if (error) throw error;
+        } catch (e) {
+          console.error(errCtx || ('Failed to save ' + key + ':'), e);
+          alert("Error saving to Supabase: " + e.message);
+          return false;
+        }
+      }
+      localStorage.setItem(key, JSON.stringify(value));
+      renderWebsiteConfig();
+      if (okMsg) alert(okMsg);
+      return true;
+    }
+
+    async function deleteCmsWebsiteItem(key, idx, label) {
+      if (!confirm("Are you sure you want to remove this " + label + "?")) return;
+      const items = getCmsWebsiteVal(key) || [];
+      items.splice(idx, 1);
+      const okLabel = label.charAt(0).toUpperCase() + label.slice(1);
+      await saveCmsWebsiteKey(key, items, okLabel + " removed successfully!", "Failed to remove " + label + ":");
+    }
+
+    // 5. Testimonials
+    async function addCmsTestimonial(event) {
+      event.preventDefault();
+      const quote = document.getElementById('cmsw-testimonial-quote').value.trim();
+      const name = document.getElementById('cmsw-testimonial-name').value.trim();
+      const role = document.getElementById('cmsw-testimonial-role').value.trim();
+      if (!quote || !role) return;
+      const testimonials = getCmsWebsiteVal('website_testimonials') || [];
+      testimonials.push({ quote, name, role });
+      const ok = await saveCmsWebsiteKey('website_testimonials', testimonials, "Testimonial added successfully!", "Failed to save testimonial:");
+      if (ok) event.target.reset();
+    }
+
+    // 6. FAQ
+    async function addCmsFaq(event) {
+      event.preventDefault();
+      const question = document.getElementById('cmsw-faq-question').value.trim();
+      const answer = document.getElementById('cmsw-faq-answer').value.trim();
+      if (!question || !answer) return;
+      const faqs = getCmsWebsiteVal('website_faq') || [];
+      faqs.push({ question, answer });
+      const ok = await saveCmsWebsiteKey('website_faq', faqs, "FAQ entry added successfully!", "Failed to save FAQ:");
+      if (ok) event.target.reset();
+    }
+
+    // 7. Feature cards
+    async function addCmsFeature(event) {
+      event.preventDefault();
+      const title = document.getElementById('cmsw-feature-title').value.trim();
+      const description = document.getElementById('cmsw-feature-desc').value.trim();
+      const icon = document.getElementById('cmsw-feature-icon').value;
+      if (!title || !description) return;
+      const features = getCmsWebsiteVal('website_features') || [];
+      features.push({ title, description, icon });
+      const ok = await saveCmsWebsiteKey('website_features', features, "Feature card added successfully!", "Failed to save feature card:");
+      if (ok) event.target.reset();
+    }
+
+    // 8. Campus cards
+    async function addCmsCampus(event) {
+      event.preventDefault();
+      const submitBtn = document.getElementById('cmsw-campus-submit-btn');
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Publishing Campus Card... ⏳';
+      }
+
+      const variant = document.getElementById('cmsw-campus-variant').value;
+      const badge = document.getElementById('cmsw-campus-badge').value.trim();
+      const title = document.getElementById('cmsw-campus-title').value.trim();
+      const location = document.getElementById('cmsw-campus-location').value.trim();
+      const mapUrl = document.getElementById('cmsw-campus-map-url').value.trim();
+      const points = document.getElementById('cmsw-campus-points').value.split('\n').map(p => p.trim()).filter(Boolean);
+      const imageUrlInput = document.getElementById('cmsw-campus-image-url').value.trim();
+      const fileInput = document.getElementById('cmsw-campus-file');
+
+      let imageUrl = imageUrlInput;
+      if (!imageUrl && fileInput && fileInput.files && fileInput.files[0]) {
+        const file = fileInput.files[0];
+        try {
+          imageUrl = await uploadMediaFile(file, `campuses/${Date.now()}_${file.name.replace(/\s+/g, '_')}`);
+        } catch (e) {
+          console.error("Failed to upload campus image:", e);
+          alert("Image upload failed: " + e.message);
+        }
+      }
+
+      const campuses = getCmsWebsiteVal('website_campuses') || [];
+      campuses.push({ variant, badge, title, location, image_url: imageUrl, map_url: mapUrl, points });
+
+      const ok = await saveCmsWebsiteKey('website_campuses', campuses, "Campus card added successfully!", "Failed to save campus card:");
+      if (ok) {
+        event.target.reset();
+        document.getElementById('cmsw-campus-variant').value = variant;
+      }
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Add Campus Card';
+      }
+    }
+
+    // 9. Class statistics badges
+    async function addClassStat(event) {
+      event.preventDefault();
+      const title = document.getElementById('cmsw-class-title').value.trim();
+      const count = document.getElementById('cmsw-class-count').value.trim();
+      const level = document.getElementById('cmsw-class-level').value;
+      if (!title || !count) return;
+      const classStats = getCmsWebsiteVal('website_class_stats') || [];
+      classStats.push({ title, count, level });
+      const ok = await saveCmsWebsiteKey('website_class_stats', classStats, "Class badge added successfully!", "Failed to save class badge:");
+      if (ok) event.target.reset();
+    }
+
+    // 10. About section teaser
+    async function saveCmsAboutTeaser(event) {
+      event.preventDefault();
+      const value = {
+        heading: document.getElementById('cmsw-about-heading').value.trim(),
+        p1: document.getElementById('cmsw-about-p1').value.trim(),
+        p2: document.getElementById('cmsw-about-p2').value.trim(),
+        chips: document.getElementById('cmsw-about-chips').value.split(',').map(c => c.trim()).filter(Boolean)
+      };
+      await saveCmsWebsiteKey('website_about_teaser', value, "About section saved successfully!", "Failed to save about section:");
+    }
+
+    // 11. Contact / top bar / footer details
+    async function saveCmsContactInfo(event) {
+      event.preventDefault();
+      const value = {
+        address: document.getElementById('cmsw-contact-address').value.trim(),
+        phone: document.getElementById('cmsw-contact-phone').value.trim(),
+        email: document.getElementById('cmsw-contact-email').value.trim(),
+        iemis: document.getElementById('cmsw-contact-iemis').value.trim(),
+        school_type: document.getElementById('cmsw-contact-school-type').value.trim(),
+        province_line: document.getElementById('cmsw-contact-province').value.trim(),
+        location_line: document.getElementById('cmsw-contact-location').value.trim(),
+        map_address: document.getElementById('cmsw-contact-map-address').value.trim(),
+        map_general_url: document.getElementById('cmsw-contact-map-general').value.trim(),
+        map_technical_url: document.getElementById('cmsw-contact-map-technical').value.trim(),
+        footer_address: document.getElementById('cmsw-contact-footer-address').value.trim(),
+        footer_tagline: document.getElementById('cmsw-contact-footer-tagline').value.trim(),
+        footer_copyright: document.getElementById('cmsw-contact-copyright').value.trim()
+      };
+      await saveCmsWebsiteKey('website_contact_info', value, "Contact & footer details saved successfully!", "Failed to save contact details:");
     }
 
     // ── ADMIN AUTHENTICATION ──
@@ -14852,6 +15742,234 @@ display: block;">
       });
     }
 
+    // ==================== HOUSES & CLUBS (MEMBERSHIPS + ROSTER) ====================
+
+    const GROUP_HOUSE_META = {
+      'Resunga House':   { bg: '#dcfce7', fg: '#15803d', icon: '🏔️' },
+      'Thapla House':    { bg: '#dbeafe', fg: '#1d4ed8', icon: '🏔️' },
+      'Satyawati House': { bg: '#fee2e2', fg: '#b91c1c', icon: '🏔️' },
+      'Ruru House':      { bg: '#fef9c3', fg: '#a16207', icon: '🏔️' },
+      'Red House':       { bg: '#fee2e2', fg: '#b91c1c', icon: '🔴' },
+      'Blue House':      { bg: '#dbeafe', fg: '#1d4ed8', icon: '🔵' },
+      'Green House':     { bg: '#dcfce7', fg: '#15803d', icon: '🟢' },
+      'Yellow House':    { bg: '#fef9c3', fg: '#a16207', icon: '🟡' }
+    };
+    const GROUP_POSITION_META = {
+      leader:      { bg: '#fef3c7', fg: '#b45309', label: '👑 Leader' },
+      'co-leader': { bg: '#e2e8f0', fg: '#334155', label: '✳️ Co-Leader' },
+      member:      { bg: '#e0e7ff', fg: '#3730a3', label: 'Member' }
+    };
+
+    function getStudentGroupCache() {
+      return (typeof getStudentGroupMembershipsFromCache === 'function')
+        ? getStudentGroupMembershipsFromCache()
+        : JSON.parse(localStorage.getItem('student_group_memberships') || '[]');
+    }
+
+    function getGroupCatalog() {
+      const cached = JSON.parse(localStorage.getItem('school_clubs') || '[]');
+      const houses = [];
+      const clubs = [];
+      (cached || []).forEach(c => {
+        const t = (c.title || '').trim();
+        if (!t) return;
+        if (/house$/i.test(t)) {
+          if (!houses.includes(t)) houses.push(t);
+        } else {
+          if (!clubs.includes(t)) clubs.push(t);
+        }
+      });
+      getStudentGroupCache().forEach(m => {
+        const arr = m.group_type === 'house' ? houses : clubs;
+        if (m.group_name && !arr.includes(m.group_name)) arr.push(m.group_name);
+      });
+      if (!houses.length) houses.push('Red House', 'Blue House', 'Green House', 'Yellow House');
+      if (!clubs.length) clubs.push('Junior Red Cross Society', 'Eco Club', 'Science Club');
+      return { houses, clubs };
+    }
+
+    function loadStudentGroupSelects() {
+      const houseSel = document.getElementById('std-house');
+      const clubSel = document.getElementById('std-club');
+      if (!houseSel || !clubSel || (houseSel.dataset.loaded && clubSel.dataset.loaded)) return;
+      const { houses, clubs } = getGroupCatalog();
+      const existingValues = sel => Array.from(sel.options).map(o => o.value);
+      houses.forEach(name => {
+        if (!existingValues(houseSel).includes(name)) {
+          const opt = document.createElement('option');
+          opt.value = name;
+          opt.textContent = name;
+          houseSel.appendChild(opt);
+        }
+      });
+      clubs.forEach(name => {
+        if (!existingValues(clubSel).includes(name)) {
+          const opt = document.createElement('option');
+          opt.value = name;
+          opt.textContent = name;
+          clubSel.appendChild(opt);
+        }
+      });
+      houseSel.dataset.loaded = '1';
+      clubSel.dataset.loaded = '1';
+    }
+
+    async function assignEnrollmentGroups(roll) {
+      const house = document.getElementById('std-house').value;
+      const club = document.getElementById('std-club').value;
+      const housePos = document.getElementById('std-house-pos').value || 'member';
+      const clubPos = document.getElementById('std-club-pos').value || 'member';
+
+      if (house && typeof createStudentGroupMembership === 'function') {
+        await createStudentGroupMembership({ student_roll: roll, group_type: 'house', group_name: house, position: housePos });
+      }
+      if (club && typeof createStudentGroupMembership === 'function') {
+        await createStudentGroupMembership({ student_roll: roll, group_type: 'club', group_name: club, position: clubPos });
+      }
+      if (typeof syncStudentCredentials === 'function') {
+        await syncStudentCredentials();
+      }
+    }
+
+    function populateStudentGroupFields(roll) {
+      const membership = getStudentGroupCache();
+      if (!membership.length) return;
+      const house = membership.find(m => String(m.student_roll) === String(roll) && m.group_type === 'house');
+      const club = membership.find(m => String(m.student_roll) === String(roll) && m.group_type === 'club');
+
+      if (house) {
+        const houseSel = document.getElementById('std-house');
+        const housePos = document.getElementById('std-house-pos');
+        if (houseSel) {
+          for (let i = 0; i < houseSel.options.length; i++) {
+            if (houseSel.options[i].value === house.group_name) { houseSel.selectedIndex = i; break; }
+          }
+        }
+        if (housePos) housePos.value = house.position || 'member';
+      }
+      if (club) {
+        const clubSel = document.getElementById('std-club');
+        const clubPos = document.getElementById('std-club-pos');
+        if (clubSel) {
+          if (!clubSel.querySelector(`option[value="${CSS.escape(club.group_name)}"]`)) {
+            const opt = document.createElement('option');
+            opt.value = club.group_name;
+            opt.textContent = club.group_name;
+            clubSel.appendChild(opt);
+          }
+          clubSel.value = club.group_name;
+        }
+        if (clubPos) clubPos.value = club.position || 'member';
+      }
+    }
+
+    function groupChip(label, groupType, count, style) {
+      const icon = style.icon || '🏷️';
+      return `<button type="button" onclick="showStudentGroupDetail('${groupType}', '${label.replace(/'/g, "\\'")}')"
+        style="display:inline-flex; align-items:center; gap:0.5rem; padding:0.55rem 1rem; border:none; border-radius:999px;
+        background:${style.bg}; color:${style.fg}; font-weight:600; cursor:pointer; font-size:0.9rem;
+        box-shadow:0 1px 3px rgba(0,0,0,0.08); transition:transform 0.15s;"
+        onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+        ${icon} ${label}
+        <span style="background:rgba(255,255,255,0.75); border-radius:999px; padding:0.1rem 0.55rem; font-size:0.78rem;">${count}</span>
+      </button>`;
+    }
+
+    function renderStudentGroupRoster() {
+      const container = document.getElementById('group-roster-chips');
+      const detail = document.getElementById('group-roster-detail');
+      if (!container) return;
+      const memberships = getStudentGroupCache();
+      const { houses, clubs } = getGroupCatalog();
+
+      const chips = houses.map(name => {
+        const members = memberships.filter(m => m.group_type === 'house' && m.group_name === name);
+        return groupChip(name, 'house', members.length, GROUP_HOUSE_META[name] || { bg: '#f1f5f9', fg: '#334155', icon: '🏘️' });
+      });
+      clubs.forEach(name => {
+        const members = memberships.filter(m => m.group_type === 'club' && m.group_name === name);
+        chips.push(groupChip(name, 'club', members.length, { bg: '#ede9fe', fg: '#6d28d9', icon: '🎭' }));
+      });
+
+      container.innerHTML = chips.length
+        ? chips.join('')
+        : '<span style="color:#94a3b8;">No houses/clubs found. Assign a house/club while creating a student account.</span>';
+      if (detail) detail.innerHTML = '';
+    }
+
+    function studentGroupMemberRow(m) {
+      const creds = JSON.parse(localStorage.getItem('student_credentials') || '[]');
+      const cred = creds.find(c => String(c.student_roll) === String(m.student_roll));
+      const pos = GROUP_POSITION_META[m.position] || GROUP_POSITION_META.member;
+      return `
+        <tr style="border-bottom:1px solid #e5e7eb;">
+          <td style="padding:0.7rem; font-weight:600;">${m.student_roll}</td>
+          <td style="padding:0.7rem;">${cred ? cred.student_name : ('Roll ' + m.student_roll)}</td>
+          <td style="padding:0.7rem;">${cred ? (cred.student_class || '-') : '-'}</td>
+          <td style="padding:0.7rem;">
+            <span style="background:${pos.bg}; color:${pos.fg}; padding:0.25rem 0.75rem; border-radius:999px; font-size:0.8rem; font-weight:600;">${pos.label}</span>
+          </td>
+          <td style="padding:0.7rem; text-align:right;">
+            <button onclick="removeStudentFromGroup(${m.id}, ${m.student_roll})" style="padding:0.3rem 0.6rem; background:#f1f5f9; color:#b91c1c; border:1px solid #fecaca; border-radius:6px; cursor:pointer; font-size:0.75rem;" onmouseover="this.style.background='#fee2e2'" onmouseout="this.style.background='#f1f5f9'">✕ Remove</button>
+          </td>
+        </tr>`;
+    }
+
+    function showStudentGroupDetail(groupType, groupName) {
+      const detail = document.getElementById('group-roster-detail');
+      if (!detail) return;
+      const memberships = getStudentGroupCache();
+      const meta = groupType === 'house' ? (GROUP_HOUSE_META[groupName] || { bg: '#f1f5f9', fg: '#334155', icon: '🏘️' }) : { bg: '#ede9fe', fg: '#6d28d9', icon: '🎭' };
+      const members = memberships
+        .filter(m => m.group_type === groupType && m.group_name === groupName)
+        .sort((a, b) => (a.position_rank || 3) - (b.position_rank || 3) || a.student_roll - b.student_roll);
+
+      if (!members.length) {
+        detail.innerHTML = `<div style="background:#fff7ed; border:1px solid #fed7aa; border-radius:10px; padding:1.2rem; color:#9a3412;">No members in <strong>${groupName}</strong> yet. Assign students while creating their accounts.</div>`;
+        return;
+      }
+
+      detail.innerHTML = `
+        <div style="background:white; border:1px solid #e5e7eb; border-radius:12px; overflow:hidden;">
+          <div style="padding:1rem 1.25rem; background:${meta.bg}; border-bottom:1px solid #e5e7eb; display:flex; align-items:center; justify-content:space-between;">
+            <h4 style="margin:0; color:${meta.fg};">
+              ${meta.icon} ${groupName} <span style="font-weight:500; font-size:0.85rem;">(${members.length} member${members.length > 1 ? 's' : ''})</span>
+            </h4>
+          </div>
+          <table class="custom-table" style="margin:0;">
+            <thead>
+              <tr>
+                <th>Roll</th>
+                <th>Student Name</th>
+                <th>Class</th>
+                <th>Position</th>
+                <th style="text-align:right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody>${members.map(studentGroupMemberRow).join('')}</tbody>
+          </table>
+        </div>`;
+    }
+
+    async function removeStudentFromGroup(id, roll) {
+      if (!confirm('Remove roll ' + roll + ' from this group?')) return;
+      if (typeof deleteStudentGroupMembership === 'function') {
+        await deleteStudentGroupMembership(id);
+      }
+      loadStudentGroupRoster('render');
+    }
+
+    function loadStudentGroupRoster(mode) {
+      if (mode === 'refresh' && typeof syncStudentGroupMemberships === 'function') {
+        Promise.all([
+          typeof syncStudentCredentials === 'function' ? syncStudentCredentials() : Promise.resolve(),
+          syncStudentGroupMemberships()
+        ]).then(() => renderStudentGroupRoster());
+        return;
+      }
+      renderStudentGroupRoster();
+    }
+
     // ==================== FEE MANAGEMENT FUNCTIONS ====================
     
     async function loadFeeCategories() {
@@ -15493,6 +16611,7 @@ display: block;">
         if (result.success) {
           const action = result.updated ? 'Updated' : 'Created';
           alert(`✅ Student Account ${action} Successfully!\n\nRoll Number: ${roll}\nUsername: ${username}\nPassword: ${password}\nClass: ${className}\n\nShare these credentials with the student.`);
+          await assignEnrollmentGroups(roll);
           clearStudentForm();
           loadStudentAccounts();
           loadClassesForDropdown();
@@ -15539,6 +16658,9 @@ display: block;">
         if (result.success) {
           alert('Student account deleted successfully');
           loadStudentAccounts();
+          if (typeof syncStudentGroupMemberships === 'function') {
+            syncStudentGroupMemberships().then(() => loadStudentGroupRoster('render'));
+          }
         } else {
           alert('Error deleting account: ' + result.error);
         }
@@ -16779,6 +17901,7 @@ display: block;">
       if(submitBtn) {
         submitBtn.innerHTML = '✏️ Update Student Account';
       }
+      if (typeof populateStudentGroupFields === 'function') populateStudentGroupFields(roll);
       document.getElementById('student-enrollment-form').scrollIntoView({ behavior: 'smooth' });
     }
 
@@ -17530,6 +18653,36 @@ display: block;">
       </div>
     </div>
   </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const seen = new Set();
+    document.querySelectorAll('.page-view form').forEach(form => {
+      const parent = form.parentElement;
+      if (!parent || seen.has(parent) || parent.querySelector(':scope > .form-toggle')) return;
+      seen.add(parent);
+      const toggle = document.createElement('div');
+      toggle.className = 'form-toggle';
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'form-collapse-btn';
+      btn.textContent = '▾ Minimize Form';
+      btn.setAttribute('aria-expanded', 'true');
+      btn.addEventListener('click', () => {
+        const minimized = parent.classList.toggle('minimized-form');
+        if (minimized) {
+          form.style.setProperty('display', 'none', 'important');
+        } else {
+          form.style.removeProperty('display');
+        }
+        btn.textContent = minimized ? '▸ Expand Form' : '▾ Minimize Form';
+        btn.setAttribute('aria-expanded', minimized ? 'false' : 'true');
+      });
+      toggle.appendChild(btn);
+      form.parentNode.insertBefore(toggle, form);
+    });
+  });
+</script>
 
 </body>
 </html>

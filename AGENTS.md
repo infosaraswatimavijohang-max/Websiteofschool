@@ -16,7 +16,7 @@ Two files are meta-refresh stubs — **never edit either**: root `admin-portal.h
 
 ## Verification: the browser is the test suite
 
-Load the page, watch the console, exercise the feature. There is **no test file anywhere** (the ad-hoc `scratch/e2e_*.js` Playwright drivers were deleted; recover with `git show HEAD:<path>`). `adms-api`'s `npm test` is the stock `echo "Error: no test specified" && exit 1` placeholder — that exit 1 is not a real failure. Use the `playwright` MCP server.
+Load the page, watch the console, exercise the feature. There is **no test file anywhere** (the ad-hoc `scratch/e2e_*.js` Playwright drivers were deleted in commit `b2eb9bd`; deleted files are *not* in HEAD — recover with `git show b2eb9bd^:<path>`). `adms-api`'s `npm test` is the stock `echo "Error: no test specified" && exit 1` placeholder — that exit 1 is not a real failure. Use the `playwright` MCP server.
 
 **`ripgrep` is not installed on this machine** — use the grep tool or `Select-String`, not `rg`.
 
@@ -44,6 +44,7 @@ Load the page, watch the console, exercise the feature. There is **no test file 
   Seven never-loaded orphans — `admin-about-handler`, `admin-academic-handler`, `biometric-attendance`, `exam-portal-admin`, `fee-handler`, `student-directory-handler`, `student-fee-portal` — were deleted; their live logic is inline in the portals, and `html/admin-about-panel.html` went with them. `docs/` still documents them (see docs caveat).
 - **`html/faculty-showcase.html` never gets a Supabase client** — its CDN `<script>` tag is commented out (line 58) and it does not load `supabase-client.js`, so `js/faculty-showcase.js` always takes its mock-data path (`window.supabaseDb` is undefined). This is by design, not a bug to fix.
 - **LocalStorage is a real data layer, not a cache** (228 references in `js/` alone). `pullAllFromSupabase()` (`js/supabase-client.js:60`) mirrors DB rows into LocalStorage and many read paths hit LocalStorage directly. Don't treat it as disposable.
+- **House & club membership** uses `student_group_memberships` (`sql/setup/HOUSE_CLUB_MEMBERSHIP_SETUP.sql`): one row per student per group (`group_type` `house`/`club`, `position` leader/co-leader/member, `position_rank` 1/2/3). The Admin Portal's Create Student Account form + Houses & Clubs Roster (`html/admin-portal.html`) drive it via `createStudentGroupMembership` / `deleteStudentGroupMembership` / `syncStudentGroupMemberships` (`js/supabase-client.js`, mirrored into the `student_group_memberships` localStorage key). The group catalog is derived dynamically: houses = `school_clubs` titles ending in "House" (Resunga/Thapla/Satyawati/Ruru), clubs = the rest — don't hardcode a second list.
 - **The `*_REAL` indirection is intentional — preserve the suffix.** `js/about-data.js:1408-1410` exports `window.createAdminMember_REAL` / `readAllAdminTeam_REAL` / `deleteAdminMember_REAL`. `html/admin-portal.html` (665–706) defines early fallback wrappers for the *unsuffixed* names that poll for the `_REAL` globals — 100 × 50 ms ≈ 5 s, then return `[]` or throw. A separate `waitForAboutDataFunctions()` (711–732) polls 100 × 100 ms ≈ 10 s. Renaming either side silently breaks the about-team admin CRUD.
 
 ## Two Supabase projects — do not mix them
@@ -57,13 +58,13 @@ Load the page, watch the console, exercise the feature. There is **no test file 
 
 ## SQL has no migration system
 
-Schema applied by hand in the Supabase SQL Editor in arbitrary order. Additive: `sql/setup/` (40 files), patches: `sql/fixes/` (3), queries: `sql/queries/` (1). No rollbacks, no auto-apply — assume partial state. Never run `supabase init` (no `supabase/` dir; `.gitignore` keeps `supabase/.temp/` and `supabase/.branches/` out).
+Schema applied by hand in the Supabase SQL Editor in arbitrary order. Additive: `sql/setup/` (41 files), patches: `sql/fixes/` (3), queries: `sql/queries/` (1). No rollbacks, no auto-apply — assume partial state. Never run `supabase init` (no `supabase/` dir; `.gitignore` keeps `supabase/.temp/` and `supabase/.branches/` out).
 
 ## Agent tooling (see `opencode.json`)
 
 MCP servers — **restart opencode after any config change**, it is not hot-reloaded:
 
-- **supabase** (remote) — deliberately scoped: `?project_ref=ohczlooperjqpyllmabo&read_only=true`. Read-only because the DB holds real student PII and plaintext passwords. To inspect media DB2 or allow writes, edit that URL; dropping `project_ref` entirely grants access to *every* project in the account. Auth: `opencode mcp auth supabase` (OAuth, no PAT).
+- **supabase** (remote) — scoped: `?project_ref=ohczlooperjqpyllmabo&read_only=false`. Currently **write-enabled** (flipped from the original `read_only=true`; that edit lives uncommitted in `opencode.json` — `git status` will show it). The DB holds real student PII and plaintext passwords, so write only deliberately; the read-only URL was the safer default. To inspect media DB2, edit that URL; dropping `project_ref` entirely grants access to *every* project in the account. Auth: `opencode mcp auth supabase` (OAuth, no PAT).
 - **context7** (remote) — uses a `CONTEXT7_API_KEY` env var as a bearer token with `oauth: false`. There is no OAuth flow to run; if it 401s, the env var is missing.
 - **playwright** (local) — `npx.cmd -y @playwright/mcp@0.0.83`. Practical replacement for "reload and watch the console". Writes a `.playwright-mcp/` directory at repo root — gitignored, but still stage paths explicitly rather than `git add -A`.
 - **graphify** (local) — `python -m graphify.serve C:\Users\saras\.graphify\school-website\graph.json`. **Call these tools with `project_path` omitted.** Omitting it works because the server defaults to the graph path passed in `opencode.json`; passing *any* `project_path` makes the tool append `graphify-out/graph.json` to it and fail with `graph file not found: ...\graphify-out\graph.json` (that directory does not exist in the repo). Unlike the other servers, this one re-reads `graph.json` per call, so swapping the file needs no restart.
@@ -108,7 +109,7 @@ Still true: AST extraction indexes every `js/*.js` whether or not a page loads i
 
 ## Repo hygiene traps
 
-- **A ~102-file cleanup is staged but not committed**, so `git status` looks alarming and HEAD (`b5f521e`) still has the old tree. Deleted: root `test_syntax*.js`/`temp_script.js`/empty `schema.json`, debug captures (`improve.pdf`, `*_error.png`), the stray `js/admin-about-handler.js.restored`, the never-loaded `js/*.js` orphans, and the `scratch/` + `scripts/dev-tools/` archaeology directories. Recover with `git show HEAD:<path>` rather than recreating it.
+- **A ~102-file cleanup was committed as `b2eb9bd`** (HEAD is now `9b347d2`), so the working tree is clean — but the deleted files are *gone from HEAD*: `git show HEAD:<path>` fails for them. Deleted: root `test_syntax*.js`/`temp_script.js`/empty `schema.json`, debug captures (`improve.pdf`, `*_error.png`), the stray `js/admin-about-handler.js.restored`, the never-loaded `js/*.js` orphans, and the `scratch/` + `scripts/dev-tools/` archaeology directories. Recover with `git show b2eb9bd^:<path>` rather than recreating it.
 - **`node_modules` is gitignored and untracked** (0 tracked files). A fresh clone has no dependencies — run `npm install` in `adms-api/` (Express 5, port 4370) as needed; its `package.json` + `package-lock.json` are tracked, so installs are reproducible. **Nothing in the web app calls it**: 0 references to `adms-api`, `4370`, or `iclock` in `js/` or `html/`.
 - **Two divergent copies of the homepage exist and are not in sync**: root `index.html` (8.7k lines) and `html/index.html` (7.7k lines). Both load the same four handlers, both are reachable (`/` and `/html/index.html`), and neither is canonical — both nav bars use `href="#"` for Home. They differ partly because of relative depth (`js/...` vs `../js/...`, `html/about.html` vs `about.html`). Confirm which one you're editing and mirror the change deliberately.
 
@@ -120,7 +121,7 @@ Still true: AST extraction indexes every `js/*.js` whether or not a page loads i
 
 ## Conventions
 
-- Single branch `main`, tracking `origin/main`. Run `git status` before committing — the tree is intentionally not clean (see the staged cleanup above).
+- Single branch `main`, tracking `origin/main`. Run `git status` before committing — the tree is normally clean; recurring exceptions are `opencode.json` (MCP URL edits) and `.playwright-mcp/`/`graphify-out/` noise (both gitignored).
 - **Git has no `user.name`/`user.email` configured** — pass `-c user.name=... -c user.email=...` per commit; don't write config unless asked.
 - Don't commit, add remotes, or push unless asked.
 - Commit messages use plain imperatives (`Fix admin-portal UI syntax errors...`), occasionally `chore:`/`feat:`; match the form.
